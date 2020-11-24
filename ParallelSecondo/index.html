@@ -1,0 +1,318 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+
+<title>Parallel SECONDO</title>
+
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+<meta name="author" content="Erwin Aligam - styleshout.com" />
+<meta name="description" content="Site Description Here" />
+<meta name="keywords" content="keywords, here" />
+<meta name="robots" content="index, follow, noarchive" />
+<meta name="googlebot" content="noarchive" />
+
+<link rel="stylesheet" type="text/css" media="screen" href="images/Techmania.css" />
+
+</head>
+
+<body>
+<!-- wrap starts here -->	
+<div id="wrap">
+
+		<div id="header">
+		
+			<h1 id="logo-text">Parallel <span class="gray">SECONDO</span></h1>
+			<h2 id="slogan">Extensible Query Processing in the Cloud<br/>
+			<span class="blue float-right">Large Scale Analysis of Mobility Data</span></h2>	
+					
+			<div id="header-tabs">
+				<ul>
+					<li id="current"><a href="index.html"><span>Home</span></a></li>
+					<li><a href="Downloads.html"><span>Download</span></a></li>
+					<li><a href="Model.html"><span>Data Model</span></a></li>
+					<li><a href="VMI.html"><span>VMware Image</span></a></li>
+					<li><a href="AMI.html"><span>EC2 Image</span></a></li>
+					<li><a href="BMOD.html"><span>BerlinMOD</span></a></li>
+					<li><a href="About.html"><span>About</span></a></li>			
+				</ul>
+			</div>				
+			
+		</div>
+	  
+	  <!-- content-wrap starts here -->
+	  <div id="content-wrap">
+	  
+	  		<div id="main"> 
+	
+				<h1>Parallel SECONDO Overview</h1>
+				
+			<p><strong>Parallel SECONDO</strong> scales up the capability of processing extensible data models in
+			the <a href="http://dna.fernuni-hagen.de/secondo/">SECONDO</a> database system to a cluster of computers. 
+			It combines <a href="http://hadoop.apache.org/">Hadoop 0.20.2</a> with a set of SECONDO databases, 
+			providing almost all existing SECONDO data types and operators. 
+			All parallel queries are expressed in SECONDO executable language, 
+			like common sequential queries. 
+			Therefore, the user can easily describe parallel queries without learning too many details 
+			about the underlying Hadoop platform. </p>
+
+			<p>SECONDO has been developed with a focus on supporting spatial and spatio-temporal data management. It offers a comprehensive set of data types and operators for representing and querying moving objects (e.g. GPS-captured tracks of people, vehicles, or animals, also called trajectories). Through the coupling of Hadoop and SECONDO, it is now possible to perform queries and analyses on  massive sets of trajectory data in the cloud.
+			</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<p>For installation, a set of bash scripts is provided
+			which makes the installation relatively easy for the user and makes Parallel SECONDO usable not only on a single computer, 
+			but also on computer clusters containing tens or even hundreds of computers. 
+			Besides, a <a href="http://dna.fernuni-hagen.de/secondo/files/ParallelSecondo_VM332.zip">
+			VMware image</a> containing a single-computer Parallel SECONDO
+			enables the user to explore the system by simply starting a virtual machine.
+			At last, an Amazon Machine Image ( <a href="https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-f3167d9a">AMI</a> ) 
+			containing a Parallel SECONDO Data Server is also published, 
+			with which the user can quickly set up Parallel SECONDO on a EC2 virtual cluster.</p>
+
+			<p>Furthermore, the <a href="http://dna.fernuni-hagen.de/secondo/BerlinMOD/BerlinMOD.html">BerlinMOD benchmark</a> is also revised for Parallel SECONDO. 
+			In the past, the data generation and certain example queries are quite expensive in BerlinMOD, 
+			even with small factors like 1.0. 
+			At present, Parallel SECONDO can create a large data set with a scale factor of 30 
+			on an Amazon cluster consisting of 110 large-type instances in only five hours. </p>
+			
+				<!--p class="comments">
+					<a href="index.html">Read more</a> |
+					<a href="index.html">Comments(7)</a> |
+					Oct 08, 2006
+				</p-->
+				
+			<h1>Install Parallel SECONDO</h1>				
+			
+				<!--a name="SampleTags"></a>				
+				<h1>Sample Tags</h1-->
+			<h3>Prerequisites</h3>
+				<ol>
+					<li><span>At present Parallel SECONDO is well supported on all Unix-based systems, 
+					while usually Ubuntu is highly recommended.</span></li>
+					<li><span>A SECONDO database system of version higher than 3.3.2
+					and all its required libraries should be installed on all involved computers at the very beginning. 
+					The <a href="http://dna.fernuni-hagen.de/secondo/content_downloads.html#install">installation guides</a> 
+					of SECONDO regarding different platforms, 
+					including Linux, MacOSX and Windows, help the user to finish this step easily. </span></li>
+					<li><span>A <a href="http://archive.apache.org/dist/hadoop/core/hadoop-0.20.2/hadoop-0.20.2.tar.gz">Hadoop 0.20.2</a> archive is needed. 
+					We are aware that this release is out of date nowadays, 
+					and we are working on adapting Parallel SECONDO to the latest Hadoop distribution.</span></li>
+					<li><span>JAVA<sup>TM</sup> 1.6.x. </span></li>
+					<li><span>The software <b>ssh</b> and <b>screen</b> should be installed. <br/>
+					For example, in an Ubuntu system, they can be installed by the commands: 
+					<code>
+					$ sudo apt-get install ssh <br/>
+					$ sudo apt-get install screen
+					</code>
+					</span></li>
+					<li><span>Passphraseless SSH connection is also required. In Ubuntu, it is built by: 
+					<code>
+					$ ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa<br/>
+					$ cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+					</code>
+					</span></li>
+				</ol>
+			
+			<h3>Configuration File</h3>
+			<p> 
+			A configuration file named <span style="text-decoration: underline;">ParallelSecondoConfig.ini</span> is prepared 
+			to set up various parameters of the system. 
+			Within the file, two parameters must be set before installing the system. 
+			</p>
+
+			<ul>
+			  <li><span><b>JAVA_HOME</b> It indicates the current JAVA installation for Hadoop.</span></li>
+			  <li><span><b>Cluster</b> It describes the distribution of the system.</span></li>
+			</ul>
+			
+			<p>More details about this file are described in the <a href="http://dna.fernuni-hagen.de/papers/PSUserGuide.pdf">
+			User Guide for Parallel SECONDO</a>. 
+			</p>
+			
+			<h3>Set Up Data Servers</h3>
+			<p>
+			Basically, the installation of Parallel SECONDO is automatically done by two bash scripts: 
+			ps-cluster-format and ps-secondo-buildMini. The first sets up Data Servers, 
+			which are basic processing units in Parallel SECONDO, to all involved computers. 
+			The second installs SECONDO to all Data Servers. 
+			The basic installation can be executed by the command: </p>
+			
+			<p><code>
+			$ ps-cluster-format
+			</code></p>
+			
+			<p>After initializing all Data Servers, start a new console and type the command: </p>
+			<p><code>
+			$ ps-secondo-buildMini
+			</code></p>
+			
+			<p>Detailed installation instructions, on both a single-computer and computer-cluster,
+			are described in: </p>
+			<ul>
+			  <li><a href="http://dna.fernuni-hagen.de/papers/PSUserGuide.pdf">User Guide for Parallel Secondo</a></li>
+			  <li><a href="http://dna.fernuni-hagen.de/secondo/files/example.pdf">Example: How to Write Parallel Queries in Parallel SECONDO</a></li>
+			</ul>
+				<!--h3>Code</h3>				
+				<p><code>
+				code-sample { <br />
+				font-weight: bold;<br />
+				font-style: italic;<br />				
+				}
+				</code></p>	
+				
+				<h3>Example Lists</h3>
+				
+				<ol>
+					<li><span>example of ordered list</span></li>
+					<li><span>uses span to color the numbers</span></li>								
+				</ol>	
+							
+				<ul>
+					<li><span>example of unordered list</span></li>
+					<li><span>uses span to color the bullets</span></li>								
+				</ul>				
+				
+				<h3>Blockquote</h3>			
+				<blockquote><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy 
+				nibh euismod tincidunt ut laoreet dolore magna aliquam erat....</p></blockquote>
+				
+				<h3>Image and text</h3>
+				<p><a href="http://getfirefox.com/"><img src="images/firefox-gray.jpg" width="100" height="120" alt="firefox" class="float-left" /></a>
+				Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. 
+				Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu 
+				posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum 
+				odio, ac blandit ante orci ut diam. Cras fringilla magna. Phasellus suscipit, leo a pharetra 
+				condimentum, lorem tellus eleifend magna, eget fringilla velit magna id neque. Curabitur vel urna. 
+				In tristique orci porttitor ipsum. Aliquam ornare diam iaculis nibh. Proin luctus, velit pulvinar 
+				ullamcorper nonummy, mauris enim eleifend urna, congue egestas elit lectus eu est. 				
+				</p>
+								
+				<h3>Example Form</h3>
+				<form action="#">		
+				<p>				
+				<label>Name</label>
+				<input name="dname" value="Your Name" type="text" size="30" />
+				<label>Email</label>
+				<input name="demail" value="Your Email" type="text" size="30" />
+				<label>Your Comments</label>
+				<textarea rows="5" cols="5"></textarea>
+				<br />	
+				<input class="button" type="submit" />		
+				</p>		
+				</form>				
+				<br /-->		
+								
+	  		</div> 	
+			  
+	  		<div id="sidebar">
+					
+<p><a href="http://dna.fernuni-hagen.de/secondo/"><img src="images/logo.gif" width="200" height="43" alt="SECONDO" /></a></p>
+				<!--h1>Sidebar Menu</h1>				
+				<ul class="sidemenu">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="#TemplateInfo">Template Info</a></li>
+					<li><a href="#SampleTags">Sample Tags</a></li>
+					<li><a href="http://www.styleshout.com/">More Free Templates</a></li>	
+					<li><a href="http://www.dreamtemplate.com" title="Web Templates">Web Templates</a></li>
+      		    </ul-->
+				
+				<!--h1>Site Partners</h1>				
+				<ul class="sidemenu">
+                    <li><a href="http://www.dreamtemplate.com" title="Website Templates">DreamTemplate</a></li>
+                    <li><a href="http://www.themelayouts.com" title="WordPress Themes">ThemeLayouts</a></li>
+                    <li><a href="http://www.imhosted.com" title="Website Hosting">ImHosted.com</a></li>
+                    <li><a href="http://www.dreamstock.com" title="Stock Photos">DreamStock</a></li>
+                    <li><a href="http://www.evrsoft.com" title="Website Builder">Evrsoft</a></li>
+                    <li><a href="http://www.webhostingwp.com" title="Web Hosting">Web Hosting</a></li>
+  				</ul-->	
+
+			
+
+			<h1>Links</h1>
+			<ul class="sidemenu">
+				<li><a href="http://dna.fernuni-hagen.de/" title="Database for New Applications" >DNA Group</a></li>
+				<li><a href="http://dna.fernuni-hagen.de/secondo/" title="SECONDO Database System" >SECONDO</a></li>
+				<li><a href="http://hadoop.apache.org/" title="Apache Hadoop" >Hadoop</a></li>
+				<li><a href="http://aws.amazon.com/" title="Amazon Web Services" >Amazon AWS</a></li>
+			</ul>
+
+				
+				<!--h1>Search</h1>	
+				<form method="post" id="search" action="Building.html">
+					<p>
+					<input name="search_query" class="textbox" type="text" /> 
+					<input name="search" class="searchbutton" value="Search" type="submit" />
+					</p>
+				</form-->	
+									
+				<!--h1>Wise Words</h1>
+				<p>&quot;Criticism is something you can avoid easily by saying nothing,
+				doing nothing, and being nothing&quot;</p>	
+				
+				<p class="align-right">- Aristotle</p-->
+				
+				<h1>Latest News</h1>
+				<h3>Oct-22-2013</h3>
+				<h5>Parallel SECONDO will be presented as a demo in 
+				  <a href="http://ieee-icde2014.eecs.northwestern.edu/">ICDE'14</a> Chicago, USA</h5>
+
+				<h3>Jun-01-2013 </h3>
+				<h5>This website is online.</h5>
+
+				<h3>May-27-2013</h3>
+				<h5>The Parallel BerlinMOD is prepared, and the SECONDO and Parallel SECONDO are updated to versions to 3.3.2 and 1.2, respectively.</h5>
+				
+				<p class="align-right"><a href="News.html">More ... </a></p>			
+
+				<h1>Contact Us</h1>
+			<h6><span>Every comment is appreciated. Contact us without hesitation: </span></h6>
+			<h5>Major Developer</h5>
+			<ul class="sidemenu">
+			<li><a class="align-left" href="mailto:jiamin.lu@fernuni-hagen.de">Jiamin Lu</a></li>
+			</ul>
+			<h5>Counseling</h5>
+			<ul class="sidemenu">
+			<li><a class="align-left" href="mailto:secondo@fernuni-hagen.de">SECONDO Group</a></li>
+			</ul>
+								
+			</div>	
+		
+		<!-- content-wrap ends here -->
+		</div>
+		
+		<div id="footer">
+		
+			<p id="footer-left">
+				&copy; 2013 Database for New Applications (DNA), FernUniversität in Hagen, Germany |
+				<a href="http://www.bluewebtemplates.com/" title="Website Templates">website templates</a> by <a href="http://www.styleshout.com/">styleshout</a>
+			</p>
+			
+			<p id="footer-right">
+                <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10-blue.png" alt="Valid XHTML 1.0 Strict" height="31" width="88" /></a> &#160;
+				<a href="http://jigsaw.w3.org/css-validator/check/referer"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" /></a>
+			</p>
+			
+			
+		</div>	
+
+<!-- wrap ends here -->		
+</div>	
+</body>
+</html>
