@@ -1,0 +1,60 @@
+Secondo Installation on OSX EL CAPITAN
+=============================================
+
+
+This document describes how to install Secondo on OSX El Capitan.
+This guide works also with versions Mavericks and Yosemite.
+
+Firstly, the xcode command line tools must be installed. For that, 
+open a Terminal (Applications->Utilities->Terminal) and enter:
+
+gcc --version
+
+If xcode is already installed, the compiler's version is displayed.
+Otherwise, a window pops up informing that the xcode is necessary 
+for the gcc-command. Just click "install" and wait for some time.
+
+The next step is the installation of the Java Development Kit.
+In the terminal enter:
+  javac -version
+
+If Java is installed, the version number is printed out. Otherwise,
+a new window appears. By clicking on "install", the web browser is
+opened showing Oracle's Java download page. Accept the license, download 
+the JDK for Mac OS X, and install it.
+
+Now it's time to install the Secondo environment and Secondo itself.
+Download the Mavericks SDK from:
+
+  http://dna.fernuni-hagen.de/secondo/files/Installation/Mac/SDK_OSX_EL_CAPITAN.zip
+
+If not done automatically, unpack the file. Within the terminal, navigate 
+to the SDK's directory. Enter:
+   ./Install_On_ElCapitan
+
+Wait for some time. After the installation finished, open the file .profile within 
+your home directory with a text editor. Ensure that this file contains the following
+lines:
+
+export SECONDO_SDK=$HOME/secondo-sdk
+export SECONDO_PLATFORM=max_osx
+export SECONDO_BUILD_DIR=$HOME/secondo
+source $SECONDO_SDK/secondorc
+
+Save the file if changes were performed and close the text editor.
+
+Close the terminal and open a new one. 
+The terminal shows some configuration information. Navigate to Secondo's 
+main directory: 
+  cd secondo
+and enter
+  make
+
+Wait for a while. 
+Now you can start Secondo (See User Manual).
+
+
+All changes made by the SDK installation are local to the user. 
+To remove the Secondo SDK, just remove the secondo-sdk directory
+within the home directory. For removing secondo, remove the directories
+secondo and secondo-databases from your home directory.

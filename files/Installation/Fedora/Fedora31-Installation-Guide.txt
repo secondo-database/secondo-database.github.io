@@ -1,0 +1,31 @@
+
+This document describes how to create an environment able to
+compile Secondo on a freshly installed Fedora 31. The user installing the SDK 
+must be a 'sudoer'.
+
+ (1) Make sure that your system is up to date.
+ (2) Connect to the internet.
+ (3) Open a terminal
+ (4) Install wget
+     sudo yum install wget
+ (5) Navigate to your HOME directory
+     cd $HOME
+ (6) Download the installation script
+     wget http://dna.fernuni-hagen.de/secondo/files/Installation/Fedora/SecondoOnFedora31.sh
+ (7) Start the script: 
+     bash SecondoOnFedora31.sh
+     The script will install additional packages required for compiling Secondo.
+     Thus it will ask for the sudo password.
+     (If you don't trust the script, you can also install the required software manually).
+     Furthermore, the script will create a file .secondorc in your home 
+     directory.
+      
+ (8) Download and unpack the Secondo source code, so that it is rooted at
+     a directory ~/secondo. If you choose an other directory for the source 
+     root, you need to adapt the command in the next step. 
+ (9) Add the following entry into the file $HOME/.bashrc file:
+
+  source ~/.secondorc $HOME/secondo
+
+
+Now, you are finally able to compile Secondo (see Secondo User's Manual).

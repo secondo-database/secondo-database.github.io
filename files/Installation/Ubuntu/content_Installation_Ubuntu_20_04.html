@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO Installation on Ubuntu </title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+  <meta name="description" content="extensible database system">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="/secondo/images/logo.gif" height="107" width="598"> </div>
+<h2><br>
+</h2>
+<h2> Installation on Ubuntu 20.04</h2>
+<div>
+For installing <span class="secondo">Secondo</span> on Ubuntu 20.04, a few steps are
+needed. These are:
+<ol>
+  <li> Install Ubuntu 20_04 from an Installation medium to hard disk and start it. </li>
+  <li> Download the file <a href="http://dna.fernuni-hagen.de/secondo/files/Installation/Ubuntu/InstallSDK_Ubuntu_20_04.bash">InstallSDK_Ubuntu_20_04.bash</a> 
+       and store it into your home directory. </li>
+  <li> Open a terminal. </li>
+  <li> If <span class="secondo">Secondo</span> is installed the <b>first time</b>, some system tools must be installed.
+       This is done by the script automatically. Note that the user has to be in the 
+       sudoers list for that. <br>
+       Execute the script:  <tt>bash InstallSDK_Ubuntu_20_04.bash</tt> <br>
+       The script will ask for your password for installing the required tools.<br>
+       Alternatively, you can enter the lines of the script manually. <br>
+       If <span class="secondo">Secondo</span> should be installed just for <b>a further user</b>, the tools are
+       already present and the user can be outside the sudoer list. In this case, run the
+       script, with the option -onlyrc, e.g.:<br>
+       <tt>bash InstallSDK_Ubuntu_20_04.bash -onlyrc</tt><br>
+       This will create a file <tt>.secondorc</tt> in the user's 
+       home directory.
+       </li>
+  <li> Insert the following line at the end of the file <tt>$HOME/.bashrc</tt><br>
+       <tt>source $HOME/.secondorc $HOME/secondo</tt></li>
+  <li> Download the <a href="http://dna.fernuni-hagen.de/Secondo.html/content_sources.html">latest Secondo version</a> and unpack it. <br>
+  <li> Close the terminal (exit) and open a new one. </li>
+  <li> Go into directory <tt>$HOME/secondo</tt> and compile <span class="secondo">Secondo</span> just by typing <tt>make</tt> 
+</ol>
+</div>
+
+<div class="footnote">
+ Last Changed: 2020-05-29 (JNI)
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+Date: Fri, 29 May 2020 06:40:36 +0000
+MD5Sum:
+ 6e1fb2e7ce4760f6d71069594f2360cb              981 Packages
+ 905c54e0970bfbc6240f29e3b5f84185              658 Packages.gz
+ c3687cac1055889738aefb1a2ef44c0f               38 Release
+SHA1:
+ edc58d93eeb847eb00e84e9f548f846444d62cf4              981 Packages
+ 94be06a3bd2812c4824a5cb802c45eb862f6174c              658 Packages.gz
+ 35215c82cc486c7dccc8e6d22c9c9e729e96c287               38 Release
+SHA256:
+ aa814ade75446f6e24987bf9900618b67b78b131bdf3907347afbc851464a514              981 Packages
+ 75c255e9bad64e7c9b4e225081d66aefb0f524cb92fe6d5bd601fa52b71d9fe2              658 Packages.gz
+ 4b89dc6c37941903618f01bfebeb736fe0c2d89f8ed053b8fc7a215686894fd6               38 Release
+SHA512:
+ 8ec8ac3d62254bb6188d6cf7d37c51b3437c1c8cf3fd8636adc74c12138c2529aa267e37410da186685ff14821c01df525a7edb6ee1b210f8cf296e9248596f8              981 Packages
+ 92603bc15c6f5db5b80feaca9d7f14499bdbe0841081c743c473fc5ade73014448f5284187cca5a50930fdc32182814745e1ad7e33f36fa5cb6a66be7767bac2              658 Packages.gz
+ eb7928743a4130481040c1ea59046818dc2b5d1dc2a4e729f2af02de23fb361edb3120c12345f0ac4a29b15e8656daadf66afd4b625fbbb4a538b29ef1cca4b7               38 Release

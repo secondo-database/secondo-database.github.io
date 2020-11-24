@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Secondo Installation on Ubuntu </title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+  <meta name="description" content="extensible database system">
+  <link rel="stylesheet" type="text/css" href="../../../secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="/secondo/images/logo.gif" height="107" width="598"> </div>
+
+
+<h1>Installation on Ubuntu using <tt>apt-get</tt></h1>
+
+We provide <tt>.deb</tt> packages for Ubuntu 20.04 (LTS), 18.04 (LTS), and 16.04 (LTS). These
+packages work on 64-Bit installations. 
+These packages can be used to setup <span class="secondo">Secondo</span> within 
+a few minutes on your computer. We recommend this installation type for new users, 
+who want to gain first experience with the <span class="secondo">Secondo</span> system. 
+For advanced users, who want to develop their own extensions, we recommend to install 
+the <span class="secondo">Secondo</span>-SDK.
+
+<h2>Installation of <span class="secondo">Secondo</span></h2>
+
+To install <span class="secondo">Secondo</span> via <tt>apt-get</tt>, 
+add the <span class="secondo">Secondo</span> repository to your <tt>sources.list</tt>.
+This must be done using the <code>root</code> account. Note that the <code>sudo</code> command 
+does not work with redirecting into files. To get the <code>root</code> account, enter:<br>
+<pre>
+sudo su -l root
+</pre>
+After that extend your repository list by entering:<br>
+<br>
+Ubuntu 20.04<br>
+<pre>
+echo "deb http://dna.fernuni-hagen.de/secondo/files/Installation/Ubuntu/repos/focalfossa ./" >> /etc/apt/sources.list
+</pre>
+
+Ubuntu 18.04<br>
+<pre>
+echo "deb http://dna.fernuni-hagen.de/secondo/files/Installation/Ubuntu/repos/bionicbeaver ./" >> /etc/apt/sources.list
+</pre>
+
+Ubuntu 16.04<br>
+<pre>
+echo "deb http://dna.fernuni-hagen.de/secondo/files/Installation/Ubuntu/repos/xenial ./" >> /etc/apt/sources.list
+</pre>
+
+Update the list of the available packages:<br>
+<pre>
+apt-get update
+</pre>
+
+Install <span class="secondo">Secondo</span> and all required dependencies:<br>
+<pre>
+apt-get install secondo
+</pre>
+
+<h2>Running <span class="secondo">Secondo</span></h2>
+
+Before starting the first session, each user who wants to work with <span class="secondo">Secondo</span> 
+has to execute the <span class="secondo">Secondo</span> installer. This script creates the required environment:
+<pre>
+/opt/secondo/bin/secondo_installer.sh
+</pre>
+
+
+Afterwards, each <span class="secondo">Secondo</span> component can be started
+from any directory by typing in the appropriate command. The programs that can be 
+started are:
+<ul>
+ <li> Single User Variants 
+   <ul> 
+      <li> <code>SecondoTTYBDB</code> </li>
+      <li> <code>SecondoTTYNT </code> </li>
+      <li> <code>SecondoPL</code> </li>
+      <li> <code>SecondoPLNT</code> </li>
+      <li> <code>SecondoPLTTY</code> </li>
+      <li> <code>SecondoPLTTYNT</code> </li>
+   </ul>
+  </li>
+  <li> Servers
+    <ul>
+      <li><code>SecondoMonitor</code></li>
+      <li><code>StartOptServer</code></li>
+    </ul>
+  </li>
+  <li> Clients 
+     <ul>
+       <li><code>SecondoTTYCS</code> </li>
+       <li><code>sgui</code> </li> 
+       <li><code>SecondoPLCS</code> </li>
+       <li><code>SecondoPLTTYCS</code> </li>
+     </ul>
+  </li>
+</ul> 
+
+Do not start more than one instance of Server or
+Single User programs accessing the same database directory.
+For details see the User Manual.
+
+<div class="footnote">
+Last Changed: 2020-05-29 (JNI)
+</div>
+
+
+</body>
+</html>

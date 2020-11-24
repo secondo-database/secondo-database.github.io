@@ -1,0 +1,31 @@
+
+This document describes how to create an environment able to
+compile Secondo on a freshly installed Open SuSe Linux 12.1.
+
+ (1) Make sure that your system is up to date.
+ (2) Connect to the internet.
+ (3) Download the installation script
+       http://dna.fernuni-hagen.de/secondo/files/Installation/Suse/secondoSDK_Suse_12_2.bash
+ (4) Start the script: 
+     open a terminal, enter the directory where the script is stored and enter:
+     bash secondoSDK_Suse_12_2.bashrc
+     The script will install additional packages required for compiling Secondo.
+     Thus it will ask for root's password.
+     (If you don't trust the script, you can also install the required software manually).
+     Furthermore, the script will create a file .secondorc in your home 
+     directory.
+ (5) At the end of the script, some instructions how to install the Berkeley DB 
+     are printed out. Just follow these instructions to finish the
+     Secondo-SDK installation.
+      
+ (6) Download and unpack the Secondo source code, so that it is rooted at
+     a directory ~/secondo. If you choose an other directory for the source 
+     root, you need to adapt the command in the next step. 
+     (For SuSe 12.2 at least version 3.3.0 is needed.)
+
+ (6) Add the following entry into the file $HOME/.bashrc file:
+
+  source ~/.secondorc $HOME/secondo
+
+
+Now, you are finally able to compile Secondo (see Secondo User's Manual).

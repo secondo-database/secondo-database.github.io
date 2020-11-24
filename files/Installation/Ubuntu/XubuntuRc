@@ -1,0 +1,25 @@
+if [ "$1" == "" ]; then
+  SEC_DIR=$HOME/secondo
+else
+  SEC_DIR=$1
+fi
+
+export SECONDO_PLATFORM=linux
+export SECONDO_BUILD_DIR=$SEC_DIR
+export BERKELEY_DB_LIB="db_cxx"
+export BERKELEY_DB_DIR=/usr
+export J2SDK_ROOT=/usr/lib/jvm/java-6-openjdk/
+export SWI_HOME_DIR=/usr/lib/swi-prolog
+export PL_LIB_DIR=$SWI_HOME_DIR/lib/i386
+export PL_INCLUDE_DIR=$SWI_HOME_DIR/include
+export PL_VERSION=50647
+export SECONDO_JAVA=$J2SDK_ROOT/bin/java
+export readline=true
+export PATH=$PATH:.
+export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini
+
+alias secroot='export SECONDO_BUILD_DIR=$PWD'
+
+export JAVAVER="1.6"
+
+
