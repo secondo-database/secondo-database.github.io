@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title> SECONDO </title>
+<meta name="description" content="extensible database system" />
+<link rel="stylesheet" type="text/css" href="secondo.css">
+<link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An extensible database system'">
+
+
+<div align="center">
+<table summary="">
+<tr><td> <img alt="FernUni Hagen" src="images/feulogo.gif" width="363" height="78"></td></tr>
+<tr><td> <img alt="SECONDO" width="598" height="107" src="images/logo.gif"> </td></tr>
+<tr><td><h1> An Extensible Database System </h1></td></tr>
+</table>
+</div>
+
+<h2> What is <span class="secondo">Secondo</span> </h2>
+<div class="short">
+<span class="secondo">Secondo</span> is an extensible database system supporting
+especially non-standard applications. Designed at the FernUniversit&auml;t in Hagen,  
+<span class="secondo">Secondo</span> is a platform for implementing and experimenting
+with various kinds of data models.
+</div>
+
+<h2> Target Groups </h2>
+
+<div class="short">
+<span class="secondo">Secondo</span> can be used by groups at universities to pursue 
+and prototype their research ideas for database systems. It can be used in teaching 
+to show students in detail the architecture and implementation of database systems. 
+Additionally, <span class="secondo">Secondo</span> may be interesting for users in need
+of a database system able to handle non-standard data types usually not supported 
+by standard systems.
+</div>
+
+<h2> Benefits </h2>
+<div class="short">
+The <span class="secondo">Secondo</span> system is extensible by algebra modules, using 
+a well defined interface. New data models and data structures together with their operations
+are integrated into the system in this way. The source code is available and enables the 
+user to access and modify every part of the database system. <span class="secondo">Secondo</span>
+comes with a carefully written user manual, programmer's guide and installation instructions.
+</div>
+
+<h2> Functionality </h2>
+<div style="text-indent:2cm;">
+	<img src="images/architecture.gif" alt="Architecture" width="317" height="276"><br>
+</div><br>	
+
+<div class="short">
+Objects of an arbitrary type defined in one of the
+<span class="secondo">Secondo</span> algebra modules can be stored in a database.
+The following list shows some of the available
+algebras:
+
+<ul class="algebra">
+	<li> <span class="algebraname"> Standard-Algebra </span>  <br>
+             provides simple types like integer, real, bool and
+	     string and operations on those types.<br><br>
+	</li>
+	<li> <span class="algebraname"> Relational-Algebra </span> <br>
+               contains data types and operations to realize a
+	       classical relational database system.<br><br>
+        </li>	
+	<li> <span class="algebraname"> Spatial-Algebra </span> <br>
+             represents geometrical objects such as points,
+	     lines and regions together with spatial operations.<br><br>
+	</li>     
+	<li> <span class="algebraname"> Temporal-Algebra </span> <br>
+	     represents moving objects in databases, e.g.
+             peoples or vehicles and allows one to formulate
+	     queries about their movements.<br>
+	</li>
+</ul>	
+</div>
+
+<h2> Query Example </h2>
+<div class="short">
+Using these algebras, one can determine the names
+and addresses of all Italian restaurants in Berlin, which
+have a distance smaller than 2 km to the Brandenburg
+Gate. Then, the result is presented graphically.
+</div>
+
+<pre>
+   select [r:name, r:strasse, r:geoData]
+   from   [restaurants as r, sehenswuerdpoi as s]
+   where  [ s:name="Brandenburger Tor",
+            r:art="Italienisch",
+            distance(r:geoData, s:geodata) < 2000]
+</pre>
+<br><br>
+<div style="text-indent:2cm">
+<img src="images/screenshot1.gif" width="640" height="495" alt="Screenshot"> 
+</div>
+<br><br>
+
+<div class="footnote">
+  Last Changed: 2009-08-06
+</div>
+
+</body>
+</html>
+
+
+
