@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
+
+<h1><span style="font-variant:small-caps">Secondo</span> Plugins</h1>
+<h2>Basic Idea</h2>
+<span style="font-variant:small-caps">Secondo</span> is extensible in many ways. One can provide a new algebra, new viewers,
+new display classes, and extensions of the optimizer. 
+A <span style="font-variant:small-caps">Secondo</span> plugin is a package of such extensions provided as a single zip-file. 
+Besides the parts containing the source code (i.e. source files and code sections),
+a plugin contains an XML file containing information about where the new code is to
+place, the name of the extension etc. This allows for an automatical installation
+of an extension  using a tool which is part of a <span style="font-variant:small-caps">Secondo</span> distribution. 
+So, if the inventor of a new data structure or of a new
+algorithm provides it as a <span style="font-variant:small-caps">Secondo</span> plugin, other researchers can compare their solutions
+with this approach without the effort of reimplementing the algorithms/data structures. 
+<p>
+A main motivation for this is to better support <a href="content_plugin_motivation.html">experimental research in databases</a>. 
+
+
+<h2>Current Restrictions</h2> 
+
+In the current state, only standard extensions are possible. If changes at the kernel are
+required to implement a new approach, the plugin mechanism  is not sufficient.  
+Further, non-solved problems are name conflicts. For example, if two plugins provide each a 
+new algebra containing a same-named data type, the plugins cannot be installed at the same
+time. A similar problem occurs if two new algebras provide new operators having the 
+same signature. From the view of the gui, it's not allowed to overwrite existing classes. 
+
+<h2>Installing Plugins</h2>
+
+Before installing a new plugin ensure to have a running <span style="font-variant:small-caps">Secondo</span> system. Additionally to
+the plugin to install, you need the following two files (these files are also created 
+by typing <code>make</code> in the <code>$SECONDO_BUILD_DIR/Tools/extensionInstaller</code>
+directory in <span style="font-variant:small-caps">Secondo</span> version 2.9.0 or later):
+<ul>
+  <li> <a href="files/Binaries/Installer.jar">Installer.jar</a></li>
+  <li> <a href="files/Binaries/secinstall">secinstall</a></li>
+</ul>
+and a running Java environment (version 1.5 or above). Just copy both files into the directory
+of your choice, let us call it X. Then proceed as follows:
+
+<ol>
+  <li>Ensure that the system variable <code>SECONDO_BUILD_DIR</code> points
+to the root directory of your <span style="font-variant:small-caps">Secondo</span> installation. 
+To make sure this is the case,  
+open a bash (or an msys-shell on Windows), navigate to that <code>secondo</code> directory, and type
+<pre>
+ setvar $PWD
+</pre>
+  <li>Navigate in a bash or msys shell to the directory X where you put the installer.
+  <li>Now install the plugin by entering the following line
+<pre>
+ secinstall &lt;filename&gt;
+</pre>
+where <code>filename</code> is the name of the zip file containing the plugin. If there
+are any dependencies between plugins, i.e. plugin <i>A</i> requires an already installed
+plugin <i>B</i>, both plugins can be installed at the same time just by extending the command
+above by further file names.
+</ol>
+
+After installing the plugin, the system has to be recompiled.  
+
+<h2>Available Plugins</h2>
+
+The following plugins are currently available.
+<ul>
+  <li>Nearest Neighbor</li>
+  <li>TB-Tree</li>
+  <li>X-Tree and M-Tree</li>
+  <li>Periodic</li>
+  <li>Spatiotemporal Pattern Queries</li>
+</ul>  
+
+Descriptions and sources of these plugins can be found <a href="content_plugins_detailed.html">here</a>.
+
+
+<h2> Creating Your Own Plugins</h2>
+
+If you want to create your own plugin, please visit <a href="content_plugin_creation.html">this page</a>.
+
+<div class="footnote">
+  Last Changed: 2009-10-05
+</div>
+</body>
+</html>

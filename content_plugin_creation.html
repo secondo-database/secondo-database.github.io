@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
+
+<h1><span style="font-variant:small-caps">Secondo</span> Plugin Creation</h1>
+
+<p>On  this page, we describe, how you can build your own plugin. If you share  
+your work with other researchers, feel free to send us your implementation as
+a plugin by email (<a href="mailto:secondo@fernuni-hagen.de">secondo@fernuni-hagen.de</a>).
+We will publish it on our website. 
+</p>
+<p>
+Currently, creating a plugin needs some manual work. There is no tool supporting the creation of
+a plugin. Although a plugin may contain several extensions, i.e. a new algebra and display classes
+for the new introduced types, the following sections describe how to create a single extension plugin.
+</p>
+
+<h2> Creating an Algebra Plugin </h2>
+
+<p> First of all, the algebra must be created. If the algebra works fine, a plugin can be created from it.
+We create a new folder outside the <span class="secondo">Secondo</span>-installation. After that, we copy all source files 
+into this directory (including <code>makefile</code>, <code>example file</code>, 
+and <code>spec file</code>). 
+In the same directory, we create a new file <code>copyright.txt</code> containing 
+copyright information about this plugin.</p>
+
+Furthermore, we create a new file named <code>SecondoExtension.xml</code>.
+For the <code>PointSequenceAlgebra</code> which is part of a <span class="secondo">Secondo</span> distribution, the file has the
+following content:
+<div style="text-align:center">
+<textarea cols="80" rows="22" readonly>
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;SecondoExtension&gt;
+  &lt;Algebra&gt;
+     &lt;Name&gt; PointSequenceAlgebra &lt;/Name&gt;
+     &lt;Dependencies&gt;
+        &lt;SecondoVersion&gt;
+          &lt;Major&gt; 2 &lt;/Major&gt;
+          &lt;Minor&gt; 8 &lt;/Minor&gt;
+          &lt;SubMinor&gt; 4 &lt;/SubMinor&gt;
+        &lt;/SecondoVersion&gt;
+        &lt;Algebra&gt; SpatialAlgebra &lt;/Algebra&gt;
+        &lt;Algebra&gt; RectangleAlgebra &lt;/Algebra&gt;
+     &lt;/Dependencies&gt;
+     &lt;SourceCode&gt;
+        &lt;file&gt; makefile &lt;/file&gt;
+        &lt;file&gt; PointSequenceAlgebra.cpp &lt;/file&gt;
+     &lt;/SourceCode&gt;
+     &lt;SpecFile&gt; NearestNeighborAlgebra.spec &lt;/SpecFile&gt;
+     &lt;ExampleFile&gt; NearestNeighbor.examples &lt;/ExampleFile&gt;
+     &lt;Copyright&gt;  copyright.txt &lt;/Copyright&gt;
+ &lt;/Algebra&gt;
+&lt;SecondoExtension&gt;
+</textarea>
+</div>
+
+Within a single plugin, only one algebra module is allowed.
+In the algebra section, the name of the algebra must be provided. 
+Additionally, some dependencies  can be listed. The <span class="secondo">Secondo</span> version is
+necessary, other dependencies are optionally. All algebra modules used
+by the new algebra should be listed as an algebra dependency. You can find 
+out the needed algebras by looking at the <code>...dep</code> file
+created during compiling <span class="secondo">Secondo</span>. If there are dependencies to
+external libraries, these must also be written within the <code>Dependencies</code> section.
+For example, if the <code>gsl</code> library is required by the algebra, the following code
+must be part of the Dependencies section:
+<div style="text-align:center">
+<textarea cols="80" rows="4" readonly>
+     &lt;Libraries&gt; 
+        &lt;Lib name="GSL" flag="gsl" /&gt; 
+        &lt;Lib name="GSLCDLAS" flag="gslcblas" /&gt;
+     &lt;/Libraries&gt;
+</textarea>
+</div>
+
+If such information is contained in the xml file, an information about required 
+libraries are printed out during the plugin installation and the needed entries
+are inserted into the file <code>makefile.algebras</code>. 
+The section <code>SourceCode</code> has to contain all files which must be 
+copied into the algebra directory except the <code>example file</code> and 
+the <code>spec file</code>. The <code>SpecFile</code> and the 
+<code>ExampleFile</code> sections contain the filenames of the corresponding files.
+The content of the file from  the <code>Copyright</code> section will be displayed after the
+installation of the plugin.
+
+
+After creating the XML-file, just use the <code>zip</code> tool to compress all files 
+into a single zip file. The command is:
+<pre>
+   zip plugin.zip *
+</pre>
+
+
+<h2> Creating a Viewer Plugin </h2>
+
+Normally, a viewer consists of several source files and may have dependencies
+to external libraries. The main class of a viewer must be located within the 
+<code>viewer</code> directory of <span class="secondo">Secondo</span>'s <code>Javagui</code>. The procedure is
+similar to the one creating an algebra plugin: 
+<ul>
+  <li> copy all required files into a new directory </li>
+  <li> create a <code>copyright.txt</code> file </li>
+  <li> create an XML file </li>
+  <li> compress all the stuff to a plugin </li>
+</ul>
+
+The interesting thing is the format of the XML file. 
+Here, an example for the <code>SVGViewer</code> is given:
+<div style="text-align:center">
+<textarea cols="80" rows="28" readonly>
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;SecondoExtension&gt;
+  &lt;Viewer&gt;
+    &lt;Mainclass&gt; SvgViewer.java &lt;/Mainclass&gt;
+    &lt;Dependencies&gt;
+       &lt;SecondoVersion&gt;
+         &lt;Major&gt; 2 &lt;/Major&gt;
+         &lt;Minor&gt; 8 &lt;/Minor&gt;
+         &lt;SubMinor&gt; 4 &lt;/SubMinor&gt;
+       &lt;/SecondoVersion&gt;
+       &lt;JavaVersion&gt;
+         &lt;Major&gt; 1 &lt;/Major&gt;
+         &lt;Minor&gt; 5 &lt;/Minor&gt;
+       &lt;/JavaVersion&gt;
+       &lt;Library file="batik.jar" location="." provided="yes" classpath="true"/&gt;
+       &lt;Library file="batik-anim.jar" location="lib" provided="yes" /&gt;
+         ...
+      &lt;!-- &lt;Viewer name="name of the required viewer" /&gt; --&gt;
+    &lt;/Dependencies&gt;
+    &lt;Copyright&gt; copyright.txt &lt;/Copyright&gt;
+    &lt;---
+       &lt;Files&gt;
+          &lt;File location="subdir"&gt; FileName &lt;/File&gt;
+       &lt;/Files&gt; 
+    --&gt;
+  &lt;/Viewer&gt;
+&lt;/SecondoExtension&gt;
+</textarea>
+</div>
+
+
+Within the <code>Dependencies</code> section, the minimum required <span class="secondo">Secondo</span> version must be 
+specified. Furthermore, the required Java version is given. 
+If there are dependencies to external libraries, they must be listed here. The attributes 
+of a library entry are:
+<ul>
+  <li> file: name of the library file </li>
+  <li> location: install path relatively to the library path of the Javagui </li>
+  <li> provided: (yes/no) specifies whether the library  must be already installed 
+       or is included in the plugin </li>
+  <li> classpath: (true/false): specifies whether this library must be part of the classpath
+       when compiling or starting javagui  or not</li>
+</ul>
+
+If there are dependencies to other viewers, these can also be given here.
+
+
+The <code>Mainclass</code> entry contains the name of the viewer class. This file is extracted from the
+zip-file into the Javagui's <code>viewer</code> directory. If the viewer has more than one source file, these
+files are given in the <code>Files</code> section. Besides the filename, the directory of the file relatively
+to the <code>viewer</code> directory is provided using the <code>location</code> attribute. 
+
+<h2> Creating a Plugin Providing Display Classes </h2>
+
+
+The HoeseViewer can be extended by display classes. Such a class is located within 
+the <code>algebra</code> directory of the <code>HoeseViewer</code> and may use some supporting
+classes within a subdirectory of the <code>algebra</code> directory. Within a single plugin,
+several displayclasses may be contained.  Again, all required files are copied into an empty
+directory and zipped together with an XML file. 
+In the following, the code of the XML-file for a plugin providing display classes for periodic
+moving object is shown.
+<div style="text-align:center">
+<textarea cols="80" rows="30" readonly>
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;SecondoExtension&gt;
+  &lt;HoeseExtension&gt;
+    &lt;Mainclass&gt; Dsplpmpoint.java &lt;/Mainclass&gt;
+    &lt;Files&gt;
+      &lt;File location="periodic"&gt; BBox.java &lt;/File&gt;
+      &lt;File location="periodic"&gt; CompositeMove.java &lt;/File&gt;
+         ...
+    &lt;/Files&gt;
+    &lt;Copyright&gt; copyright.txt &lt;/Copyright&gt;
+    &lt;Dependencies&gt;
+       &lt;SecondoVersion&gt;
+         &lt;Major&gt; 2 &lt;/Major&gt;
+         &lt;Minor&gt; 8 &lt;/Minor&gt;
+         &lt;SubMinor&gt; 4 &lt;/SubMinor&gt;
+       &lt;/SecondoVersion&gt;
+       &lt;JavaVersion&gt;
+         &lt;Major&gt; 1 &lt;/Major&gt;
+         &lt;Minor&gt; 5 &lt;/Minor%gt;
+       &lt;/JavaVersion&gt;
+    &lt;/Dependencies&gt;
+  &lt;/HoeseExtension&gt;
+  &lt;HoeseExtension&gt;
+    &lt;Mainclass&lt; Dsplpmpoints.java &lt;/Mainclass&gt;
+  &lt;/HoeseExtension&gt;
+    ...
+&lt;/SecondoExtension&gt;
+</textarea>
+</div>
+
+Supporting files are given in one of the <code>HoeseExtension</code> sections. Its sufficient
+to write them down once. The given location is the directory relatively to the <code>algebra</code>
+directory of the <code>HoeseViewer</code>. Similar it's enough to give the dependencies for a single
+display class. The remainder of this file should be self-explanatory.
+ 
+
+<h2> Plugin Creation for Optimizer Extensions </h2>
+
+In optimizer extensions, new files are very rare. The main task is to modify existing files. 
+The problem is, that an append-only fashion is not sufficient because the used environment
+(Prolog) requires some order of the rules to create the results in the correct order. For this 
+reason, the complete source code of the optimizer framework is tagged with tag formatted as follows:
+<pre>
+  % Section:Start:Name
+  % Section:End:Name
+</pre>
+
+All extension code must be inserted between existing tags. If some code is outside such blocks,
+it cannot be converted into a plugin.
+If the extension needs additional files, copy them into an empty directory. Create the copyright 
+file and an XML-file. The XML-file for an optimizer extension has the following structure:
+<div style="text-align:center;">
+<textarea cols="80" rows="23">
+&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;SecondoExtension&gt;
+  &lt;Optimizer&gt;
+     &lt;Name&gt; TestExtension &lt;/Name&gt;
+     &lt;Dependencies&gt;
+        &lt;SecondoVersion&gt;
+           &lt;Major&gt; 8 &lt;/Major&gt;
+           &lt;Minor&gt; 4 &lt;/Minor&gt;
+        &lt;/SecondoVersion&gt;
+     &lt;/Dependencies&gt;
+     &lt;Copyright&gt; copyright.txt &lt;/Copyright&gt;
+     &lt;Files&gt;
+        &lt;File location="."&gt; AdditionalFile.pl  &lt;/File&gt;
+     &lt;/Files&gt;
+     &lt;Block file="calloptimizer.pl" section="loadFiles_1_e" position="first"&gt;
+        Here is the extension stuff
+        .....
+     &lt/Block&gt;
+     &lt;Block file="calloptimizer.pl" section="defaultOptions_0_i" position="last"&gt;
+         more extension stuff
+     &lt;/Block&gt;
+  &lt;/Optimizer&gt;
+&lt;/SecondoExtension&gt;
+</textarea>
+</div> 
+
+Within in <code>Dependencies</code> section only the <span class="secondo">Secondo</span> version is supported.
+The <code>Copyright</code> section and the <code>File</code> section are the same as for other plugins.
+Files are copyied into a directory given as <code>location</code> attribute relatively to the
+<code>Optimizer</code> directory of <span class="secondo">Secondo</span>. 
+
+Code snippets which should be inserted into existing files are listed as Blocks.
+The attribute <code>file</code> is the name of the file to modify (within the 
+<code>Optimizer</code> directory). The <code>section</code> attribute specifies the name
+of the section where the code should be inserted. The attribute <code>position</code>
+describes whether the code should be inserted at the start of the section (<code>first</code>)
+or at the end of the section (<code>last</code>), respectively. This is only important if several extensions 
+are installed.
+
+
+<p>
+<a href="content_plugins.html">Back to the Plugin page</a>
+</p>
+
+<div class="footnote">
+  Last Changed: 2009-08-18
+</div>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
+
+<h1>Available <span style="font-variant:small-caps">Secondo</span> Plugins</h1>
+<hr>
+
+<a name="NearestNeighbor"></a>
+<h2>Nearest Neighbor</h2>
+
+<b>Responsible</b>: Thomas Behr, Ralf Hartmut G&uuml;ting, Jianqiu Xu </p>
+
+<b>Included in <span class="secondo">Secondo</span> since version 3.4.0</b>
+
+<h3> Description </h3>
+The NearestNeighbor plugin contains the 
+NearestNeighborAlgebra. It provides operators to find continuous nearest 
+neighbors of a query trajectory with respect to a set of stored 
+trajectories [1, 2, 3]. Pieces (units) of stored trajectories are 
+indexed by an R-tree [1, 2] or a TB-tree [3]. The operators are called 
+knearestfilter and knearest [1], greeceknearest [2], and chinaknearest 
+[3], respectively. The plugin also contains several variants of 
+distancescan operators implementing the incremental enumeration of 
+nearest neighbors of [4], for a point set indexed by an R-tree.
+
+<h3> Implementation Based on Papers </h3>
+<ol>
+  <li> R.H. G&uuml;ting, T. Behr, and J. Xu. Efficient k-Nearest Neighbor Search on 
+       Moving Object Trajectories. Fernuniversit&auml;t in Hagen, Informatik-Report 
+       352 - 7/2009. <a href="http://dna.fernuni-hagen.de/articles2000all.html#NearestNeighbor">Paper</a>.
+       </li>
+  <li> E. Frentzos, K. Gratsias, N. Pelekis, and Y. Theodoridis. Algorithms for 
+       nearest neighbor search on moving object trajectories. GeoInformatica, 
+       11(2):159-193, 2007.</li>
+  <li> Y. Gao, C. Li, G. Chen, Q. Li, and C. Chen. Efficient algorithms for 
+       historical continuous k nn query processing over moving object 
+       trajectories. In APWeb/WAIM, pages 188-199, 2007.</li>
+  <li> G..R. Hjaltason, H. Samet: Distance Browsing in Spatial Databases. ACM 
+       Transactions on Database Systems 24(2): 265-318 (1999).</li>
+</ol>
+
+<h3> Requirements </h3>
+<table summary="" border="1">
+   <tr>  <th> <span class="secondo">Secondo</span> Version </th> <th> Plugins Needed </th> <th> Notes </th></tr>
+   
+
+      <tr>  <td> 3.4.0  (<a href="files/secondo-v340-CP1252.zip">win</a>, <a href="files/secondo-v340-LAT1.tar.gz">linux</a>)</td> <td> none (already included) </td> <td> &nbsp; </td> </tr>
+
+      <tr>  <td> 3.1.0  (<a href="files/secondo-v310-CP1252.zip">win</a>, <a href="files/secondo-v310-LAT1.tar.gz">linux</a>)</td> <td> <a href="files/plugins/NN_v5.zip">NearestNeighbor (version 5)</a>, <a href="files/plugins/TBTree_v2.zip">TBTree (version2)</a> </td> <td>additional operator knearestdistance</td> </tr>
+
+   <tr>  <td> 3.0.0  (<a href="files/secondo-v300-CP1252.tgz">win</a>, <a href="files/secondo-v300-LAT1.tar.gz">linux</a>)</td> <td> <a href="files/plugins/NN_v4.zip">NearestNeighbor (version 4)</a>, <a href="files/plugins/TBTree_v2.zip">TBTree (version2)</a> </td> <td> &nbsp; </td> </tr>
+  
+  <tr>  <td> 2.9.2  (<a href="files/secondo-v292-CP1252.zip">win</a>, <a href="files/secondo-v292-LAT1.tar.gz">linux</a>)</td> <td> <a href="files/plugins_tmp/NN.zip">NearestNeighbor (version 3)</a>, <a href="files/plugins/TBTree.zip">TBTree</a> </td> <td> bulk update mechanism added (with revised paper)</td> </tr>
+   <tr>  <td> 2.9.1  (<a href="files/secondo-v291-CP1252.zip">win</a>, <a href="files/secondo-v291-LAT1.tar.gz">linux</a>)</td> <td> <a href="files/plugins_tmp/NN_v2.zip">NearestNeighbor (version 2)</a>, <a href="files/plugins/TBTree.zip">TBTree</a> </td> <td> Bugfix Oct. 2, 2009 </td> </tr>
+   <tr>  <td> 2.8.4 (<a href="files/secondo-v284-CP1252.zip">win</a>, <a href="files/secondo-v284-LAT1.tar.gz">linux</a>)          </td> <td> <a href="files/plugins/NN_v1.zip">NearestNeighbor (version 1)</a> </td> <td>&nbsp; </td></tr>
+</table>
+
+
+<hr>
+
+<a name="TB-Tree"></a>
+<h2>TB-Tree</h2>
+
+<b>Responsible</b>: Thomas Behr </p>
+
+<b>Included in <span class="secondo">Secondo</span> since version 3.4.0</b>
+
+<h3> Description </h3>
+The TBTree plugin provides the data structure TBTree described in [1]. Additionally,
+some operations for inserting and finding elements in a TBTree are part of this 
+algebra.
+
+<h3> Implementation Based on Papers </h3>
+<ol>
+   <li> D. Pfoser, C.S. Jensen, and Y. Theodoridis.
+        Novel Approaches in Query Processing for Moving Object Trajectories.
+        VLDB 2000:395-406. </li>
+</ol>
+
+<h3> Requirements </h3>
+<table summary="" border="1">
+   <tr>  <th> <span class="secondo">Secondo</span> Version </th> <th> Plugins Needed </th> </tr>
+
+   <tr>  <td> 3.4.0  (<a href="files/secondo-v340-CP1252.zip">win</a>, <a href="files/secondo-v340-LAT1.tar.gz">linux</a>)</td> <td> none (already included) </td> </tr>
+   
+   <tr>  <td> 3.0.0  (<a href="files/secondo-v300-CP1252.tgz">win</a>, <a href="files/secondo-v300-LAT1.tar.gz">linux</a>)          </td> <td> <a href="files/plugins/TBTree_v2.zip">TBTree</a> </td></tr>
+   
+   <tr>  <td> 2.9.1  (<a href="files/secondo-v291-CP1252.zip">win</a>, <a href="files/secondo-v291-LAT1.tar.gz">linux</a>)          </td> <td> <a href="files/plugins/TBTree.zip">TBTree</a> </td></tr>
+   <tr>  <td> 2.8.4  (<a href="files/secondo-v284-CP1252.zip">win</a>, <a href="files/secondo-v284-LAT1.tar.gz">linux</a>)         </td> <td> none (already included) </td> </tr>
+</table>
+
+<hr>
+<h2> X-Tree and M-Tree</h2>
+<b>Responsible</b>: Mirko Dibbert, Ralf Hartmut G&uuml;ting
+<h3> Description </h3>
+The GenTree plugin provides three algebra modules: GeneralTree, XTree[1]  and MTree[2].
+The X-tree is able to index data in high dimensional spaces avoiding the drawbacks of
+R-trees in such spaces. 
+The M-tree is an index structure organizing its elements based on a distance function only.
+It supports similarity queries.
+
+<h3> Implementation Based on Papers </h3>
+<ol>
+   <li> S. Berchtold, D.A. Keim, H.-P. Kriegel. 
+        The X-tree : An Index Structure for High-Dimensional Data VLDB 1996: 28-39 </li>
+   <li> P. Ciaccia, M. Patella, P. Zezula. M-tree: An Efficient Access Method for 
+        Similarity Search in Metric Spaces. VLDB 1997: 426-435 </li>
+</ol>
+
+<h3> Requirements </h3>
+<table summary="" border="1">
+   <tr>  <th> <span class="secondo">Secondo</span> Version </th> <th> Plugins Needed </th> </tr>
+   
+   <tr>  <td> 3.0.0  (<a href="files/secondo-v300-CP1252.tgz">win</a>, <a href="files/secondo-v300-LAT1.tar.gz">linux</a>)         </td> <td> <a href="files/plugins/GenTree_v2.zip">GenTree (version 2)</a></td></tr> 
+   <tr>  <td> 2.9.1  (<a href="files/secondo-v291-CP1252.zip">win</a>, <a href="files/secondo-v291-LAT1.tar.gz">linux</a>)         </td> <td> <a href="files/plugins/GenTree.zip">GenTree</a></td></tr> 
+   <tr>  <td> 2.8.4 (<a href="files/secondo-v284-CP1252.zip">win</a>, <a href="files/secondo-v284-LAT1.tar.gz">linux</a>)           </td> <td> none (already included) </td> </tr>
+</table>
+
+<hr>
+
+<a name="Periodic"></a>
+<h2>Periodic </h2>
+
+<b>Responsible</b>: Thomas Behr
+<h3> Description</h3>
+The Periodic plugin contains an algebra providing data types for representing periodic moving
+objects[1]. Such objects have repetitions within their movements. A repeated movement is only stored
+once to save memory and to accelerate operations. Furthermore some operations on these
+data types are implemented. The plugin contains also display classes for the HoeseViewer 
+for a graphical representation of periodic moving objects.
+
+<h3> Implementation Based on Papers </h3>
+<ol>
+   <li> T. Behr, V.T. de Almeida, R.H. G&uuml;ting,
+        Representation of Periodic Moving Objects in Databases.
+        GIS 2006: 43-50.</li>
+</ol>
+
+<h3> Requirements </h3>
+<table summary="" border="1">
+   <tr>  <th> <span class="secondo">Secondo</span> Version </th> <th> Plugins Needed </th> </tr>
+   <tr>  <td> 3.0.0  (<a href="files/secondo-v300-CP1252.tgz">win</a>, <a href="files/secondo-v300-LAT1.tar.gz">linux</a>) </td> <td> <a href="files/plugins/Periodic_v2.zip">Periodic (version 2)</a> </td></tr>
+   <tr>  <td> 2.9.1  (<a href="files/secondo-v291-CP1252.zip">win</a>, <a href="files/secondo-v291-LAT1.tar.gz">linux</a>) </td> <td> <a href="files/plugins/Periodic.zip">Periodic</a> </td></tr>
+   <tr>  <td> 2.8.4  (<a href="files/secondo-v284-CP1252.zip">win</a>, <a href="files/secondo-v284-LAT1.tar.gz">linux</a>)         </td> <td> none (already included) </td> </tr>
+</table>
+
+
+
+<hr>
+
+<a name="STPatterns"></a>
+<h2> Spatiotemporal Pattern Queries</h2>
+
+<b>Responsible</b>: Mahmoud Sakr </p>
+
+<b>Included in <span class="secondo">Secondo</span> since version 3.4.0</b>
+
+<h3> Description</h3>
+Spatiotemporal pattern queries allow for querying moving objects by
+their movement profiles. That is, one can specify for example temporal 
+order constraints on the fulfillment of predicates on moving objects. 
+This <span class="secondo">Secondo</span> Plugin implements our approach that builds on the 
+concept of lifted predicates, i.e. predicates returning time dependent boolean values, of type moving(bool). Hence, unlike previous approaches, it is not restricted to a specific set of predicates. 
+<br><br>
+The Spatiotemporal Pattern Queries plugin contains two types of <span class="secondo">Secondo</span> extensions:
+<ul>
+<li>An algebra providing the data types and the necessary operators for implementing spatiotemporal pattern queries. This extension is implemented in C++. </li>
+<li>An extension to the <span class="secondo">Secondo</span> Optimizer so that it is able to optimize the spatiotemporal pattern queries. The extension is written in Prolog.</li>
+</ul>
+
+<h3> Implementation Based on Papers </h3>
+<ol>
+   <li> M.A.Sakr and R.H. G&uuml;ting, Spatiotemporal Pattern Queries. Fernuniversit&auml;t in Hagen, Informatik-Report 355 - 11/2009. <a href="http://dna.fernuni-hagen.de/articles2010all.html#STPatterns">Paper</a>.
+   </li>
+</ol>
+
+<h3>Instructions for Use</h3>
+<a href="files/plugins/STPatternsUserManual.pdf">User Manual</a><br>
+<a href="files/plugins/STPatternsBerlintest.pdf">The Berlintest Demo Example</a>
+
+<h3> Requirements </h3>
+<table summary="" border="1">
+   <tr>  <th> <span class="secondo">Secondo</span> Version </th> <th> Plugins Needed </th> <th> Notes </th></tr>
+  
+   <tr>  <td> 3.4.0  (<a href="files/secondo-v340-CP1252.zip">win</a>, <a href="files/secondo-v340-LAT1.tar.gz">linux</a>)</td> <td> none (already included) </td> <td> &nbsp; </td> </tr>
+ 
+   <tr>  <td> 3.1.0  (<a href="files/secondo-v310-CP1252.zip">win</a>, <a href="files/secondo-v310-LAT1.tar.gz">linux</a>) </td> <td> <a href="files/plugins/STPatternPlugin3.1b.zip">STPatterns (version 3b)</a> </td> 
+   <td>a lightweight version of the plugin with additional <br> operators (e.g. stpatternextend) but without optimizer <br>extensions and scripts for experiments</td></tr> 
+
+   <tr>  <td> 3.1.0  (<a href="files/secondo-v310-CP1252.zip">win</a>, <a href="files/secondo-v310-LAT1.tar.gz">linux</a>) </td> <td> <a href="files/plugins/STPatternPlugin3.1.zip">STPatterns (version 2)</a> </td> 
+   <td>adapted to <span class="secondo">Secondo</a> 3.1</td></tr> 
+   
+   <tr>  <td> 3.0.0  (<a href="files/secondo-v300-CP1252.tgz">win</a>, <a href="files/secondo-v300-LAT1.tar.gz">linux</a>) </td> <td> <a href="files/plugins/STPatternPlugin3.0.zip">STPatterns (version 2)</a> </td> 
+   <td> &nbsp; </td></tr>
+   
+   <tr>  <td> 2.9.1  (<a href="files/secondo-v291-CP1252.zip">win</a>, <a href="files/secondo-v291-LAT1.tar.gz">linux</a>)          </td> 
+<td> <a href="files/plugins/STPatterns.zip">STPatterns</a></td>
+<td> Revised Version Nov. 16, 2009 </td></tr> 
+</table>
+
+<hr>
+
+<p>
+<a href="content_plugins.html">Back to the Plugin page</a>
+</p>
+<div class="footnote">
+  Last Changed: 2015-03-05
+</div>
+</body>
+</html>

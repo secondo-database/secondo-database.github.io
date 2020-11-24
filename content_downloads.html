@@ -1,0 +1,835 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title> SECONDO </title>
+<meta name="description" content="erweiterbares Datenbanksystem">
+<link rel="stylesheet" type="text/css" href="secondo.css">
+<link rel="shortcut icon" href="favicon.ico">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<div align="center">
+<img alt="SECONDO" width="598" height="107" src="images/logo.gif"> 
+</div>
+
+<p>
+<em>Note: The FernUniversit&auml;t in Hagen is not responsible for the content or the privacy policies of Web sites to which it may link. 
+</em>
+</p>
+
+<H1>Downloads</H1>
+
+<a name="documentation"></a>
+<h2>Documentation</h2>
+<p>
+For research papers see the link on the Secondo home page. To become acquainted with Secondo,
+we recommend to start with the short documents listed below before delving into User Manual or Programmer's Guide.
+</p>
+
+
+<ul>
+<li> <a href="files//Documentation/General/Secondo-mod.pdf">Short Guide to Using Secondo</a></li>
+<li> <a href="files/Documentation/General/SecondoQuerying.pdf">Short Guide to Querying at the Executable Level</a></li>
+<li> <a href="files/Documentation/General/SecondoTracks.pdf">Example: Loading Tracks and Displaying Them With a Map Background</a></li>
+<li> <a href="files/Documentation/General/SecondoManual.pdf">User Manual</a></li>
+<li> <a href="files/Documentation/Programming/ProgrammersGuide.pdf">Programmer's Guide</a></li>
+<li> <a href="files/Documentation/Programming/SpatialListFormat.pdf">Format Description for Spatial and Spatio-Temporal Data</a></li>
+<!--<li> <a href="files/Documentation/General/Optimizer-Syntax.pdf">Grammar of the <span class="secondo">Secondo</span> Optimizer's Query Language</a></li>-->
+
+</ul>
+
+<p>
+If you have some problems concerning installation or usage please read first the informally
+collected notes in the <a href="files/Sources/old/Release-Notes-v320.txt">Release-Notes.txt</a>. 
+</p>
+
+
+<a name="Lecture Video"></a>
+<h2>Lecture Video</h2>
+<p>
+Here is a video of a lecture presented by Ralf Hartmut G&uuml;ting on August 14 at the <a href="http://postrack.nina.no/SummerSchool.aspx">Summer School &quot;Stuck in motion? Reconnecting questions and tools in movement ecology&quot;, Evenstad, Norway, August 2012.</a>
+<p>
+The lecture (about 2 hrs duration) provides an introduction to the management of moving objects in databases to an audience of animal ecologists; it contains about one hour of practical demonstrations of the Secondo system and the querying and visualization of moving objects. The lecture is entitled &quot;Calculations with Moving Objects in Databases&quot; (<a href="http://tcs.hihm.no/tcs/#page:recordingList&amp;pageNumber:1&amp;id:268DEA66-6E65-49AB-BD04-2EE4F77F8E54" target="_blank">streaming</a>, <a href="http://dna.fernuni-hagen.de/Videos/Evenstad.wmv" target="_blank">download</a>).
+<p>
+
+
+<a name=SecondoNews></a>
+<h2>Secondo News</h2>
+<p>
+If you wish to be informed about new Secondo releases or new documentation, bugs discovered and bugfixes, please send an email to <a href="mailto:secondo@fernuni-hagen.de">secondo@fernuni-hagen.de</a> with a message like "please put me on 
+the Secondo News mailing list". In the same way you can ask for removal from this list, of course.
+<p>
+
+
+
+
+<a name=source></a>
+<h2>Source Code</h2>
+<p>
+Below you can download the source code. We offer a MS-Windows and a Unix/Linux version,
+since the coding convention for an end of line on MS-Windows are two bytes CR/LF and on
+Linux its only LF. The latter can cause trouble on MS-Windows systems. 
+
+</p>
+
+<table BORDER="1" summary="5 columns. The 3rd column contains a link to download the source code for Windows, the 4th a link to download the source code for Linux, the 5th contains a link to download release notes.">
+<tr>
+<th>Date</th>
+<th>Version</th>
+<th>MS-Windows (CP1252)</th>
+<th>Linux (ISO-Latin), also for Mac OS X</th>
+<th>Notes</th>
+</tr>
+
+
+<tr>
+  <td> 09/17/2014 </td>
+  <td> 3.4.0 </td>
+  <td> <a href="files/Sources/old/secondo-v340-CP1252.zip">Source Code</a> (98 MB) </td>
+  <td> <a href="files/Sources/old/secondo-v340-LAT1.tar.gz">Source Code</a> (94 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v340.txt">notes</a></td>
+</tr>
+
+
+<tr>
+  <td> 10/31//2012 </td>
+  <td> 3.3.0 </td>
+  <td> <a href="files/Sources/old/secondo-v330-HalloweenEdition-CP1252.zip">Source Code</a> (33 MB)  </td>
+  <td> <a href="files/Sources/old/secondo-v330-HalloweenEdition-LAT1.tar.gz">Source Code</a> (31 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v330.txt">notes</a> </td>
+</tr>
+
+
+<tr>
+  <td> 12/16/2011 </td>
+  <td> 3.2.1 </td>
+  <td> <a href="files/Sources/old/secondo-v321-CP1252.zip">Source Code</a> (27 MB)  </td>
+  <td> <a href="files/Sources/old/secondo-v321-LAT1.tar.gz">Source Code</a> (25 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v321.txt">notes</a> </td>
+</tr>
+
+
+<tr>
+  <td> 09/08/2011 </td>
+  <td> 3.2.0 </td>
+  <td> <a href="files/Sources/old/secondo-v320-CP1252.zip">Source Code</a> (28 MB)  </td>
+  <td> <a href="files/Sources/old/secondo-v320-LAT1.tar.gz">Source Code</a> (26 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v320.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 07/20/2011 </td>
+  <td> 3.1.0 </td>
+  <td> <a href="files/Sources/old/secondo-v310-CP1252.zip">Source Code</a> (24 MB)  </td>
+  <td> <a href="files/Sources/old/secondo-v310-LAT1.tar.gz">Source Code</a> (24 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v310.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 06/25/2010 </td>
+  <td> 3.0.0 </td>
+  <td> <a href="files/Sources/old/secondo-v300-CP1252.zip">Source Code</a> (25 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v300-LAT1.tar.gz">Source Code</a> (23 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v30.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 01/25/2010 </td>
+  <td> 2.9.2 </td>
+  <td> <a href="files/Sources/old/secondo-v292-CP1252.zip">Source Code</a> (21 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v292-LAT1.tar.gz">Source Code</a> (20 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v292.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 10/05/2009 </td>
+  <td> 2.9.1 </td>
+  <td> <a href="files/Sources/old/secondo-v291-CP1252.zip">Source Code</a> (21 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v291-LAT1.tar.gz">Source Code</a> (20 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v291.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 08/24/2009 </td>
+  <td> 2.9.0 </td>
+  <td> <a href="files/Sources/old/secondo-v290-CP1252.zip">Source Code</a> (21 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v290-LAT1.tar.gz">Source Code</a> (20 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v29.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 06/04/2009 </td>
+  <td> 2.8.4 </td>
+  <td> <a href="files/Sources/old/secondo-v284-CP1252.zip">Source Code</a> (21 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v284-LAT1.tar.gz">Source Code</a> (20 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v284.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 01/05/2009 </td>
+  <td> 2.8.3 </td>
+  <td> <a href="files/Sources/old/secondo-v283-Winter08-CP1252.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v283-Winter08-LAT1.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v283.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 12/19/2008 </td>
+  <td> 2.8.2 </td>
+  <td> <a href="files/Sources/old/secondo-v282-Winter08-CP1252.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v282-Winter08-LAT1.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v282.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 12/16/2008 </td>
+  <td> 2.8.1 </td>
+  <td> <a href="files/Sources/old/secondo-v281-Winter08-CP1252.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v281-Winter08-LAT1.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v281.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 10/10/2008 </td>
+  <td> 2.7 </td>
+  <td> <a href="files/Sources/old/secondo-v27-ColoredLeaves08-CP1252.zip">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v27-ColoredLeaves08-LAT1.tar.gz">Source Code</a> (14 MB)</td>
+  <td> &nbsp;</td>
+</tr>
+
+<tr>
+ <td> 10/25/2007 </td>
+ <td> 2.6 </td>
+ <td> <a href="files/Sources/old/secondo-v26-CP1252.zip"> Source Code</a> (13 MB) </td>
+ <td> <a href="files/Sources/old/secondo-v26-LAT1.tar.gz"> Source Code</a> (12 MB) </td>
+ <td> <a href="files/Sources/old/Release-Notes-v26.txt">notes</a> </td>
+</tr>
+
+<tr>
+ <td> 09/17/2007 </td>
+ <td> 2.5 </td>
+ <td> <a href="files/Sources/old/secondo-v25-CP1252.zip"> Source Code</a> (12 MB)  </td>
+ <td> <a href="files/Sources/old/secondo-v25-LAT1.tar.gz"> Source Code</a> (11 MB) </td>
+ <td> <a href="files/Sources/old/Release-Notes.txt">notes</a> </td> 
+</tr> 
+
+</table>
+
+
+<a name="gui"></a>
+<h2> GUI Binaries </h2>
+
+<div>
+Below you can download the binaries of the graphical user interface of <span class="secondo">Secondo</span>. 
+It can be run on any platform with an installed Java Runtime Environment version 1.5 or higher. Furthermore, you 
+will need access to a running <span class="secondo">Secondo</span> server and optionally a running optimizer
+server.<br>
+For using the GUI, just download and unpack the zip-File into an arbitrary directory.<br><br>
+On Linux systems, start a terminal, navigate to the newly created directory and start the gui by entrering <span class="command">sgui</span>.
+On Windows based systems, double click on <span class="file">sgui.bat</span> if the directory containing the file <span class="file">java.exe</span>
+is contained in your PATH environment variable, or double click on <span class="file">Javagui.jar</span> if your system is configured to
+process <span class="file">jar</span> files directly. <br>
+The <span class="file">zip</span> file contains a file named <span class="file">ViewerList.txt</span>. This file contains the names of all
+available viewers. By default, only a small part of them is load when starting the gui. You can add each of the listed viewers by entering
+<span class="command">gui addViewer &lt;viewer's name&gt;</span>. If a viewer should be loaded at starting time, insert the viewer name into
+the file <span class="file">gui.cfg</span> to the variable <span class="file">KNOWN_VIEWERS</span>. <br><br>
+Further information can be found in the <a href="#documentation">documentation</a>.
+</div>
+<br><br>
+<table>
+  <tr>
+    <th> Release Date </th>
+    <th> Download </th>
+    <th> Release Notes </th>
+  </tr>  <tr>
+     <td> 09/30/2014 </td>
+     <td> <a href="files/Binaries/old/Javagui_2014_09_30.zip"> Javagui_2014_09_30.zip </a> </td>
+     <td>  </td>
+  </tr>
+</table>
+
+
+<a name="appliance"></a>
+<h2>SecondoVM Appliance</h2>
+<p>
+The <span class="secondo">SecondoVM</span> Appliance offers the possibility to use a full-fledged 
+<span class="secondo">Secondo</span> system within a virtual machine on your preferred system. 
+</p>
+
+<p>
+<span class="secondo">SecondoVM</span> is a Linux-based installation of the <span class="secondo">Secondo</span>
+extensible DBMS on a virtual machine. It is distributed as a zip-archive file. A user just needs to install VMware Player,
+a virtualization software, in order to play the virtual machine.
+</p>
+
+<p>
+VMware Player is available from the VMware website (<a href="http://www.vmware.com/de/" target="_blank">http://www.vmware.com/de/</a>). 
+It is available for Linux, and Windows. For non-commercial use, Licences are free of charge. For Macintosh platforms, one can use VMware Fusion (30 days of free trial period) or install the free VMware Player on a Windows/Linux installation using BootCamp.
+</p>
+
+<p>
+The <span class="secondo">SecondoVM</span> appliance was set up 
+using the 32bit variant of Ubuntu as a base. When starting
+the virtual machine, VMware will set up a virtual network,
+acting as a NAT-bridge between the virtual and your machine's
+physical network. This allows for full communications with the
+system running on the virtual machine. Hence, you can use
+secure shell (ssh) to communicate with the virtual machine.
+Also, VMware tools can be used to share folders between the
+host and guest system.
+</p>
+
+<p>
+Setting up the virtual machine does not require any difficult
+or time-intensive installation process.
+</p>
+
+<ul>
+<li> <a href="files/VM/old/Secondo340VM.zip">Download <span class="secondo">SecondoVM 3.4.0</span></a> (Secondo 3.4.0, 2.5 GB). 
+      <a href="files/VM/old/InstructionsVM340.txt">Instructions</a>, md5sum: b38e778199f69696074f066afd18ba42
+</li> 
+
+<li> <a href="files/VM/old/Secondo330VM.zip">Download <span class="secondo">SecondoVM 3.3.0</span></a> (Secondo 3.3.0, 1.9 GB). 
+      <a href="files/VM/old/InstructionsVM330.txt">Instructions</a>, md5sum: f5d1fc58c8de550089a386ebffa5919a
+</li> 
+ 
+ <li> <a href="files/VM/old/Secondo321VM.zip">Download <span class="secondo">SecondoVM 3.2.1</span></a> (Secondo 3.2.1, 1.6 GB). 
+      <a href="files/VM/old/InstructionsVM321.txt">Instructions</a>.
+ </li> 
+  <li> <a href="files/VM/old/Secondo320VM_1.zip">Download <span class="secondo">SecondoVM 3.2.0</span></a> (Secondo 3.2.0, 1.4GB). <a href="files/VM/old/InstructionsVM320.txt">Instructions</a>.
+ </li> 
+ <li> <a href="files/VM/old/Secondo3.0.1-Appliance.zip">Download <span class="secondo">SecondoVM 3.0.1</span></a> (Secondo 3.0, 989MB, MD5-checksum: 58c07aa2eb46cd85d1b0e3f0131d2d97).
+ </li>
+ <li> <a href="files/VM/old/SecondoVM-FAQ.txt">Download <span class="secondo">SecondoVM 3.0.1</span> instructions</a>.
+ </li>
+</ul>
+
+
+<a name="livecd"></a>
+<h2> Live CD</h2>
+<p>
+The <span class="secondo">Secondo</span>-Live CD offers the possibility to try out 
+the <span class="secondo">Secondo</span> system without any changes on your hard disk. 
+This CD is based on Xubuntu 10.04 and Secondo 3.0.
+Some applications of the original Xubuntu system are replaced by <span class="secondo">Secondo</span>
+together with some example data. 
+
+This CD should run on x86/32 bit machines with at least 512MB of RAM. 
+
+The first step for trying out the <span class="secondo">Secondo</span>-Live CD is to burn
+the ISO Image to a CD. <br>
+</p>
+<p>
+The ISO Image can be found here:
+ <a href="files/Live/SecondoLive2.0.iso">SecondoLive2.0.iso</a> (Secondo 3.0)
+<br>
+Please check the correctness of your download using the md5-checksum
+<pre>
+fa27ccc544f888d9ebbb3d9e8b1f3514  SecondoLive2.0.iso
+</pre>
+<p>
+After creating the CD, change the boot sequence of your computer to boot first from CD  
+using the BIOS-settings dialog of your computer. Then, put the CD into the CD drive, turn
+on the computer and wait for some time. When the Xfce desktop is completely loaded, start 
+a console. Within the <code>secondo</code> directory, you will find the subdirectories
+<code>bin</code>, <code>optimizer</code>, and <code>Javagui</code>. Here you can start 
+your preferred <span class="secondo">Secondo</span> user interface (refer to the 
+<a href="files/Documentation/General/SecondoManual.pdf"><span class="secondo">Secondo</span> User Manual</a>). 
+</p>
+<p>
+Note that the live version is not appropriate for complex queries producing a lot 
+of data. The whole system runs completely within the main memory and uses no
+hard disk space. While in a regular <span class="secondo">Secondo</span> installation
+data which cannot be held within the main memory is swapped to the hard-disk, in the 
+live system the hard disk is mapped to a ram disk which is also part of the main
+memory. 
+</p>
+
+
+
+<a name="system"></a>
+<h2>System Requirements for <span class="secondo">Secondo</span></h2>
+<p>
+If you plan to compile <span class="secondo">Secondo</span> by yourself on your system (not within the appliance) you need to install some tools and define some shell environment variables.
+You can do this using your system's package manager (like yast, aptitude, or dselect), or by compiling the tool's source code. 
+In the latter case please take care for the appropriate configure switches. We have collected comprehensive details about the installation in the
+<a href="files/Documentation/Linux/SDK_SETUP.pdf">SDK-SETUP</a> documentation.
+</p>
+
+<p>
+<span class="secondo">Secondo</span> depends on the following <strong>free</strong> software packages (see the table below). 
+In all cases, <strong>the development versions</strong> are required (packages with development versions usually contain the string "devel" or "dev" in their names)!
+The versions noted have been sucessfully used with <span class="secondo">Secondo</span>, but you can also try other versions.
+</p>
+
+<table BORDER="1" summary="3 columns. The 3rd contains a link to the tool's project website.">
+<tr>
+<th>software package</th>
+<th>version</th>
+<th>project home page</th>
+</tr>
+
+<tr>
+<td>Berkeley DB</td>
+<td>&gt;4.3.29</td>
+<td><a href="http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html" target="_blank">
+Oracle Berkeley DB</a></td>
+</tr>
+
+<tr>
+<td>SWI-Prolog</td>
+<td>5.6.37</td>
+<td><a href="http://www.swi-prolog.org" target="_blank">
+http://www.swi-prolog.org</a></td>
+</tr>
+
+<tr>
+<td>GCC&nbsp;</td>
+<td>&gt;4.7</td>
+<td><a href="http://gcc.gnu.org" target="_blank">
+http://gcc.gnu.org</a></td>
+</tr>
+
+<tr>
+<td>Java SDK&nbsp;</td>
+<td>1.7 </td>
+<td><a href="http://www.oracle.com/technetwork/java/index.html" target="_blank">
+http://www.oracle.com/technetwork/java/index.html</a></td>
+</tr>
+
+
+<tr>
+<td>Bison&nbsp;</td>
+<td>2.1</td>
+<td><a href="http://www.gnu.org/software/bison/bison.html" target="_blank">
+http://www.gnu.org/software/bison/bison.html
+</a></td>
+</tr>
+
+<tr>
+<td>Flex&nbsp;</td>
+<td>2.5.33</td>
+<td>
+<a href="http://www.gnu.org/software/flex/flex.html" target="_blank">
+http://www.gnu.org/software/flex/flex.html
+</a> 
+</td>
+
+</tr>
+
+<tr>
+<td>Make&nbsp;</td>
+<td>3.79.1, 3.80</td>
+<td>
+<a href="http://www.gnu.org/software/make/make.html" target="_blank">
+http://www.gnu.org/software/make/make.html
+</a></td>
+
+</tr>
+
+<tr>
+<td>BASH&nbsp;</td>
+<td>2.x</td>
+<td>
+<a href="http://www.gnu.org/software/bash/bash.html" target="_blank">
+http://www.gnu.org/software/bash/bash.html
+</a></td>
+</tr>
+
+
+<tr>
+<td>GSL&nbsp;</td>
+<td>1.12</td>
+<td>
+<a href="http://www.gnu.org/software/gsl/" target="_blank">http://www.gnu.org/software/gsl/
+</a></td>
+</tr>
+
+
+<tr>
+<td>libjpeg&nbsp;</td>
+<td>6.2</td>
+<td>
+<a href="http://www.ijg.org/" target="_blank">http://www.ijg.org/
+</a></td>
+</tr>
+
+
+<tr>
+<td>libreadline&nbsp;</td>
+<td>5.2</td>
+<td>
+<a href="http://tiswww.case.edu/php/chet/readline/rltop.html" target="_blank">http://tiswww.case.edu/php/chet/readline/rltop.html
+</a></td>
+</tr>
+
+
+</table>
+
+<p>
+A more detailed list is presented in the <a href="files/Documentation/Linux/SDK_SETUP.pdf">SDK-SETUP</a> documentation.
+For compiling on MS-Windows platforms we use windows ports of the tools above (basically MSYS and MinGW) collected at <a href="http://www.mingw.org" target="_blank">http://www.mingw.org</a>.
+Some of this software is not easy to compile, but at <a href="http://gnuwin32.sourceforge.net" target="_blank">http://gnuwin32.sourceforge.net</a> you will find precompiled windows binaries.
+To ease this process, we have compiled a standard development kit (<span class="secondo"> Secondo</span> SDK) for Windows and strongly recommend to use it (<a href="#sdk">see below</a>).
+</p>
+
+<a name="install"></a>
+<h2>Platform Specific Installation without<span class="secondo"> Secondo</span> Development Kit</h2>
+
+We have collected some instruction guidelines for various operating systems and Linux distributions, providing information on how to install which packages and how to set up the environment:
+
+<table BORDER="1" summary="3 columns. The 2nd is a link to a text file, the 3rd may provide a link to additional tools.">
+<tr>
+<th>Platform</th>
+<th>Installation Guide</th>
+<th>Additional Software Needed</th>
+</tr>
+
+<tr><th colspan="3"> Fedora </th></tr>
+
+<tr>
+  <td> Fedora 20 </td>
+  <td> <a href="files/Installation/Fedora/Fedora20-Installation-Guide.txt">Fedora 20 Installation Guide</a></td>
+  <td>  <a href="files/Installation/Fedora/SecondoOnFedora20.sh"> Installation Script </a> </td>
+</tr>
+
+<tr><th colspan="3">SuSe</th></tr>
+
+<tr>
+  <td> SuSe 12.2 </td>
+  <td> <a href="files/Installation/Suse/SuSe12.2-Installation-Guide.txt">SuSe 12.2 Installation Guide</a></td>
+  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_12_2.bash"> Installation Script </a> </td>
+</tr>
+
+<tr>
+  <td> SuSe 12.1 </td>
+  <td> <a href="files/Installation/Suse/SuSe12.1-Installation-Guide.txt">SuSe 12.1 Installation Guide</a></td>
+  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_12_1.bash"> Installation Script </a> </td>
+</tr>
+<tr>
+  <td> SuSe 11.3 </td>
+  <td> <a href="files/Installation/Suse/SuSe11.3-Installation-Guide.txt">SuSe 11.3 Installation Guide</a></td>
+  <td> &nbsp; </td>
+</tr>
+
+
+
+<tr><th colspan="3">Ubuntu</th></tr>
+<tr>
+  <td> Ubuntu 14.04 </td>
+  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_14_04.html">Ubuntu 14.04 Installation Guide</a></td>
+  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_14_04.bash"> Installation Script </a> </td>
+</tr>
+
+<tr>
+  <td> Ubuntu 12.04 </td>
+  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_12_04.html">Ubuntu 12.04 Installation Guide</a></td>
+  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_12_04.bash"> Installation Script </a> </td>
+</tr>
+
+
+<tr>
+  <td> Ubuntu 11.10 </td>
+  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_11_10.html">Ubuntu 11.10 Installation Guide</a></td>
+  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_11_10.bash"> Installation Script </a> </td>
+</tr>
+
+<tr>
+  <td> Ubuntu 10.04 LTS</td>
+  <td> <a href="files/Installation/Ubuntu/XUbuntu10.04LTS-Installation-Guide.txt">Secondo 3.0/XUbuntu 10.04 LTS Installation Guide</a></td>
+  <td> &nbsp; </td>
+</tr>
+
+<tr>
+  <td> Ubuntu 9.10 </td>
+  <td> <a href="files/Installation/Ubuntu//Ubuntu-Installation-Guide.txt">Secondo 3.0/Ubuntu 9.10 Installation Guide</a></td>
+  <td> &nbsp; </td>
+</tr>
+
+<tr>
+<td>Ubuntu 8.04 LTS </td>
+<td><a href="files/sdk/Ubuntu804/Installation-Guide.pdf">Ubuntu 8.04 Installation Guide</a></td>
+<td><a href="files/sdk/Ubuntu804/patchUbuntu804">Tool for Patching Secondo Versions</a>
+<br>
+<a href="files/sdk/Ubuntu804/.secondorc">File .secondorc</a>
+</td>
+</tr>
+</table>
+
+
+<h2><a name="sdk"></a><span class="secondo">Secondo</span> Development Kits</h2>
+<p>
+To try out <span class="secondo">Secondo</span>, we strongly recommend to use either the <a href="#appliance"><span class="secondo">SecondoVM</span></a> 
+or the <a href="#livecd"><span class="secondo">Secondo</span> Live-CD</a>. <br>
+
+For developing with <span class="secondo">Secondo</span>, we suggest to use a Linux platform or Mac-OSX.
+If you are using one of the distributions mentioned in <a href="#install">here</a>, please follow the instructions
+for your operating system in that table. Note that the script normally runs also with higher versions. <br>
+If using a quite different Linux distribution, install the tools from the table <a href="#system">requirements</a> 
+using the software management tool provided by your distribution. <br>
+Note, some algebra modules require further libraries to be installed. If you want to use such an algebra, take a look to the file makefile.algebras
+to find out which additional libraries are required.<br>
+For developing with Mac-OSX, please use the SDK from the table below.
+
+</p>
+
+<p>
+<span class="secondo">Secondo</span>-SDK is a comprehensive tool collection and an installation script which automates most of the tasks.
+</p>
+
+<p>
+The column "Known to Work" means that the installation works for this platform. Note that the <span class="secondo">Secondo</span> version in the installation kit does not necessarily compile without problems. It may need to be replaced by a recent version that can be downloaded above.
+</p>
+
+
+<table BORDER="1" summary="6 columns.">
+<tr>
+<th>System</th>
+<th>Installation Guide</th>
+<th>SDK Download</th>
+<th>Size</th>
+<th>Known to Work<br>(with recent <span class="secondo">Secondo</span> version)</th>
+<th>Known not to Work</th>
+<th>Last Change </th>
+</tr>
+
+<tr>
+<td> 
+  Mac OS X MAVERICKS <br>
+  Mac OS X YOSEMITE
+</td>
+<td>
+<a href="files/Installation/Mac/El_Capitan-Installation-Guide.txt">Mac OS X El Capitan/Mavericks/Yosemite  Guide</a>
+</td>
+<td>
+  <a href="files/Installation/Mac/SDK_OSX_EL_CAPITAN.zip">SDK_OSX_EL_CAPITAN</a>
+</td>
+<td>
+  125&nbsp;MB 
+</td>
+<td>10.9 Mavericks <br>
+    10.10 Yosemite <br>
+    10.11 El Capitan </td>
+<td>&nbsp;</td>
+<td>2016-06-24</td>
+</tr>
+
+
+<tr>
+<td> 
+  Mac OS X Lion
+</td>
+<td>
+<a href="files/Installation/Mac/Mac_OSX_Lion_Installation.pdf">Mac-OSX Lion Guide</a>
+</td>
+<td>
+  <a href="files/Installation/Mac/SDK_MAC_OSX_LION.zip">SDK_OSX_Lion</a>
+</td>
+<td>
+  52&nbsp;MB 
+</td>
+<td>10.7 Lion </td>
+<td>&nbsp;</td>
+<td>2011-12-16</td>
+</tr>
+
+
+
+<tr>
+<td> 
+  Mac OS X 
+</td>
+<td>
+<a href="files/Installation/Mac/Mac-OSX-Installation-Guide.pdf">Mac-OSX Guide</a>
+</td>
+<td>
+  <a href="files/Installation/Mac/SDK_OSX_101116.tar.gz">SDK_OSX</a>
+</td>
+<td>
+  90&nbsp;MB 
+</td>
+<td>10.4 Tiger<br>10.5 Leopard<br>10.6 Snow Leopard (from Nov. 2010)</td>
+<td>&nbsp;</td>
+<td>2010-11-16</td>
+</tr>
+
+
+<!--
+<tr> 
+<td> 
+  Windows XP 
+</td>
+<td>
+<a href="files/sdk/Windows-Installation-Guide.pdf">Windows Guide</a>
+</td>
+<td>
+  <a href="files/sdk/SDK_W32_080212.zip">SDK_W32</a>
+</td>
+<td>
+  190&nbsp;MB 
+</td>
+<td>yes</td>
+<td>&nbsp;</td>   
+<td>2008-02-06</td>
+</tr>
+
+<tr> 
+<td> 
+  Windows XP/Vista (Experimental) 
+</td>
+<td>
+<a href="files/sdk/Windows-Vista-Installation-Guide.pdf">Windows Guide</a>
+</td>
+<td>
+  <a href="files/sdk/SDK_W32_081013.zip">SDK_W32</a>
+</td>
+<td>
+  160&nbsp;MB 
+</td>  
+<td>yes</td>
+<td>&nbsp;</td>
+<td>2008-10-13</td>
+</tr>
+
+
+<tr> 
+  <td>  Windows 7 </td>
+  <td>  <a href="files/sdk/Windows-7-Installation-Guide.pdf">Windows Guide</a> </td>
+  <td>  <a href="files/sdk/SDK_W32_101130.zip">SDK_W32</a> </td>
+  <td> 150&nbsp;MB </td>  
+  <td>yes</td>
+  <td>&nbsp;</td>
+  <td> <a href="files/sdk/Windows-7-Installation-Guide.txt"> 2012-11-28 </a> </td>
+</tr>
+
+<tr>
+  <td> Windows 7, 32 Bit<br> (1 Click installation) </td>
+  <td> <a href="files/Windows7_32Bits-Installation-Guide.txt">Windows 7 Installation Guide</a></td>
+  <td> <a href="files/SecondoWin7SDK.zip"> Windows 7 - SDK </a>  </td>
+  <td> 192 MB </td>
+  <td> yes </td>
+  <td>&nbsp;</td>
+  <td>2014-10-31</td>
+</tr>
+
+-->
+
+
+
+
+</table>
+
+<p>
+The system dependent installation guides will help you to set up your
+environment ready to compile <span class="secondo">Secondo</span> whereas the
+<a href="files/SDK_SETUP.pdf">SDK setup documentation</a> provides detailed information about the compile time and run time dependencies in general.
+</p>
+
+<p>
+Moreover, we keep the <a href="files/sdk/old-versions/index.html">earlier versions</a> here if someone needs them for some reason.
+</p>
+
+
+
+<h2>How to use other Java SDK versions</h2>
+<p>
+For several reasons (e.g. after updating Java to a more recent version) one may need to change the Java SDK used by <span class="secondo">Secondo</span>. 
+
+<h3>Installation without Secondo SDK</h3>
+<p>
+Edit the environment variable J2SDK_ROOT (e.g. in a file .secondorc) and set it to the root directory of the new Java installation (e.g. /usr/lib/jvm/java-1.5.0-sun).
+</p>
+
+<h3>Installation with Secondo SDK</h3>
+<p>
+In an installation with Secondo SDK this can be done by editing the file
+</p>
+
+<pre>
+  $SECONDO_SDK/secondo.config.win32  { or *.linux, *.linux64, *.mac_osx }
+</pre>
+
+<p>
+Here $SECONDO_SDK is a placeholder for the root directory of the Secondo SDK installation.
+Besides the windows configuration file there are also system dependent files for linux 32-bit, 
+linux 64-bit and Mac. The only setting you have to do is to change the value of variable J2SDK_ROOT, e.g.
+</p>
+
+<pre>
+  #JAVA
+  export J2SDK_ROOT="/c/Java/jdk1.5.0_12" 
+</pre>
+
+<p>
+Note that the correct directory name depends on your choice during the JDK installation process and 
+the JDK version. In the example above it was JDK 1.5.0 update 12, which is currently contained in the
+Secondo SDK. 
+</p>
+
+<a name="data"></a>
+<h2>Data</h2>
+<p>
+Here we present some data sets e.g. geographical data or relations with
+standard data types represented in a textual nested list format suitable
+for <span class="secondo">Secondo</span>.
+</p>
+
+<table BORDER="1" summary="2 columns,">
+
+<tr>
+<th>data set</th>
+<th>description</th>
+</tr>
+
+<tr>
+<td><a href="files/data/berlindb/">berlindb</a></td>
+<td>The city map of Berlin</td>
+</tr>
+
+<tr>
+<td><a href="files/data/geodb/">geodb</a></td>
+<td>Zip codes of German cities</td>
+</tr>
+
+<tr>
+<td><a href="files/data/metrodb/">metrodb</a></td>
+<td>Some trains of the Berlin metro represented as moving points</td>
+</tr>
+
+<tr>
+<td><a href="files/data/opengeodb/">opengeodb</a></td>
+<td>German states and districts. For further information 
+visit <a href="http://www.opengeodb.de" target="_blank">www.opengeodb.de</a></td>
+</tr>
+
+<tr>
+<td><a href="files/data/optdb/">optdb</a></td>
+<td>Some relations used by the examples in the optimizer documentation</td>
+</tr>
+
+<tr>
+<td><a href="files/data/osnabrueck/">osnabrueck</a></td>
+<td>City map of the German city Osnabr&uuml;ck</td>
+</tr>
+
+<tr>
+<td><a href="files/data/transobj/">transobj</a></td>
+<td>A java program converting data from <a href="http://www.dict.cc" target="_blank">www.dict.cc</a></td>
+</tr>
+
+<tr>
+<td><a href="files/data/vorwahlobj/">vorwahlobj</a></td>
+<td>Area codes of German cities</td>
+</tr>
+
+</table>
+<hr>
+<div class="footnote">
+  Last Changed: 2014-10-21 (tb)
+</div>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,479 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
+
+
+<h1> Sources </h1>
+
+At this page, we provide the sources of the last <span class="secondo">Secondo</span> 
+release. Note that if you have an old installation of <span class="secondo">Secondo</span>,
+you should remove this old version completely (or just rename the containing folder).
+
+
+<h2> Technical Details </h2>
+
+<table>
+ <tr> <th align=right> Release Date:  </th> <td> 2020-05-29 </td></tr>
+ <tr> <th align=right> Version:       </th> <td> Secondo 4.2.0 </td> </tr>
+ <tr> <th align=right> Download Size: </th> <td> 81 MB </td> </tr>
+ <tr> <th align=right> Encoding:      </th> <td> Latin-1 </td></tr>
+ <tr> <th align=right> md5sum:        </th> <td> a4e55c2a79aaab193ed2dc125ad710af </td></tr>
+ <tr> <th align=right> sha1sum:       </th> <td> 9311456a0a704bb8f60d223da4f79b94a60acf51 </td></tr>
+ <tr> <th valign=top align=right > Known to Work With: </th> <td>
+        <ul>
+          <li> Ubuntu 16.04, 18.04, 20.04 </li>
+          <li> Debian 10 </li>
+          <li> OS X 10.15 Catalina </li>
+        </ul>
+      </td> </tr>
+</table>
+
+<h2> Download Link </h2>
+
+The <span class="secondo">Secondo</span> sources can be downloaded <a href="files/Sources/secondo-v420-LAT1.tgz">here</a>. <br>
+<br>
+<a class="btn" href="files/Sources/secondo-v420-LAT1.tgz">Download</a>
+
+
+
+<h2> Installation </h2>
+
+The first step for installing <span class="secondo">Secondo</span> is to install the
+<a href="content_install.html">Secondo SDK</a>.
+After that, download the current <span class="secondo">Secondo</span> sources using the link above.
+Unpack the file into your home directory. This will create a subdirectory <code>secondo</code>. 
+Now, navigate into that directory and type <code>make</code>. This will create all parts of the 
+<span class="secondo">Secondo</span> system (the kernel, the optimizer, and the gui).
+
+
+
+<h2> Patches</h2>
+
+At this place, we provide some patches for the current <span class="secondo">Secondo</span> version.<br><br>
+
+<i> For version 4.2.0 no patches are available. </i>
+
+<!--
+<table>
+<tr> <th> Patch </th> <th> Installation Info </th> <th> Info </th> </tr>
+<tr> <td> <a href="files/Sources/patches/v400/FTextAlgebra.patch">FTextAlgebra.patch</a> </td>
+     <td> <a href="files/Sources/patches/v400/FTextAlgebra.txt">FTextAlgebra.txt</a> </td>
+     <td> bug fix if using a text within a btree </td>
+</tr>
+<tr> <td> <a href="files/Sources/patches/v400/ExtRelationAlgebra.patch">ExtRelationAlgebra.patch</a> </td>
+     <td> <a href="files/Sources/patches/v400/ExtRelationAlgebra.txt">ExtRelationAlgebra.txt</a> </td>
+     <td> bug fix in nth operator </td>
+</tr>
+</table>
+-->
+
+<h2> Release Notes, Version 4.2.0 </h2>
+<ul>
+  <li> Support new compiler versions </li>
+  <li> Support new operating systems (OS X 10.15, Ubuntu 20.04, Debian 10) </li>
+  <li> Extended algebra modules
+     <ul>
+       <li> SymbolicTrajectoryAlgebra: Split into SymbolicTrajectoryBasicAlgebra and SymbolicTrajectoryAlgebra</li>
+       <li> Distributed2Algebra: Added operators slotSizes, loadBalance, and collectB</li>
+       <li> New Types and Operators in several algebra modules </li>
+     </ul>
+  </li>
+  <li> New algebra modules 
+     <ul>
+       <li> KafkaAlgebra: Integration of SECONDO with Apache Kafka </li>
+     </ul>
+  </li>
+  <li> Several bug fixes have been done in different modules </li>
+</ul>
+
+<h2> Release Notes, Version 4.1.2 </h2>
+<ul>
+  <li> Support new compiler versions </li>
+  <li> Improved support of main memory objects </li>
+  <li> Extended algebra modules
+     <ul>
+       <li> SymbolicTrajectoryAlgebra: Additional version of pattern matching on tuples of time-dependent values</li>
+       <li> New Types and Operators in several algebra modules </li>
+     </ul>
+  </li>
+  <li> New algebra modules 
+     <ul>
+       <li> RoutePlanningAlgebra: Can be used for route planning with height information </li>
+       <li> SpatialLRAlgebra: Alternative implementation for line and region type </li>
+       <li> DFSAlgebra: Provides a distributed file system </li>
+       <li> CRelAlgebra: Column oriented relation model </li>
+       <li> CStreamAlgebra: Allows to distribute tuple streams between Secondo instances </li>
+       <li> ImageSimilarityAlgebra: Finds images that are similar to a query image </li>
+     </ul>
+   <li> Several bug fixes have been done in different modules </li>
+</ul>
+
+
+
+<h2>Release Notes, Version 4.1.0 </h2>
+
+<ul>
+<li>The MainMemoryAlgebra has been replaced by the MainMemory2Algebra providing
+more types and operators.</li>
+
+<li>Readded the TransportationModeAlgebra.</li>
+
+<li>Several bug fixes have been done in different modules. Embedded patches of version 4.0.0.</li>
+</ul>
+
+
+
+<h2> Release Notes, Version 4.0.0</h2>
+
+<h3>New Algebra Modules</h3>
+
+
+<dl>
+<dt>Distributed2Algebra</dt>
+<dd> Provides distributed query processing. One Secondo system called the 
+     master controls many Secondo instances called workers running on 
+     different computers/cores. So-called distributed arrays are provided 
+     whose field are stored in a distributed manner on the workers. 
+     Operations are applied in parallel to all fields of a distributed array. 
+     Fields can be of any available Secondo type, in particular, relations or 
+     nested relations.
+</dd>
+     
+<dt>MainMemoryAlgebra</dt>
+<dd> 
+     This algebra allows one to load existing Secondo objects (e.g. 
+     relations) or query results into main memory and keep them there for 
+     further querying. The algebra controls available and used amounts of 
+     memory and maintain a catalog of objects loaded. AVL-trees, R-trees, and 
+     M-trees are available for main-memory indexing.
+</dd>
+     
+<dt>DBScanAlgebra, OpticsAlgebra</dt>
+<dd> 
+     These two algebras provide the well-known algorithms for density-based 
+     clustering, DBScan, and OPTICS. Clustering may depend on geometric 
+     distances or arbitrary user-defined similarity functions.
+</dd>
+     
+<dt>TrajectorySimilarityAlgebra</dt>
+<dd> 
+     Provides operations to measure similarity of trajectories in different 
+     ways, to support different applications.
+</dd>
+     
+<dt>GuideAlgebra</dt>
+<dd> 
+     A comprehensive algebra for the purpose of teaching all aspects of 
+     algebra implementation in Secondo.
+</dd>
+     
+<dt>FileIndexAlgebra</dt>
+<dd> 
+     Allows one to create B-tree or R-tree indices on top of binary files 
+     storing relations. Useful in a distributed environment, as index files 
+     can easily be moved to other computers.
+</dd>
+     
+<dt>CassandraAlgebra</dt>
+<dd> 
+     Supports the coupling of Secondo with Cassandra. See the work on 
+     <a href="http://dna.fernuni-hagen.de/Secondo.html/DSecondo/DSECONDO-Website/index.html">Distributed Secondo</a>.
+</dd>
+</dl>
+
+
+<h3>Optimizer</h3>
+
+The optimizer is now available in a basic version (directory OptimizerBasic) 
+and the current version (directory Optimizer). The basic version reflects the 
+state of optimizer implementation from about 2006. It is provided to 
+facilitate understanding of the basic concepts of the Secondo optimizer 
+(omitting all the extensions of the current version to keep it simple).
+<p>
+On the other hand, the basic algorithm for conjunctive query optimization has 
+been extended to support the management of properties for intermediate 
+results. This could be the order of a stream of tuples, or the distribution 
+criteria for a distributed intermediate result. In both directories, the old 
+query optimization algorithm is still available in the file optimizer.pl, the 
+new one in file optimizerNewProperties.pl.
+<p>
+New textual user interfaces have been introduced that allow one to mix 
+queries at the SQL level with queries in Secondo executable language. They are:
+
+<ul>
+  <li>SecondoPLTTY</li>
+  <li>SecondoPLTTYCS</li>
+  <li>SecondoPLTTYNT</li>
+</ul>
+
+The first one is a stand-alone interface comparable to SecondoTTYBDB, the 
+second the client-server version comparable to SecondoTTYCS, and the third 
+one the stand-alone version running without transactions, like SecondoTTYNT.
+All three versions can run scripts combining executable language and SQL 
+commands.
+<p>
+In contrast to SecondoPL, which requires Prolog terms as input, these 
+interfaces as well as the Javagui allow one to enter SQL queries and commands 
+in a more natural syntax, as it is NOT necesssary any more to use lower case 
+names. Instead, all names of Secondo objects can be written in the same way 
+as in the kernel, including relation and attribute names.
+
+
+<h3>New Viewers</h3>
+
+<dl>
+<dt>UpdateViewer2
+</dt>
+<dd>This viewer provides a better display and updating facilities especially for long text fields. It allows one to edit documents defined across a set of relations. It also provides searching and replacing across relations and a formatting capability, translating format specifications into LaTeX.
+</dd>
+<dt>SpaceTimeCubeViewer
+</dt>
+<dd>This viewer provides a 3D display of sets of trajectories in a so-called space time cube. 
+It requires installation of Java3D; therefore it is by default not activated.
+</dd>
+<dt>OpticsViewer
+</dt>
+<dd>
+This viewer allows one to display the results of applying the Optics clustering algorithm. One can interactively manipulate a threshold to define smaller or larger clusters.
+</dd>
+</dl>
+
+<h3>Scripts</h3>
+
+The secondo/bin/Scripts directory provides some scripts written in Secondo executable language for performing certain tasks.
+<p>
+From Secondo 4.0.0, scripts can be documented in the pd format generally used for program documentation in Secondo. An example is importGermanyOsm.sec which can be formatted with "pdview importGermanyOsm.sec".
+<p>
+Furthermore, it is now possible to write scripts mixing executable language with SQL statements. An example is nrwImportShape.psec.
+
+<dl>
+<dt>
+OrderedRelationGraphFromFullOSMImport.SEC
+</dt>
+<dd>The script imports OpenStreetMap data from an XML file. It reconstructs linear features as a nested relation containing lists of nodes and lists of tags and the geometry of type line. Its main purpose is to construct the road network as a directed graph. The resulting graph representation can be used for map matching recorded trajectories or for shortest path search.
+</dd>
+<dt>ORGfromOSM.sec
+</dt>
+<dd>A shorter version of the previous script (reduced of some extras) for which, however, documentation exists in file ORGfromOSM.sec - Road Network Construction.pdf.
+</dd>
+<dt>nrwImportShape.psec
+</dt>
+<dd>Imports eight classes of objects such as Roads, Waterways, Buildings, etc. from a set of shapefiles derived from OpenStreetMap data (downloaded from GeoFabrik). Needs to be run in a PL shell (e.g. SecondoPLTTYNT) as it includes SQL commands.
+</dd>
+<dt>importGermanyOsm.sec
+</dt>
+<dd>This is a parallel version of the previous script to be run on a cluster.
+</dd>
+<dt>ParallelSort.sec
+</dt>
+<dd>Parallel sorting on a cluster.
+</dd>
+</dl>
+
+
+<h2> Old Versions </h2>
+
+For some nostalgic reasons, here some old and even older versions can be found.
+
+
+<table BORDER="1" summary="5 columns. The 3rd column contains a link to download the source code for Windows, the 4th a link to download the source code for Linux, the 5th contains a link to download release notes.">
+<tr>
+<th>Date</th>
+<th>Version</th>
+<th>MS-Windows (CP1252)</th>
+<th>Linux (ISO-Latin), also for Mac OS X</th>
+<th>Notes</th>
+</tr>
+
+<tr>
+<td>29/11/2019</td>
+<td>4.1.3</td>
+<td>&nbsp;</td>
+<td><a href="files/Sources/old/secondo-v413P1-LAT1.tgz">Source Code</a>(77 MB)<br>
+    md5sum: 51aa7c3e9b74fc57aaa167f7ba41214b
+</td>
+<td></td>
+</tr>
+
+
+<tr>
+<td>03/06/2019</td>
+<td>4.1.2</td>
+<td>&nbsp;</td>
+<td><a href="files/Sources/old/secondo-v412-LAT1.tgz">Source Code</a>(76 MB)<br>
+    md5sum: 75c1bcc02c038961bab01198dbfa73b3 
+</td>
+<td></td>
+</tr>
+
+<tr>
+<td>12/20/2016</td>
+<td>4.1.0</td>
+<td>&nbsp;</td>
+<td><a href="files/Sources/old/secondo-v410-LAT1.tgz">Source Code</a>(38 MB)<br>
+    md5sum:  6f08e2fd5a86744f90ee2d51c92c40cc
+</td>
+<td></td>
+</tr>
+
+<tr>
+<td>05/10/2016</td>
+<td>4.0.0</td>
+<td>&nbsp;</td>
+<td><a href="files/Sources/old/secondo-v400-LAT1.tgz">Source Code</a>(38 MB)<br>
+    md5sum: 2910ed4b0f3cd31bc0710cc4c34f77ce
+</td>
+<td><a href="files/Sources/old/Release-Notes-v400.txt">Release Notes</a></td>
+</tr>
+
+<tr>
+  <td> 09/17/2014 </td>
+  <td> 3.4.0 </td>
+  <td> <a href="files/Sources/old/secondo-v340-CP1252.zip">Source Code</a> (98 MB) </td>
+  <td> <a href="files/Sources/old/secondo-v340-LAT1.tar.gz">Source Code</a> (94 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v340.txt">notes</a></td>
+</tr>
+
+
+<tr>
+  <td> 10/31/2012 </td>
+  <td> 3.3.0 </td>
+  <td> <a href="files/Sources/old/secondo-v330-HalloweenEdition-CP1252.zip">Source Code</a> (33 MB)  </td>
+  <td> <a href="files/Sources/old/secondo-v330-HalloweenEdition-LAT1.tar.gz">Source Code</a> (31 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v330.txt">notes</a> </td>
+</tr>
+
+
+<tr>
+  <td> 12/16/2011 </td>
+  <td> 3.2.1 </td>
+  <td> <a href="files/Sources/old/secondo-v321-CP1252.zip">Source Code</a> (27 MB)  </td>
+  <td> <a href="files/Sources/old/secondo-v321-LAT1.tar.gz">Source Code</a> (25 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v321.txt">notes</a> </td>
+</tr>
+
+
+<tr>
+  <td> 09/08/2011 </td>
+  <td> 3.2.0 </td>
+  <td> <a href="files/Sources/old/secondo-v320-CP1252.zip">Source Code</a> (28 MB)  </td>
+  <td> <a href="files/Sources/old/secondo-v320-LAT1.tar.gz">Source Code</a> (26 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v320.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 07/20/2011 </td>
+  <td> 3.1.0 </td>
+  <td> <a href="files/Sources/old/secondo-v310-CP1252.zip">Source Code</a> (24 MB)  </td>
+  <td> <a href="files/Sources/old/secondo-v310-LAT1.tar.gz">Source Code</a> (24 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v310.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 06/25/2010 </td>
+  <td> 3.0.0 </td>
+  <td> <a href="files/Sources/old/secondo-v300-CP1252.zip">Source Code</a> (25 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v300-LAT1.tar.gz">Source Code</a> (23 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v30.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 01/25/2010 </td>
+  <td> 2.9.2 </td>
+  <td> <a href="files/Sources/old/secondo-v292-CP1252.zip">Source Code</a> (21 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v292-LAT1.tar.gz">Source Code</a> (20 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v292.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 10/05/2009 </td>
+  <td> 2.9.1 </td>
+  <td> <a href="files/Sources/old/secondo-v291-CP1252.zip">Source Code</a> (21 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v291-LAT1.tar.gz">Source Code</a> (20 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v291.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 08/24/2009 </td>
+  <td> 2.9.0 </td>
+  <td> <a href="files/Sources/old/secondo-v290-CP1252.zip">Source Code</a> (21 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v290-LAT1.tar.gz">Source Code</a> (20 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v29.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 06/04/2009 </td>
+  <td> 2.8.4 </td>
+  <td> <a href="files/Sources/old/secondo-v284-CP1252.zip">Source Code</a> (21 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v284-LAT1.tar.gz">Source Code</a> (20 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v284.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 01/05/2009 </td>
+  <td> 2.8.3 </td>
+  <td> <a href="files/Sources/old/secondo-v283-Winter08-CP1252.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v283-Winter08-LAT1.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v283.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 12/19/2008 </td>
+  <td> 2.8.2 </td>
+  <td> <a href="files/Sources/old/secondo-v282-Winter08-CP1252.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v282-Winter08-LAT1.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v282.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 12/16/2008 </td>
+  <td> 2.8.1 </td>
+  <td> <a href="files/Sources/old/secondo-v281-Winter08-CP1252.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v281-Winter08-LAT1.tar.gz">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/Release-Notes-v281.txt">notes</a> </td>
+</tr>
+
+<tr>
+  <td> 10/10/2008 </td>
+  <td> 2.7 </td>
+  <td> <a href="files/Sources/old/secondo-v27-ColoredLeaves08-CP1252.zip">Source Code</a> (13 MB)</td>
+  <td> <a href="files/Sources/old/secondo-v27-ColoredLeaves08-LAT1.tar.gz">Source Code</a> (14 MB)</td>
+  <td> &nbsp;</td>
+</tr>
+
+<tr>
+ <td> 10/25/2007 </td>
+ <td> 2.6 </td>
+ <td> <a href="files/Sources/old/secondo-v26-CP1252.zip"> Source Code</a> (13 MB) </td>
+ <td> <a href="files/Sources/old/secondo-v26-LAT1.tar.gz"> Source Code</a> (12 MB) </td>
+ <td> <a href="files/Sources/old/Release-Notes-v26.txt">notes</a> </td>
+</tr>
+
+<tr>
+ <td> 09/17/2007 </td>
+ <td> 2.5 </td>
+ <td> <a href="files/Sources/old/secondo-v25-CP1252.zip"> Source Code</a> (12 MB)  </td>
+ <td> <a href="files/Sources/old/secondo-v25-LAT1.tar.gz"> Source Code</a> (11 MB) </td>
+ <td> <a href="files/Sources/old/Release-Notes.txt">notes</a> </td> 
+</tr> 
+
+</table>
+
+
+
+<div class="footnote">
+ Last Changed: 2020-05-29 (JNI)
+</div>
+
+
+</body>
+</html>

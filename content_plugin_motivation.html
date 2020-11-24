@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
+
+<h1>Motivation for <span style="font-variant:small-caps">Secondo</span> Plugins</h1>
+
+<p align="center">Ralf Hartmut G&uuml;ting, September 2009</p>
+<br>
+<h2>Experimental Research in Databases</h2>
+
+The current methodology of experimental research in databases can to a large extent be described as follows. A new data structure or algorithm is proposed, say, a new type of index structure, or a query processing algorithm. The authors describe their proposal and implement it. To prove the new proposal is worth publishing they have to provide an experimental evaluation which in most cases needs to include a comparison with the strongest competing proposals from the literature. Unfortunately for the comparison in most cases the competing algorithms need to be reimplemented, for reasons discussed below. Hence the authors take the effort to also reimplement the competitors, perform their experiments and report them in the paper. Assuming the paper is accepted, this is the end of the story. The implemented software is abandoned. Anyways, it is only suitable to be used in a very specialized system context for performing experiments and doing measurements. There is no way to use it in a practical system or in real applications.
+<p>
+The competing algorithms need to be reimplemented for the following reasons:
+<ul>
+  <li>The software is not available. Whereas the mechanisms for publishing papers including all kinds of support such as bibliographies, indexing, etc. are well established, there is no infrastructure for publishing software and no requirement to do so.</li>
+  <li>Even if the software still exists, it is unclear how one can get it. One can try to contact the authors but the outcome is open.</li>
+  <li>If the software was in good shape at the time of publication, after some years most likely it has not been maintained.</li>
+  <li>There is a high probability that the software of the competing algorithms was written in a different programming language or otherwise different platform and hence cannot be used directly for comparison.</li>
+</ul>
+<p>
+That these algorithms need to be reimplemented by the authors of another proposal is bad for several reasons. On the one hand, it appears to be an enormous waste of resources. The work was done before by the original authors; why should it be repeated? Second, there is a great danger that in the reimplementation errors are made. Even with the best effort, it is easily possible that subtle points in the descriptions in the respective papers have been misunderstood. Possibly some issues have not even been described clearly or at all. Third, the authors of the new proposal are of course interested in demonstrating that their new algorithm is better than the competitors. It exercises a lot of discipline in them to make sure that within the competing implementations everywhere the most efficient technique is used and minor details, that however might severely deteriorate performance, are treated right.
+<p>
+The lack of the software being published with the paper also has a negative impact on the scientific quality of the publication. Authors design certain experiments with certain data sets, varying some parameters. Although referees try to make sure that this has been done carefully, in many cases questions remain. How would this algorithm behave for this other parameter combination? What were the exact properties of the data set? Could they have had a special impact on this algorithm?
+<p>
+If the competing algorithms were available with the publication and could easily be run with other parameters or data sets, all such questions could be clarified. Definitely results would be more reliable. Moreover, even years after the publication, issues could be reexamined.
+<p>
+The methodology described above has the further deficiency that the field as a whole grows much more in theory than in practice. The software built is used for experiments and then lost. It is never made available in a system context.
+<p>
+As a case in point, consider the numerous proposals for spatiotemporal index structures (for a survey see [MGA03]<sup>1</sup>). Figure 1 of [MGA03] has an impressive descendence tree with on the order of 30 different proposals that existed already in 2003. Whereas we can easily find all the papers describing the structures, very few of them can be found usable in a system anywhere.
+<p>
+If such software were available in a system, it could prove its practical usefulness, and it might even support real applications that currently are not feasible. The system context might on the other hand support the understanding of the algorithms, for example, by providing a rich environment containing data sets, other query processing operators, and visualization tools.
+<p>
+The research community is aware of some of these issues. For example, there is a trend to encourage experimental repeatability, as shown at the last SIGMOD conferences. VLDB has an “Experiments and Analyses Track” that aims at providing a prestigious forum for careful experimental investigation of known techniques.
+We would like to contribute to this trend.
+
+<h2>Towards A New Methodology</h2>
+
+We do not claim that we have a complete solution for all the mentioned problems. Nevertheless, we have a vision of a new methodology and we offer to the community a platform for supporting it. 
+<p>
+The vision is that a paper is published together with the software implementing its new research proposal. The software is publicly available in a system context. It can easily be used by readers of the paper. They can redo the experiments, visualize results and do other experiments than described. They can also use the new methods for practical applications if desired.
+<p>
+The platform is the <span class="secondo">Secondo</span> system prototype. It has been built for many years as an extensible architecture. Data structures and algorithms which are the target of a lot of research can be encapsulated within so-called algebra modules in the form of type constructors and operators. The system offers a complete environment including a query optimizer and a graphical user interface. Both are extensible to support many kinds of applications.
+<p>
+The new feature we are offering now is called a <span class="secondo">Secondo</span> Plugin. It allows anyone to make an addition to <span class="secondo">Secondo</span> available without any need of intervention by the <span class="secondo">Secondo</span> team. Essentially a research group can get a version of <span class="secondo">Secondo</span> and program their new data structure or algorithm as an algebra module with new type constructors and operators. If needed, existing viewers can be extended by new display classes, or completely new viewers be provided. Extensions to the optimizer such as translation rules or cost functions can be added. All these extensions can be packaged by providing a small XML file describing the extensions. <span class="secondo">Secondo</span> scripts to repeat the experiments can also be made available.
+<p>
+Currently the authors also need to implement the competing algorithms in the same form, but the situation is improving: Further proposals coming after this paper can simply use, rather than reimplement, the existing algorithms for experimental comparisons. They only need to implement their own proposal.
+<p>
+The complete set of software can be published as a zip-file on the authors’ web site together with the paper (e.g. with a technical report). After a journal or conference publication, the software can be published on the respective server of journal or conference. Journals already now provide the possibility to publish additions to a paper. 
+<p>
+A reader can then also get a <span class="secondo">Secondo</span> system from the web site. He/she can get the plugin from the authors’ web site and call a small installer to integrate it into the standard <span class="secondo">Secondo</span> system. After that, algorithms can be called, and experiments be repeated or modified.
+
+<hr>
+1. [MGA03] Mohamed F. Mokbel, Thanaa M. Ghanem, Walid G. Aref: Spatio-Temporal Access Methods. IEEE Data Eng. Bull. 26(2): 40-49 (2003).
+
+<p>
+<a href="content_plugins.html">Back to the Plugin page</a>
+</p>
+<div class="footnote">
+  Last Changed: 2009-09-18
+</div>
+</body>
+</html>

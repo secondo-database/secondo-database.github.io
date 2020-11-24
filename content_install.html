@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
+
+<h1> Installation Instructions </h1>
+
+This page explains how to install the tools required for creating <span class="secondo">Secondo</span> on your computer. Currently supported
+operating systems are several Linux distributions and Mac OS variants.
+For just trying <span class="secondo">Secondo</span>, you can also use the <a href="content_down.html#vm">Secondo-Virtual-Machine-Appliance</a>. The installation of <span class="secondo">Secondo</span> itselfs is explained on the <a href="content_sources.html">Sources</a> page.
+
+<h2> Installation for Specific Operating Systems </h2>
+
+<span class="secondo">Secondo</span> needs some tools for compiling the sources. Furthermore, some environment variables
+must be set. The easiest way to do so, is to run an operating system specific script (Linux) or to
+install the SDK (OS X). If you find your operating system listed here,
+just follow the instructions for your system. 
+
+
+<h3> Script-based Installation of the <span class="secondo">Secondo</span>-SDK </h3>
+
+<table BORDER="1" summary="3 columns. The 2nd is a link to a text file, the 3rd may provide a link to additional tools.">
+<tr>
+<th>Platform</th>
+<th>Installation Guide</th>
+<th>Additional Software Needed</th>
+</tr>
+
+<tr><th colspan="3"> Fedora </th></tr>
+
+<tr>
+  <td> Fedora 31 </td>
+  <td> <a href="files/Installation/Fedora/Fedora31-Installation-Guide.txt">Fedora 31 Installation Guide</a></td>
+  <td>  <a href="files/Installation/Fedora/SecondoOnFedora31.sh"> Installation Script </a> </td>
+</tr>
+
+<tr>
+  <td> Fedora 20 </td>
+  <td> <a href="files/Installation/Fedora/Fedora20-Installation-Guide.txt">Fedora 20 Installation Guide</a></td>
+  <td>  <a href="files/Installation/Fedora/SecondoOnFedora20.sh"> Installation Script </a> </td>
+</tr>
+
+<tr><th colspan="3">SuSE</th></tr>
+
+<tr>
+  <td> SuSE 15.0 </td>
+  <td> <a href="files/Installation/Suse/SuSe15.0-Installation-Guide.txt">SuSE 15.0 Installation Guide</a></td>
+  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_15_0.bash"> Installation Script </a> </td>
+</tr>
+<tr>
+  <td> SuSE 42.3 <br> SuSE 42.2 <br> SuSE 42.1 </td>
+  <td> <a href="files/Installation/Suse/SuSe42.1-Installation-Guide.txt">SuSE 42.1 Installation Guide</a></td>
+  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_42_1.bash"> Installation Script </a> </td>
+</tr>
+<tr>
+  <td> SuSE 12.2 </td>
+  <td> <a href="files/Installation/Suse/SuSe12.2-Installation-Guide.txt">SuSE 12.2 Installation Guide</a></td>
+  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_12_2.bash"> Installation Script </a> </td>
+</tr>
+
+<tr>
+  <td> SuSE 12.1 </td>
+  <td> <a href="files/Installation/Suse/SuSe12.1-Installation-Guide.txt">SuSE 12.1 Installation Guide</a></td>
+  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_12_1.bash"> Installation Script </a> </td>
+</tr>
+<tr>
+  <td> SuSE 11.3 </td>
+  <td> <a href="files/Installation/Suse/SuSe11.3-Installation-Guide.txt">SuSE 11.3 Installation Guide</a></td>
+  <td> &nbsp; </td>
+</tr>
+
+
+<tr><th colspan="3">Ubuntu 64 Bit (Binary Installation)</th></tr>
+<tr>
+  <td> Ubuntu LTS <br>16.04, 18.04, 20.04</td>
+  <td colspan="2"> <a href="files/Installation/Ubuntu/content_Installation_repos.html">Ubuntu Installation Guide using apt-get</a></td>
+</tr>
+
+
+<tr><th colspan="3">Ubuntu (Full Installation)</th></tr>
+<tr>
+  <td> Ubuntu 20.04 </td>
+  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_20_04.html">Ubuntu 20.04 Installation Guide</a></td>
+  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_20_04.bash"> Installation Script </a> </td>
+</tr>
+<tr>
+  <td> Ubuntu 18.04<br> Ubuntu 16.04 </td>
+  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_16_04.html">Ubuntu 16.04 Installation Guide</a></td>
+  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_16_04.bash"> Installation Script </a> </td>
+</tr>
+<tr>
+  <td> Ubuntu 15.04 </td>
+  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_15_04.html">Ubuntu 15.04 Installation Guide</a></td>
+  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_15_04.bash"> Installation Script </a> </td>
+</tr>
+<tr>
+  <td> Ubuntu 14.04 </td>
+  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_14_04.html">Ubuntu 14.04 Installation Guide</a></td>
+  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_14_04.bash"> Installation Script </a> </td>
+</tr>
+
+<tr>
+  <td> Ubuntu 12.04 </td>
+  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_12_04.html">Ubuntu 12.04 Installation Guide</a></td>
+  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_12_04.bash"> Installation Script </a> </td>
+</tr>
+
+
+<tr>
+  <td> Ubuntu 11.10 </td>
+  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_11_10.html">Ubuntu 11.10 Installation Guide</a></td>
+  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_11_10.bash"> Installation Script </a> </td>
+</tr>
+
+<tr>
+  <td> Ubuntu 10.04 LTS</td>
+  <td> <a href="files/Installation/Ubuntu/XUbuntu10.04LTS-Installation-Guide.txt">Secondo 3.0/XUbuntu 10.04 LTS Installation Guide</a></td>
+  <td> &nbsp; </td>
+</tr>
+
+<tr>
+  <td> Ubuntu 9.10 </td>
+  <td> <a href="files/Installation/Ubuntu//Ubuntu-Installation-Guide.txt">Secondo 3.0/Ubuntu 9.10 Installation Guide</a></td>
+  <td> &nbsp; </td>
+</tr>
+
+<tr>
+<td>Ubuntu 8.04 LTS </td>
+<td><a href="files/sdk/Ubuntu804/Installation-Guide.pdf">Ubuntu 8.04 Installation Guide</a></td>
+<td><a href="files/sdk/Ubuntu804/patchUbuntu804">Tool for Patching Secondo Versions</a>
+<br>
+<a href="files/sdk/Ubuntu804/.secondorc">File .secondorc</a>
+</td>
+</tr>
+</table>
+
+
+
+<h3>Installation of the <span class="secondo">Secondo</span> SDK on OS X platforms</h3>
+ 
+
+<table BORDER="1" summary="6 columns.">
+<tr>
+<th>System</th>
+<th>Installation Guide</th>
+<th>SDK Download</th>
+<th>Size</th>
+<th>Known to Work<br>(with recent <span class="secondo">Secondo</span> version)</th>
+<th>Last Change </th>
+</tr>
+
+<tr>
+<td>
+  macOS Big Sur
+</td>
+<td>
+  <a href="files/Installation/Mac/Bigsur-Installation-Guide.html">macOS Big Sur Installation Guide</a>
+</td>
+<td>
+  <a href="files/Installation/Mac/SDK_OSX_BIGSUR.tar.gz">SDK OS X BIGSUR</a>
+</td>
+<td>
+  106&nbsp;MB
+</td>
+<td>
+  11.0 Big Sur
+</td>
+<td>
+ 2020-11-15
+</td>
+</tr>
+
+
+<tr>
+<td>
+  Mac OS X Catalina
+</td>
+<td>
+  <a href="files/Installation/Mac/Catalina-Installation-Guide.html">Mac OS X Catalina Installation Guide</a>
+</td>
+<td>
+  <a href="files/Installation/Mac/SDK_OSX_CATALINA.tar.gz">SDK OS X CATALINA</a>
+</td>
+<td>
+  103&nbsp;MB
+</td>
+<td>
+  10.15 Catalina
+</td>
+<td>
+ 2020-06-02
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+  Mac OS X Mojave
+</td>
+<td>
+  <a href="files/Installation/Mac/Mojave-Installation-Guide.html">Mac OS X Mojave Installation Guide</a>
+</td>
+<td>
+  <a href="files/Installation/Mac/SDK_OSX_MOJAVE.tar.gz">SDK OS X MOJAVE</a>
+</td>
+<td>
+  99&nbsp;MB
+</td>
+<td>
+  10.14 Mojave
+</td>
+<td>
+ 2019-07-16
+</td>
+</tr>
+
+<tr>
+<td> 
+  Mac OS X MAVERICKS <br>
+  Mac OS X YOSEMITE
+</td>
+<td>
+<a href="files/Installation/Mac/El_Capitan-Installation-Guide.txt">Mac OS X El Capitan/Mavericks/Yosemite  Guide</a>
+</td>
+<td>
+  <a href="files/Installation/Mac/SDK_OSX_EL_CAPITAN.zip">SDK_OSX_EL_CAPITAN</a>
+</td>
+<td>
+  91&nbsp;MB 
+</td>
+<td>10.9 Mavericks <br>
+    10.10 Yosemite <br>
+    10.11 El Capitan </td>
+<td>2018-09-19</td>
+</tr>
+
+
+<tr>
+<td> 
+  Mac OS X Lion
+</td>
+<td>
+<a href="files/Installation/Mac/Mac_OSX_Lion_Installation.pdf">Mac-OSX Lion Guide</a>
+</td>
+<td>
+  <a href="files/Installation/Mac/SDK_MAC_OSX_LION.zip">SDK_OSX_Lion</a>
+</td>
+<td>
+  52&nbsp;MB 
+</td>
+<td>10.7 Lion </td>
+<td>2011-12-16</td>
+</tr>
+
+
+
+<tr>
+<td> 
+  Mac OS X 
+</td>
+<td>
+<a href="files/Installtion/Mac/Mac-OSX-Installation-Guide.pdf">Mac-OSX Guide</a>
+</td>
+<td>
+  <a href="files/Installation/Mac/SDK_OSX_101116.tar.gz">SDK_OSX</a>
+</td>
+<td>
+  90&nbsp;MB 
+</td>
+<td>10.4 Tiger<br>10.5 Leopard<br>10.6 Snow Leopard (from Nov. 2010)</td>
+<td>2010-11-16</td>
+</tr>
+</table>
+
+<h4>Upgrading the OS X version</h4>
+
+After an upgrade of the OS X operating system, the xcode developer tools
+have to be reinstalled. If you have upgraded you system and the call of <code> make </code>
+produces the following error message:
+<pre>
+xcrun: error: invalid active developer path
+</pre> 
+then you have to reinstall the xcode developer tools. To do so, start a 
+terminal and enter:
+<pre>
+xcode-select --install
+</pre>
+In the upcoming dialog, click on the button <code>Installation</code> and wait until the
+installation is finished. After that, the <code>make</code> process should run
+as before.
+
+
+
+
+<h2>Manual Installation of the Required Tools</h2>
+
+If your operating system is not listed above or you dont want to use the
+scripts for some other reason, it is possible to install the needed tools
+manually. All tools must be executable for each directory and some of the 
+tools must be installed as developer versions. Moreover, some environment variables
+must be set for a successful compiling of <span class="secondo">Secondo</span>.
+
+<h3> Tools </h3>
+
+<table>
+ <tr> <th> Package </th> <th> edition </th> <th>Version</th> <th>Project Home Page</th></tr>
+ <tr> <td> flex    </td> <td> dev  </td> <td> &gt;2.6.3 </td><td>https://github.com/westes/flex </td></tr>
+ <tr> <td> bison   </td> <td> dev  </td> <td> &gt;3.0 </td> <td> http://www.gnu.org/software/bison/bison.html </td></tr>
+ <tr> <td> gcc /g++ </td> <td> &nbsp; </td> <td> &gt;7.4 </td><td>http://gcc.gnu.org </td></tr>
+ <tr> <td> berkeley DB </td><td> dev, c++ Interface </td><td> &gt;4.3.29 </td><td> http://www.oracle.com/technetwork/database/database-technologies/berkeleydb/downloads/index.html </td></tr>
+ <tr> <td> libjpeg  </td> <td> dev </td><td> 6.2 </td><td> http://www.ijg.org/ </td></tr>
+ <tr> <td> open jdk </td> <td> dev </td><td> &gt;7 </td><td>http://openjdk.java.net/</td></tr> 
+ <tr> <td> readline </td> <td>dev </td><td> &gt;5.2 </td><td> http://tiswww.case.edu/php/chet/readline/rltop.html </td></tr>
+ <tr> <td> recode  </td> <td> dev </td><td> &gt;3.6 </td><td> &nbsp; </td></tr>
+ <tr> <td> gmp    </td><td>dev </td><td> &nbsp; </td><td>&nbsp;</td></tr> 
+ <tr> <td> ncurses </td><td> dev </td> <td> &nbsp; </td><td> &nbsp; </td></tr> 
+ <tr> <td> xml2    <td> <td> dev </td> <td> &nbsp; </td><td> &nbsp; </td></tr>
+ <tr> <td> boost    <td> <td> dev </td> <td> &nbsp; </td><td> &nbsp; </td></tr>
+ <tr> <td> swi-prolog    <td> <td> dev </td> <td> &nbsp; </td><td> &nbsp; </td></tr>
+ <tr> <td> jpl    <td> <td> dev </td> <td> &nbsp; </td><td> &nbsp; </td></tr>
+ <tr> <td> bash    <td> <td> &nbsp; </td> <td> &nbsp; </td><td> &nbsp; </td></tr>
+ <tr> <td> make    <td> <td> &nbsp; </td> <td> &nbsp; </td><td> &nbsp; </td></tr>
+ <tr> <td> gsl    <td> <td> dev </td> <td> &nbsp; </td><td> &nbsp; </td></tr>
+</table>
+
+
+<h3> Environment variables </h3> 
+
+The environment variables used by <span class="secondo">Secondo</span>:
+
+<table>
+<tr> <th> Variable           </th> <th> Meaning </th> <th> Example Value(s) </th></tr>
+<tr> <td> SECONDO_BUILD_DIR  </td> <td> Secondo's home directory </td><td> /home/user/secondo </td></tr>
+<tr> <td> SECONDO_PLATFORM   </td> <td> Operation system         </td><td> linux, linux64, max_osx </td></tr>  
+<tr> <td> BDB_DIR            </td> <td> Home of the berkeley db  </td><td> /home/user/BDB </td></tr>
+<tr> <td> BERKELEY_DB_DIR    </td> <td> Home of the berkeley db  </td><td> /home/user/BDB </td></tr> 
+<tr> <td> BERKELEY_DB_LIB    </td> <td> Name of the berkeley db lib </td><td> db_cxx </td></tr>
+<tr> <td> BDB_INCLUDE_DIR    </td> <td> Include dir of berkeley db </td><td> /home/user/BDB/include </td></tr>
+<tr> <td> BDB_LIB_DIR        </td> <td> directory of the berkeley db lib </td><td> /home/user/BDB/lib64 </td></tr>
+<tr> <td> J2SDK_ROOT         </td> <td> home of the jdk </td> <td> /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/ </td></tr>
+<tr> <td> JAVAVER            </td> <td> java version </td><td> 1.8 </td></tr>
+<tr> <td> SWI_HOME_DIR       </td> <td> home of swi prolog </td> <td> /usr/lib64/swipl-7.2.2 </td></tr>
+<tr> <td> PL_LIB_DIR         </td> <td> home of swi prolog lib </td><td> /usr/lib64/swipl-7.2.2/lib/x86_64-linux/ </td></tr>
+<tr> <td> PL_DLL_DIR         </td> <td> home of swi prolog lib </td><td> /usr/lib64/swipl-7.2.2/lib/x86_64-linux/ </td></tr>
+<tr> <td> PL_LIB             </td> <td> name of prolog lib </td><td> swipl </td></tr>
+<tr> <td> PL_INCLUDE_DIR     </td> <td> prolog's include dir </td> <td> /usr/lib64/swipl-7.2.2/include </td></tr>
+<tr> <td> PL_VERSION         </td> <td> prolog's version as a single number </td> <td> 72020 </td></tr>
+<tr> <td> JPL_DLL            </td> <td> path to JPL library </td><td> /usr/lib64/swipl-7.2.2/lib/x86_64-linux//libjpl.so </td></tr>
+<tr> <td> JPL_JAR            </td> <td> path to JPL java file </td><td> /usr/lib64/swipl-7.2.2/lib/jpl.jar </td></tr>
+<tr> <td> readline           </td> <td> should readline be used </td> <td> true, false </td></tr>
+<tr> <td> SECONDO_CONFIG     </td> <td> path to Secondo's config file </td><td> /home/user/secondo/bin/SecondoConfig.ini </td></tr>
+<tr> <td> PD_HEADER          </td> <td> path to PD header file </td><td> /home/user/secondo/Tools/pd/pd_header_listing </td></tr>
+</table>
+
+<br><br>
+Moreover, some variables should be extended  as follows:<br>
+<pre>
+export PATH=.:$BDB_DIR/bin:$PATH:$SECONDO_BUILD_DIR/Tools/pd
+export LD_LIBRARY_PATH=$BDB_LIB_DIR:$PL_LIB_DIR
+</pre>
+
+
+
+
+<div class="footnote">
+ Last Changed: 2020-11-15 (JNI)
+</div>
+
+
+</body>
+</html>
