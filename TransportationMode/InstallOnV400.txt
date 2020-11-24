@@ -1,0 +1,23 @@
+
+
+For installing the TransportationModeAlgebra into Secondo V 4.0.0, the
+following steps are required:
+
+1. Install Secondo Version 4.0.0 on your computer
+2. Go into Secondo's Algebras directory:
+   cd $HOME/secondo/Algebras
+3. Download the sources of the TransportationMode algebra:
+   wget dna.fernuni-hagen.de/secondo/TransportationMode/TransportationMode_V400.zip
+4. Unzip the file and remove the zip file:
+   unzip TransportationMode_V400.zip
+   rm TransportationMode_V400.zip
+5. Put the algebra into the list of algebras:
+   echo "ALGEBRA_INCLUDE(69,TransportationModeAlgebra)" >> Management/AlgebraList.i.cfg
+6. Activate the algebra for the make process:
+   open the file $HOME/secondo/makefile.algebras in an editor and add the
+   following lines into the algebra section: 
+   ALGEBRA_DIRS += TransportationMode
+   ALGEBRAS     += TransportationModeAlgebra 
+7. Rebuild Secondo
+   make
+

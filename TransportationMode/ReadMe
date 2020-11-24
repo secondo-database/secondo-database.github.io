@@ -1,0 +1,7 @@
+1. put all scripts in Secondo/bin
+2. create a directory named TM-Data in Secondo/bin and put berlinroads, houstonroads and streets_speed into that directory
+3. run VPS-berlin.sec to create the polygon of Berlin; run VPS-houston.sec to create the polygon of Houston
+4. vpoint1.sec, vpoint2.sec and vpoint3.sec are scripts for running queries
+   (i)   vpoint1.sec: get visible points and the number of visible points
+   (ii)  vpoint2.sec: rotational plane sweep algorithm
+   (iii) vpoint3.sec: get visible points and the number of accessed triangles
