@@ -1,0 +1,519 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <title>BerlinMOD</title>
+  <meta name="AUTHOR" content="Christian Duentgen">
+  <meta name="CREATED" content="20071115;16362000">
+  <meta name="CHANGEDBY" content="Christian Duentgen">
+  <meta name="CHANGED" content="20110207;10020000">
+  <meta name="DESCRIPTION" content="A benchmark for moving object data">
+  <meta name="KEYWORDS" content="BerlinMOD, benchmark, spatio-temporal data, Secondo, moving object data, moving point">
+  <link rel="stylesheet" type="text/css" href="berlinmod.css">
+</head>
+<body lang="de-DE" text="#000000" link="#0000ff" bgcolor="#f0f0f0"
+ dir="ltr"
+ onload="window.status='BerlinMOD  A Moving Object Data Benchmark'">
+<center>
+<table cellpadding="2" cellspacing="2"
+ style="page-break-before: always;">
+  <tbody>
+    <tr>
+      <td>
+      <img
+ src="../../Secondo.html/images/feulogo.gif" alt="FernUni Hagen" align="bottom" width="363" height="78" border="0">
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <img
+ src="../../Secondo.html/images/logo.gif" alt="SECONDO" align="bottom" width="598" height="107" border="0">
+      </td>
+    </tr>
+    <tr>
+      <td>
+      <h1>BerlinMOD</h1>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</center>
+
+<h2>What is BerlinMOD?</h2>
+
+<div class=normal>
+BerlinMOD is a benchmark for spatio-temporal database management
+sytems (STDBMS). It is intended as a tool for both
+<ol>
+  <li>
+    comparing different implementation details of STDBMS, as moving
+object data types, index structures, and spatio-temporal operators;
+  </li>
+  <li>
+    comparing the performance of different STDBMS.
+  </li>
+</ol>
+</div>
+
+<h2>What Data is used by BerlinMOD?</h2>
+
+<div class=normal>
+BerlinMOD primarily measures the performance on queries employing
+moving point data. Moving point data are sampled from simulated cars
+driving on the street network of the german capital Berlin in a
+representative way. The simulation models the behavier of workers
+commuting between their homes and work places, and additional trips
+in their leisure time.
+Normally, the sampled data is mapped to the street network, but it
+is also possible to disturb the data.
+In generating the benchmark data, BerlinMOD relies on real spatial
+data on the roads of the german capital Berlin, imported from the
+tool bbbike (<a href="http://bbbike.de/">http://bbbike.de</a>)
+written by Slaven Rezic, who gave us kind permission to use his data
+for scientific purposes.
+The data is generated using not a dedicated data generator
+program, but a script for the extensible <span class="secondo">Secondo</span> DBMS. This makes
+BerlinMOD flexible, as you can easily modify the benchmark to your
+own needs.
+Of course it is possible to export the generated data to use it in
+your favourite DBMS.
+</div>
+
+<div class=normal>
+We have also generated the benchmark data for different scale factors. 
+The different datasets and their characteristics are given in Table 1,
+that also provides links to download the data in CSV and ESRI shape 
+file format.
+</div>
+
+<center>
+<table cellpadding="4" cellspacing="2" border="2" frame="hsides" rules="groups" bgcolor="#FFFFFF" 
+ style="page-break-before: always;" summary="This table lists basic statistics for BerlinMOD benchmark data at different scale factors and provides links to according downloads of pregenerated BerlinMOD data in ESRI Shape and CSV formats.">
+  <caption><a name="PregeneratedData">Table 1</a>: Pregenerated BerlinMOD Data.</caption>
+  <colgroup>
+    <col align="char" char=".">
+    <col align="right">
+    <col align="right">
+    <col align="right">
+    <col align="right">
+    <col align="left">
+    <col align="left">
+    <col align="left">
+    <col align="left">
+    <col align="left">
+  </colgroup>
+  <thead>
+    <tr bgcolor=lightgray>
+      <th>
+	Scale Factor
+      </th>
+      <th>
+	Days
+      </th>
+      <th>
+	Vehicles
+      </th>
+      <th>
+	Trips
+      </th>
+      <th>
+	Units
+      </th>
+      <th colspan="3">
+	bbbike coords
+      </th>
+      <th colspan="2">
+        wgs84 coords
+      </th>
+     </tr>
+  <tr bgcolor=lightgray>
+      <th colspan="5">
+      </th>
+      <th>
+        CSV old
+      </th>
+      <th>
+        CSV new
+      </th>
+      <th>
+        Shape
+      </th>
+      <th>
+        CSV
+      </th>
+      <th>
+        Shape
+      </th>
+   </tr>
+  </thead>
+  <tfoot align="left">
+    <tr>
+      <td colspan="10">
+	Indicated file sizes are for the compressed archieve sizes, the size of the unpacked CSV<br>
+        data for scale factor 1.0 is about 11 GB, the uncompressed shape data 23 GB.<br>
+	A <a target="_blank" href="benchmarkdata/DataFormatDescription.html">data format description</a> for the files and the <a target="_blac" href="benchmarkdata/BerlinMOD_Parameter_Settings.txt">generator settings</a> used are available.
+      </td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr>
+      <td align="char" char=".">
+	0.005
+      </td>
+      <td align="right">
+	2
+      </td>
+      <td align="right">
+	141
+      </td>
+      <td align="right">
+	1,797
+      </td>
+      <td align="right">
+	346,657
+      </td>
+      <td align="left">
+	<a href="benchmarkdata/BerlinMOD_0_005_CSV.zip">CSV</a>, 10 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_005_CSV_new.zip">CSV</a>, 5 MB
+      </td>
+      <td align="left">
+	<a href="benchmarkdata/BerlinMOD_0_005_SHAPE.zip">SHAPE</a>, 15 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_005_Geo_CSV.zip">CSV</a>, 4 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_005_SHAPE_Geo.zip">SHAPE</a>, 11 MB
+      </td>
+    </tr>
+
+    <tr>
+      <td align="char" char=".">
+	0.05
+      </td>
+      <td align="right">
+	6
+      </td>
+      <td align="right">
+	447
+      </td>
+      <td align="right">
+	15,045
+      </td>
+      <td align="right">
+	2,998,674
+      </td>
+      <td align="left">
+	<a href="benchmarkdata/BerlinMOD_0_05_CSV.zip">CSV</a>, 92 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_05_CSV_new.zip">CSV</a>, 46 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_05_SHAPE.zip">SHAPE</a>, 132 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_05_Geo_CSV.zip">CSV</a>, 37 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_05_SHAPE_Geo.zip">SHAPE</a>, 98 MB
+      </td>
+    </tr>
+
+    <tr>
+      <td align="char" char=".">
+	0.2
+      </td>
+      <td align="right">
+	13
+      </td>
+      <td align="right">
+	894
+      </td>
+      <td align="right">
+	62,510
+      </td>
+      <td align="right">
+	12,091,785
+      </td>
+      <td align="left">
+	<a href="benchmarkdata/BerlinMOD_0_2_CSV.tgz">CSV</a>, 372 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_2_CSV_new.zip">CSV</a>, 183 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_2_SHAPE.zip">SHAPE</a>, 534 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_0_2_Geo_CSV.zip">CSV</a>, 150 MB
+      </td>
+      <td align="left">
+	<a href="benchmarkdata/BerlinMOD_0_2_SHAPE_Geo.zip">SHAPE</a>, 397 MB
+      </td>
+    </tr>
+
+    <tr>
+      <td align="char" char=".">
+	1.0
+      </td>
+      <td align="right">
+	28
+      </td>
+      <td align="right">
+	2,000
+      </td>
+      <td align="right">
+	292,940
+      </td>
+      <td align="right">
+	56,129,943
+      </td>
+      <td align="left">
+	<a href="benchmarkdata/BerlinMOD_1_0_CSV.tgz">CSV</a>, 1.7 GB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_1_0_CSV_new.zip">CSV</a>, 857 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_1_0_SHAPE.zip">SHAPE</a>, 2.5 GB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_1_0_Geo_CSV.zip">CSV</a>, 706 MB
+      </td>
+      <td align="left">
+        <a href="benchmarkdata/BerlinMOD_1_0_SHAPE_Geo.zip">SHAPE</a>, 1.8 GB
+      </td>
+    </tr>
+  </tbody>
+</table>
+</center>
+
+<div class=normal>
+After unzipping one of the files into the <span class=object>secondo/bin/BerlinMOD</span>
+directory, the file contents can be imported into an open <span class="secondo">Secondo</span>
+database by executing the suitable script for
+<a href="benchmarkdata/BerlinMOD_Import_CSV.SEC">CSV</a> or 
+<a href="benchmarkdata/BerlinMOD_Import_SHP.SEC">SHAPE</a>.
+<br><br>
+Another pregenerated BerlinMOD dataset can be downloaded
+<a href="benchmarkdata/BerlinMOD_5_0_Geo_Altitude.zip">here</a> (8.6 GB). It consists
+of 750,000 trajectories in geographic coordinates with corresponding street names and 
+elevation data. After unpacking the file into your local
+<span class=object>secondo/bin</span> directory, you can import the data into an
+existing <span class="secondo">Secondo</span> database via the command
+<span class=object>restore Trips from Trips</span>.
+</div>
+
+<h2>What Queries are used in BerlinMOD?</h2>
+
+<div class=normal>
+The benchmark uses two different forms of representation for the
+created movements: the object based (one position history per
+vehicle, a concatenation of all the vehicle's movements during the
+observation period) and the trip based approach (one position history
+per trip and vehicle). For each of these representations, the
+benchmark provides 17 range-style queries (called BerlinMOD/R), and
+9 nearest-neighbours queries (called BerlinMOD/NN).
+The queries deal with predicates on
+standard data, but mainly with spatial, temporal, and spatio-temporal
+predicates.
+</div>
+<div class=deprecated>The first version of BerlinMOD only provided the BerlinMOD/R queries.</div>
+
+<h2><a name="articles">Where can I read more about it?</a></h2>
+
+<div class=normal>
+An article on BerlinMOD has been published 2009 in the VLDB Journal:
+</div>
+
+<div class=indented>
+Christian D&uuml;ntgen, Thomas Behr, Ralf Hartmut G&uuml;ting.<br>
+<b>BerlinMOD: A Benchmark for Moving Object Databases.</b><br>
+The VLDB Journal 18:6 (2009), 1335-1368.<br>
+</div>
+
+<div class=normal>
+The original article is available at <a target="_blank" href="http://dx.doi.org/10.1007/s00778-009-0142-5">Springer Link</a>. 
+You may also download a <a target="_blank" href="BerlinMOD-FinalReview-2008-06-18.pdf">technical report (revised version)</a> describing
+BerlinMOD.<br>
+</div>
+
+<div class=deprecated>
+Even the <a class=deprecated target="_blank" href="BerlinMOD.pdf">first version (deprecated)</a> of the Technical Report is still available.
+</div>
+
+<h2>What do I need for BerlinMOD?</h2>
+
+<div class=normal>
+This depends on your intentions:
+<dl>
+  <dt><em>You want to benchmark your system...</em></dt>
+  <dd>Just download the pregenerated BerlinMOD data.</dd>
+
+  <dt><em>You want to compare your system against <span class="secondo">Secondo</span>...</em></dt>
+  <dd>Download <span class="secondo">Secondo</span>, the BerlinMOD base data files and the BerlinMOD script files.</dd>
+
+  <dt><em>You want to use the generator to create your own data...</em></dt>
+  <dd>Download <span class="secondo">Secondo</span>, the BerlinMOD script files, and probably the BerlinMOD data files.</dd>
+</dl>
+</div>
+ 
+<div class=normal>
+The mentioned elements are all available for free download here:
+
+<ol>
+  <li> For pregenerated BerlinMOD data, see <a href="#PregeneratedData">Table 1</a>.</li>
+  <li> A working version of the <a target="_blank" href="../content_downloads.html"><span class="secondo">Secondo</span> 3.X DBMS</a>, e.g. using the <span class="secondo">Secondo</span> Appliance on a virtual machine</li>
+  <li> The base data files:
+     <ul>
+       <li> <a target="_blank" href="streets.data">streets.data</a></li>
+       <li> <a target="_blank" href="homeRegions.data">homeRegions.data</a></li>
+       <li> <a target="_blank" href="workRegions.data">workRegions.data</a></li>
+     </ul>
+   </li>
+<!---
+   <li> Secondo 3.3 not longer supports attribute names starting with a lower case. Thereby, the attribute names have been changed.
+        Here, you can download streets.data homeRegions.data workRegions.data for Secondo version 3.3 and above.
+       <li> <a target="_blank" href="BerlinMODData.zip">BerlinMODData.zip </a> </li>
+
+   </li>
+-->
+   <li> The <a target="_blank" href="Scripts_OptimizerCompliant-2008-12-02.zip">generator and benchmark scripts for Secondo version 3.0</a> <i> or</i><br>
+        The <a target="_blank" href="Scripts_OptimizerCompilant-2011-09-20.zip">generator and benchmark scripts for Secondo version 3.1 and 3.2</a> <i>or</i><br>
+        The <a target="_blank" href="Scripts_OptimizerCompilant-2015-01-28.zip">data, generator, and benchmark script for Secondo version 3.4  (includes base data files)</a> <br>
+        The <a target="_blank" href="Scripts_OptimizerCompilant-2019-08-28.zip">data, generator, and benchmark script for Secondo version 4.1  (includes base data files)</a>
+        <!---
+         <br>
+         The <a target="_blank" href="Scripts_OptimizerCompilant-2012-03-01.zip">generator and benchmark scripts for Secondo verion 3.3 </a>
+
+        -->
+
+   </li>
+     
+</ol>
+
+</div>
+
+<h2>How do I use BerlinMOD?</h2>
+
+<div class=normal>
+<dl>
+  <dt>You want to benchmark your DBMS or just use the data...</dt>
+  <dd>Unpack the downloaded data and import it into your system (the <a target="_blank" href="benchmarkdata/DataFormatDescription.html">data format description</a> may be useful). You can look up the benchmark queries from one of our <a href="#articles">articles</a> and translate the queries into your query language.</dd>
+
+  <dt>You want to compare your system against <span class="secondo">Secondo</span>...</dt>
+  <dd>Install <span class="secondo">Secondo</span> on your test platform. Set up the BerlinMOD data generator to export the data to your preferred data format. Then start the data generator. Import the created data into your system and translate the benchmark queries. You can execute the benchmark object builder and query scripts on the same <span class="secondo">Secondo</span> system.</dd>
+
+  <dt>You want to use the generator to create your own data...</dt>
+  <dd>Install <span class="secondo">Secondo</span> and read our <a href="#articles">article</a> to learn about the parameters and input files used. Then you can adapt the data generator to your needs.</dd>
+</dl>
+</div>
+
+<h3>Using the Data Generator</h3>
+<div class=normal>
+After installing <span class="secondo">Secondo</span> (<a target="_blank" href="../../Secondo.html">project website</a>), copy the base data files <span class =object>streets.data, homeRegions.data, workRegions.data</span> to your <span class="secondo">Secondo</span> binary directory. Extract the generator and benchmark scripts into your <span class="secondo">Secondo</span> binary directory. 
+You may now set up the data generator according to your wishes. For further details, please confer with our <a href="#Articles">article</a>.
+Change to your <span class="secondo">Secondo</span> binary directory and type <span class =object>SecondoTTYNT -i BerlinMOD_DataGenerator.SEC</span> to generate the benchmark data.
+</div>
+
+
+<h3>Running the Benchmark on Secondo</h3>
+<div class=normal>
+You can also create the benchmark data, create all database objects (including indexes) for running the benchmark on the <span class="secondo">Secondo</span> DBMS and run all benchmark queries by calling: <span class=object>SecondoTTYNT -i BerlinMOD_Complete.SEC</span> <br>
+By default, a <span class=object>scale factor</span> of <span class=object>0.05</span> is used in these scripts. 
+</div>
+
+<div class=normal>
+Further information and instruction is contained in the script files and within the technical report.
+</div>
+
+<h2>Examples and Use Cases</h2>
+
+BerlinMOD and the BerlinMOD data can be used in different ways to support reasearchers. Here, we present some examples.
+
+<h3>Assessing Representations for Moving Object Histories</h3>
+<div class=normal>
+Here, the BerlinMOD data and the BerlinMOD/R query set were used to assess different representation variants for moving object data. The <span class="secondo">Secondo</span> command scripts used for the experiments are available as a zip archieve. The archieve contains a file <tt>ReadMe.txt</tt> with further instructions. The scripts transform the BerlinMOD data into several different representation modes, and create the according index structures required within the BerlinMOD/R query scripts. This example may inspire you to use BerlinMOD and <span class="secondo">Secondo</span> as a test bed for your own experiments in MODB research. There is also a paper discussing 5 example queries from these scripts, and a technical report describing the experiments and their results.
+<ul>
+  <li> <a target="_blank" href="UnitRep_AssRepScripts.zip">BerlinMOD/R query scripts</a>.
+  <li> <a target="_blank" href="UnitRep_QueryAnalysesExamples.pdf">BerlinMOD/R query plan discussion</a>.
+  <li> <a target="_blank" href="UnitRep_Representations.pdf">Revised Technical Report</a>.
+</ul>
+</div>
+
+
+<h3>Spatiotemporal Pattern Queries</h3>
+<div class=normal>
+This paper proposes an elegant way to formulate Spatiotemporal Pattern queries. Some experiments were done in order to establish first efficiency results.
+The BerlinMod data generator was used to create moving object data for 50,0000, 100,000, 200,000, and 300,000 cars over one day used in the tests.
+</div>
+
+<div class=indented>
+M.A. Sakr and R.H. G&uuml;ting<br>
+<b>Spatiotemporal Pattern Queries.</b><br>
+GeoInformatica 15:3 (2011), 497-540.
+</div>
+
+<div class=normal>
+<ul>
+  <li> The article via <a target="_blank" href="http://www.springerlink.com/content/k670820708265378/fulltext.pdf">Springer Link</a>.
+  <li> The according <a target="_blank" href="http://dna.fernuni-hagen.de/papers/PaperPlugins.pdf">Technical Report</a> (<a target="_blank" href="http://dna.fernuni-hagen.de/papers/STPQ.pdf">revised version</a>).
+  <li> A <a target="_blank" href="http://dna.fernuni-hagen.de/Secondo.html/content_plugins_detailed.html#NearestNeighbor"><span class="secondo">Secondo</span> Plugin</a> with the implementation.</li>
+  <li> Instructions on <a target="_blank" href="http://dna.fernuni-hagen.de/papers/KNN/knn-experiment-script.zip">how to repeat the experiments</a>.</li>
+</ul>
+</div>
+
+<h3>Efficient <var>k</var>-Nearest Neighbor Search on Moving Object Trajectories</h3>
+<div class=normal>
+BerlinMOD data was used for experiments comparing a new R*-tree index access method supporting <var>k</var>-NN-queries on moving objects with two other methods using the TB-tree index. The BerlinMOD data generator was set up to create the "Cars" test data set: 2,000 cars moving on 1 day.
+</div>
+
+<div class=indented>
+R.H. G&uuml;ting, T. Behr, and J. Xu<br>
+<b>Efficient k-Nearest Neighbor Search on Moving Object Trajectories.</b><br>
+The VLDB Journal 19:5 (2010), 687-714.
+</div>
+
+<div class=normal>
+<ul>
+  <li> The article via <a target="_blank" href="http://www.springerlink.com/content/ln68v175j2580763/">Springer Link</a>.
+  <li> The according <a target="_blank" href="../../papers/KNearestNeighbors-Revised-2010-01-22.pdf">Technical Report</a>.
+</ul>
+</div>
+
+
+<h2>I want to talk about that...</h2>
+
+<div class=normal>
+We would appreciate your comments on BerlinMOD. Please contact us:
+<a href="mailto:secondo@fernuni-hagen.de">secondo@fernuni-hagen.de</a>, 
+<a href="mailto:christian.duentgen@fernuni-hagen.de">christian.duentgen@fernuni-hagen.de</a>.
+
+<br>
+</div>
+
+<div class=normal>
+<table>
+  <tr>
+    <td>
+      <a href="http://validator.w3.org/check?uri=referer">
+	<img style="border:0;width:88px;height:31px" src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional">
+      </a>
+    </td>
+    <td> 
+      <a href="http://jigsaw.w3.org/css-validator/check/referer">
+	<img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="CSS is valid!">
+      </a>
+    </td>
+    <td>&nbsp;</td>
+    <td>Last modification: 2011-09-20 by Thomas Behr .</td>
+  </tr>
+</table>
+</div>
+
+
+</body>
+</html>
