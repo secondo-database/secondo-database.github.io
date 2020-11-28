@@ -49,7 +49,7 @@
 				<h1>Parallel SECONDO Overview</h1>
 				
 			<p><strong>Parallel SECONDO</strong> scales up the capability of processing extensible data models in
-			the <a href="http://dna.fernuni-hagen.de/secondo/">SECONDO</a> database system to a cluster of computers. 
+			the <a href="https://secondo-database.github.io/">SECONDO</a> database system to a cluster of computers. 
 			It combines <a href="http://hadoop.apache.org/">Hadoop 0.20.2</a> with a set of SECONDO databases, 
 			providing almost all existing SECONDO data types and operators. 
 			All parallel queries are expressed in SECONDO executable language, 
@@ -79,14 +79,11 @@
 			<p>For installation, a set of bash scripts is provided
 			which makes the installation relatively easy for the user and makes Parallel SECONDO usable not only on a single computer, 
 			but also on computer clusters containing tens or even hundreds of computers. 
-			Besides, a <a href="http://dna.fernuni-hagen.de/secondo/files/ParallelSecondo_VM332.zip">
-			VMware image</a> containing a single-computer Parallel SECONDO
-			enables the user to explore the system by simply starting a virtual machine.
 			At last, an Amazon Machine Image ( <a href="https://console.aws.amazon.com/ec2/home?region=us-east-1#launchAmi=ami-f3167d9a">AMI</a> ) 
 			containing a Parallel SECONDO Data Server is also published, 
 			with which the user can quickly set up Parallel SECONDO on a EC2 virtual cluster.</p>
 
-			<p>Furthermore, the <a href="http://dna.fernuni-hagen.de/secondo/BerlinMOD/BerlinMOD.html">BerlinMOD benchmark</a> is also revised for Parallel SECONDO. 
+			<p>Furthermore, the <a href="/BerlinMOD/BerlinMOD.html">BerlinMOD benchmark</a> is also revised for Parallel SECONDO. 
 			In the past, the data generation and certain example queries are quite expensive in BerlinMOD, 
 			even with small factors like 1.0. 
 			At present, Parallel SECONDO can create a large data set with a scale factor of 30 
@@ -108,7 +105,7 @@
 					while usually Ubuntu is highly recommended.</span></li>
 					<li><span>A SECONDO database system of version higher than 3.3.2
 					and all its required libraries should be installed on all involved computers at the very beginning. 
-					The <a href="http://dna.fernuni-hagen.de/secondo/content_downloads.html#install">installation guides</a> 
+					The <a href="/content_downloads.html#install">installation guides</a> 
 					of SECONDO regarding different platforms, 
 					including Linux, MacOSX and Windows, help the user to finish this step easily. </span></li>
 					<li><span>A <a href="http://archive.apache.org/dist/hadoop/core/hadoop-0.20.2/hadoop-0.20.2.tar.gz">Hadoop 0.20.2</a> archive is needed. 
@@ -142,7 +139,7 @@
 			  <li><span><b>Cluster</b> It describes the distribution of the system.</span></li>
 			</ul>
 			
-			<p>More details about this file are described in the <a href="http://dna.fernuni-hagen.de/papers/PSUserGuide.pdf">
+			<p>More details about this file are described in the <a href="/files/Documentation/Algebras/hadoop/PSUserGuide.pdf">
 			User Guide for Parallel SECONDO</a>. 
 			</p>
 			
@@ -166,8 +163,8 @@
 			<p>Detailed installation instructions, on both a single-computer and computer-cluster,
 			are described in: </p>
 			<ul>
-			  <li><a href="http://dna.fernuni-hagen.de/papers/PSUserGuide.pdf">User Guide for Parallel Secondo</a></li>
-			  <li><a href="http://dna.fernuni-hagen.de/secondo/files/example.pdf">Example: How to Write Parallel Queries in Parallel SECONDO</a></li>
+			  <li><a href="/files/Documentation/Algebras/hadoop/PSUserGuide.pdf">User Guide for Parallel Secondo</a></li>
+			  <li><a href="/files/Documentation/Algebras/hadoop/example.pdf">Example: How to Write Parallel Queries in Parallel SECONDO</a></li>
 			</ul>
 				<!--h3>Code</h3>				
 				<p><code>
