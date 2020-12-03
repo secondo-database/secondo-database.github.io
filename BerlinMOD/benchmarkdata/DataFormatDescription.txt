@@ -1,0 +1,99 @@
+The accompaning files represent benchmark data created using the Secondo DBMS with the BerlinMOD data generator.
+Please go to the following websites to learn more about Secondo and BerlinMOD:
+
+ - http://dna.fernuni-hagen.de/Secondo.html/index.html
+
+ - http://dna.fernuni-hagen.de/secondo/BerlinMOD/BerlinMOD.html
+
+The data format is as follows:
+
+CSV data format
+---------------
+
+The BerlinMOD data is represented in a set of tables with comma separated values. The format is as follows:
+
+datamcar.csv: dataMcar{ Moid: int,
+                        Licence: varchar[48],
+                        Type:varchar[48],
+                        Model: varchar[48]}.
+    A table with general information on each vehicle. Moid is a key, that is also used in table journey (qv).
+
+journey.csv: Journey{ Moid: int,
+                      Licence: varchar[48],
+                      Type: varchar[48],
+                      Model: varchar[48],
+                      Tstart: date [^2],
+                      Tend: date [^2],
+                      Xstart: real,
+                      Ystart: real,
+                      Xend: real,
+                      Yend: real}[^3].
+    Each tuple defines a small movement of vehicle with the given Id, that has a given licence, vehicle type and car model. Movement starts at (Tstart, (Xstart,Ystart))) and ends at (Tend,(Xend,Yend)).
+
+queryinstants.csv: QueryInstants{ Id: int,
+                                  Instant: date [^2]}.
+    A table with query instants. Id is a key.
+
+queryperiods.csv: QueryPeriods{ Id: int,
+                                Begin: date [^2],
+                                End: date [^2]}.
+    Id is a key. A table with temporal intervals starting at Begin and ending at End.
+
+querypoints.csv: QueryPoints{ Id: int,
+                              Pos_x: real,
+                              Pos_y: real}[^3].
+    Id is a key. A table with query point data.
+
+queryregions.csv: QueryRegions{ Id: int,
+                                Vertex_x: real,
+                                Vertex_Y: real}[^4].
+    Id is a key. A table with regions/polygons used in queries.
+
+streets.csv: streets{ Id: int,
+                      Vmax: real,
+                      X1: real,
+                      Y1: real,
+                      X2: real,
+                      Y2: real}[^1].
+    Id is the key for a complete line. A table with line segment data defining the road network. Vmax is the speed limit for the according street segment.
+
+trips.csv: Trips{ Moid: int,
+                  Tripid: int,
+                  Tstart: date[^2],
+                  Tend: date[^2],
+                  Xstart: real,
+                  Ystart: real,
+                  Xend: real,
+                  Yend: real}.
+    Contains the same movement data as table Journey. However, here the complete movements are decomposed into several shorter movements called trips. The Moid is the smae as used in dataMcar and Journey. Each trip is composed by a set of tuples, each defining a small linear movement.
+
+
+[^1]: Line/Polyline format: For each line (usually identified by an Id attribute), a set of tuples defines a set of line segments. A segment is defined by a line connecting the points (X1,Y1) and (X1,Y2).
+
+[^2]: Date/time format is "yyyy-mm-dd-hh-MM-ss.nn", yyyy=year, mm=month, dd=day, hh=hour, MM=minute, ss=second, nn=millisecond. Example: 2007-05-28-08:39:42.881
+
+[^3]: Point format: A 2D point attribute <aname> is decomposed into its X and Y components, each represented by a real value. The name of the according value column is <aname>X or X<aname>, resp. <aname>.Y, Y<aname>.
+
+[^4] Region/polygon2d format: For each Region (usually identified by an Id attribute), a sequence of tuples defines a sequence of vertexes. The region's boundary is defined by the segments connecting each pair of subsequent points (see [^3]), and the segment connecting the first and thelast vertex defined. THE ORDERING OF THE TUPLES IS SIGNIFICANT!
+
+
+ESRI Shape format
+-----------------
+The data represented is the same as in CSV format. But instead of using CSV tables, spatial data is represented using Shape types.
+Remaining attributes are stored in the according dbf-file. Joining the dbf and the shape file provides the full information.
+
+cars.dbf
+journey.dbf
+queryinstants.dbf
+querylicences.dbf
+queryperiods.dbf
+querypoints.dbf
+querypoints.shp
+queryregions.dbf
+queryregions.shp
+streets.dbf
+streets.shp
+trips.dbf
+
+
+

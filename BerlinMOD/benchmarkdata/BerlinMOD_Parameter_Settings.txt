@@ -1,0 +1,57 @@
+Parameter Settings used for pregenerated BerlinMOD data
+=======================================================
+
+The following setup of the parameters in file 
+BerlinMOD_DataGenerator.SEC has been used during 
+creation of the data:
+
+-------------------------------------------------------
+
+SCALEFACTOR = (variable, according to dataset);
+
+P_TRIP_MODE = "Region Based";
+P_TRIP_DISTANCE = "Fastest Path";
+P_DISTURB_DATA = FALSE;
+
+SCALEFCARS = sqrt(SCALEFACTOR);
+SCALEFDAYS = sqrt(SCALEFACTOR);
+
+P_STARTDAY = 2702
+
+P_NUMCARS = real2int(round((2000 * SCALEFCARS),0));
+P_NUMDAYS = real2int(round((SCALEFDAYS*28),0));
+
+P_MINPAUSE_MS = 300000;
+P_MINVELOCITY = 0.04166666666666666667;
+P_GPSINTERVAL_MS = 2000;
+
+P_NEIGHBOURHOOD_RADIUS = 3000.0;
+
+P_HOMERANDSEED = 0;
+P_TRIPRANDSEED = 4277;
+
+P_SAMPLESIZE = 100;
+
+P_DEST_ExpMu = 15000.0;
+P_DEST_SS = 0.33;
+P_DEST_SM = 0.66;
+P_DEST_SF = 1.0;
+P_DEST_MS = 0.33;
+P_DEST_MM = 0.5;
+P_DEST_MF = 0.66;
+P_DEST_FS = 0.05;
+P_DEST_FM = 0.33;
+P_DEST_FF = 0.1;
+P_DEST_VmaxS = 30.0;
+P_DEST_VmaxM = 50.0;
+P_DEST_VmaxF = 70.0;
+P_EVENT_Length = 5.0;
+P_EVENT_C      = 1.0;
+P_EVENT_P      = 0.1;
+P_EVENT_Acc    = 12.0;
+
+-------------------------------------------------------
+
+The pseudo random number generator used: GSL implementation "mt19937".
+
+
