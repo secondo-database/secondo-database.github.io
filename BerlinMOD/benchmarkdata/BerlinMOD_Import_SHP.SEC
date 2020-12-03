@@ -1,0 +1,68 @@
+let cars =
+    dbimport2('BerlinMOD/cars.dbf')
+    consume
+
+
+let journey =
+    dbimport2('BerlinMOD/journey.dbf') 
+    projectextend[Moid, Licence, Type, Model; U: the_unit(makepoint(.Xstart, .Ystart), makepoint(.Xend, .Yend), 
+                                              str2instant(.Tstart), str2instant(.Tend), TRUE, FALSE)]
+    groupby[Moid, Licence, Type, Model; Trip: group feed makemvalue[U]]
+    consume
+
+
+let QueryInstants =
+    dbimport2('BerlinMOD/queryinstants.dbf') projectextend[Id; Instant: str2instant(.Instant)]
+    consume
+
+
+let QueryLicences =
+    dbimport2('BerlinMOD/querylicences.dbf')
+    consume
+
+
+let QueryPeriods =
+    dbimport2('BerlinMOD/queryperiods.dbf')
+    projectextend[Id; Begin: str2instant(.Begin), End: str2instant(.End)]
+    consume
+
+
+let QueryPoints =
+    dbimport2('BerlinMOD/querypoints.dbf')
+    shpimport2('BerlinMOD/querypoints.shp')
+    namedtransformstream[GeoData] 
+    obojoin 
+    filter[isdefined(bbox(.GeoData))] 
+    validateAttr 
+    trimAllUndef 
+    consume
+
+
+let QueryRegions =
+    dbimport2('BerlinMOD/queryregions.dbf')
+    shpimport2('BerlinMOD/queryregions.shp')
+    namedtransformstream[GeoData] 
+    obojoin 
+    filter[isdefined(bbox(.GeoData))] 
+    validateAttr 
+    trimAllUndef 
+    consume
+
+
+let streets =
+    dbimport2('BerlinMOD/streets.dbf')
+    shpimport2('BerlinMOD/streets.shp')
+    namedtransformstream[GeoData] 
+    obojoin 
+    filter[isdefined(bbox(.GeoData))] 
+    validateAttr 
+    trimAllUndef 
+    consume
+
+
+let trips = 
+    dbimport2('BerlinMOD/trips.dbf')
+    projectextend[Moid, Tripid; U: the_unit(makepoint(.Xstart, .Ystart), makepoint(.Xend, .Yend),
+                                            str2instant(.Tstart), str2instant(.Tend), TRUE, FALSE)] 
+    groupby[Moid, Tripid; Trip: group feed makemvalue[U]] 
+    consume

@@ -1,0 +1,416 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+  <title>BerlinMOD Data File Formats</title>
+  <meta name="AUTHOR" content="Christian Düntgen">
+  <meta name="CREATED" content="20110207;11550000">
+  <meta name="CHANGEDBY" content="Christian Düntgen">
+  <meta name="CHANGED" content="20110207;11550000">
+  <meta name="DESCRIPTION" content="Data file description for BerlinMOD data">
+  <meta name="KEYWORDS" content="BerlinMOD, benchmark, spatio-temporal data, Secondo, moving object data, moving point, data format, format, file format, file">
+  <link rel="stylesheet" type="text/css" href="../berlinmod.css">
+</head>
+<body lang="de-DE" text="#000000" link="#0000ff" bgcolor="#f0f0f0"
+ dir="ltr"
+ onload="window.status='BerlinMOD  A Moving Object Data Benchmark'">
+
+<H1>BerlinMOD Data Export Formats</H1>
+
+<div class=normal>
+This file describes the export table file formats used by the BerlinMOD data generator script.
+The information presented here describes
+
+<ol>
+  <li>which tables exist,</li>
+  <li>which attributes and attribute types each table uses,</li>
+  <li>the meaning of the data provided by each table,</li>
+  <li>the format used within CSV files.</li>
+</ol>
+
+Using this information should enable you to import the BerlinMOD data into your database system.
+Please go to the following websites to learn more about <span class=secondo>Secondo</span> and BerlinMOD:
+
+<ul>
+ <li><a target="_blank" href= "../../../secondo"><span class=secondo>Secondo DBMS</span></a></li>
+
+ <li><a target="_blank" href= "http://dna.fernuni-hagen.de/secondo/BerlinMOD/BerlinMOD.html">BerlinMOD benchmark</a></li>
+</ul>
+
+</div>
+
+<H2>CSV data format</H2>
+
+<div class=normal>
+The BerlinMOD data generator can export the data using comma separated value (CSV) files. Also the pregenerated benchmark data is available in this format.
+
+Each table is represented by an ASCII-text file. In this file, each line of the table is represented by a line terminated with the END-OF-LINE character. In each line, the tuple's attribute (column) values are separated by the comma character (,).
+The format for simple types is:
+
+<center>
+<table cellpadding="4" cellspacing="2" border="2" frame="hsides" rules="groups" bgcolor="#FFFFFF"
+ style="page-break-before: always;" summary="This table lists the value representation for types used in the CSV files.">
+  <caption><a name="table1">Table 1</a>: CSV Type Representation.</caption>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Example</th>
+      <th>Representation</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td align="left" valign="top">N:</td>
+      <td colspan="3" align="left">any digit (0, 1, 2, 3, 4, 5, 6, 7, 8, or 9).</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">C:</td>
+      <td colspan="3" align="left">any ASCII character, except LF, CR and comma (,).</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">X|Y:</td>
+      <td colspan="3" align="left"> either X or Y</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">[X]:</td>
+      <td colspan="3" align="left"> optional (might be skipped</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">X<sup><var>n</var></sup>:</td>
+      <td colspan="3" align="left">Up 0 to <var>n</var> elements of type <var>X</var></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">X<sup><var>+</var></sup>:</td>
+      <td colspan="3" align="left">at least 1 element of type <var>X</var></td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">X<sup><var>*</var></sup>:</td>
+      <td colspan="3" align="left">as many instants of type <var>X</var> as you wish</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">.</td>
+      <td colspan="3" align="left">the dot character (.)</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">:</td>
+      <td colspan="3" align="left">the colon character (:)</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">-</td>
+      <td colspan="3" align="left">the minus character (-)</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top">E</td>
+      <td colspan="3" align="left">the E character (E or e)</td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr>
+      <td valign="top"><code>int</code></td>
+      <td valign="top">-5441115</td>
+      <td valign="top">[-]N<sup>+</sup></td>
+      <td valign="bottom"></td>
+    </tr>
+
+    <tr>
+      <td valign="top"><code>real</code></td>
+      <td valign="top">0.56489217E-12</td>
+      <td valign="top">[-]N<sup>*</sup>.N<sup>+</sup>[E[-]N<sup>+</sup>]</td>
+      <td valign="bottom">The period is mandatory.</td>
+    </tr>
+
+    <tr>
+      <td valign="top"><code>varchar[<var>n</var>]</code></td>
+      <td valign="top">Sachsenring</td>
+      <td valign="top">C<sup><var>n</var></sup></td>
+      <td valign="bottom">The string may contain up to <var>n</var> characters. Any ASCII-characters are allowed, except characters signaling END-OF-LINE, as CR, LF, and the comma (,).</td>
+    </tr>
+
+    <tr>
+      <td valign="top"><code>date</code></td>
+      <td valign="top">2007-05-08-06:40:15.000</td>
+      <td valign="top">NNNN-NN-NN-NN:NN:NN.NNN</td>
+      <td valign="bottom">This is basically a varchar[23], having format yyyy-mm-dd-hh:tt:ss.nnn where the  yyyy=year, mm=month, dd=day, hh=hour, tt=minute, ss=second, nn=millisecond. The fields are always fully used, leading digits are filled up with zeros (0).</td>
+    </tr>
+  </tbody>
+</table>
+</center>
+
+<center>
+<table cellpadding="4" cellspacing="2" border="2" frame="hsides" rules="groups" bgcolor="#FFFFFF"
+ style="page-break-before: always;" summary="This table lists the table descritions for the CSV files.">
+  <caption><a name="table2">Table 2</a>: CSV Table Descriptions.</caption>
+  <thead>
+    <tr>
+      <th>File Name</th>
+      <th>BerlinMOD Relation Name</th>
+      <th>Column Name/Attribute</th>
+      <th>Type</th>
+      <th>Meaning</th>
+    </tr>
+  </thead>
+  <tfoot align="left">
+    <tr>
+      <td colspan="5"><a name="table1_sup1"><sup>[1]</sup></a>: Line/Polyline format: For each line (identified by an <var>Id</var> attribute), a set of tuples defines a set of line segments. A segment is defined by a line connecting the points (<var>X1</var>, <var>Y1</var>) and (<var>X1</var>, <var>Y2</var>).
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="5"><a name="table1_sup2"><sup>[2]</sup></a>: Point format: A 2D point attribute <var>&lt;name&gt;</var> is decomposed into its <var>X</var> and <var>Y</var> components, each represented by a real value. The name of the according value column is <var>&lt;aname&gt;X</var> or <var>X&lt;aname&gt;</var>, resp. <var>&lt;aname&gt;.Y</var>, <var>Y&lt;aname&gt;</var>.
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="5"><a name="table1_sup3"><sup>[3]</sup></a>: Region/polygon2D format: For each Region (usually identified by an <var>Id</var> attribute), a sequence of tuples defines a sequence of vertexes. The region's boundary is defined by the segments connecting each pair of subsequent points (see <sup>[<a href="#table2_sup2">2</a>]</sup>), and the segment connecting the first and the last vertex of the sequence. Due to representing a sequence of segments, <strong>the ordering of the tuples is significant!</strong>
+      </td>
+    </tr>
+
+  </tfoot>
+  <tbody>
+
+    <tr>
+      <td valign="top">datamcar.csv</td>
+      <td valign="top">dataMcar{</td>
+      <td>Moid:<br>
+          Licence:<br>
+          Type:<br>
+          Model:
+      </td>
+      <td>int,<br>
+          varchar[48],<br>
+          varchar[48],<br>
+          varchar[48]}.
+      </td>
+      <td valign="bottom">A table with general information on each vehicle. <var>Moid</var> is the key for the vehicle, that is also used in table <a href="#table2_journey">journey</a>.</td>
+    </tr>
+
+    <tr>
+      <td valign="top"><a name="table2_journey">journey.csv</a></td>
+      <td>Journey{<td>
+      <td> Moid:<br>
+           Licence:<br>
+           Type:<br>
+           Model:<br>
+           Tstart:<br>
+           Tend:<br>
+           Xstart:<br>
+           Ystart:<br>
+           Xend:<br>
+           Yend:
+      </td>
+      <td>int,<br>
+          varchar[48],<br>
+          varchar[48],<br>
+          varchar[48],<br>
+          date,<br>
+          date,<br>
+          real,<br>
+          real,<br>
+          real,<br>
+          real}.
+      </td>
+      <td valign="bottom">Each tuple defines a steady linear movement of the vehicle with the given <var>Moid</var>, that has a given <var>licence</var>, vehicle <var>type</var> and car <var>model</var>. Movement starts at instant <var>Tstart</var> and position (<var>Xstart</var>, <var>Ystart</var>) and ends at instant <var>Tend</var> and point (<var>Xend</var>, <var>Yend</var>).<sup>[<a href="#table2_sup2">2</a>]</sup></td>
+    </tr>
+
+    <tr>
+      <td valign="top">queryinstants.csv</td>
+      <td valign="top">QueryInstants{</td>
+      <td>Id:<br>
+          Instant
+      </td>
+      <td>int,<br>
+          date}.
+      </td>
+      <td>A table with query instants. <var>Id</var> is a key.</td>
+    </tr>
+
+    <tr>
+      <td valign="top">queryperiods.csv</td>
+      <td valign="top">QueryPeriods{</td>
+      <td>Id:<br>
+          Begin:<br>
+          End
+      </td>
+      <td>int,<br>
+          date,<br>
+          date}.
+      </td>
+      <td valign="bottom"><var>Id</var> is a key. A table with temporal intervals starting at instant <var>Begin</var> and ending at instant <var>End</var>.</td>
+    </tr>
+
+    <tr>
+      <td valign="top">querypoints.csv</td>
+      <td valign="top">QueryPoints{</td>
+      <td>Id:<br>
+          Pos_x:<br>
+          Pos_y:
+      </td>
+      <td>int,<br>
+          real,<br>
+          real}.
+      </td>
+      <td valign="bottom"><var>Id</var> is a key. A table with query point data.<sup>[<a href="#table2_sup2">2</a>]</sup></td>
+    </tr>
+
+    <tr>
+      <td valign="top">queryregions.csv</td>
+      <td valign="top">QueryRegions{</td>
+      <td>Id:<br>
+          Vertex_x:<br>
+          Vertex_Y:
+      </td>
+      <td>int,:<br>
+          real,:<br>
+          real}.
+      </td>
+      <td valign="bottom"><var>Id</var> is a key. A table with regions/polygons used in queries.<sup>[<a href="#table2_sup3">3</a>]</sup></td>
+    </tr>
+
+    <tr>
+      <td valign="top">streets.csv</td>
+      <td valign="top">streets{</td>
+      <td>Id:<br>
+          Vmax:<br>
+          X1:<br>
+          Y1:<br>
+          X2:<br>
+          Y2:
+      </td>
+      <td>int,<br>
+          real,<br>
+          real,<br>
+          real,<br>
+          real,<br>
+          real}.
+      </td>
+      <td valign="bottom"><var>Id</var> is the key for a complete line. A table with line segment data defining the road network. <var>Vmax</var> is the speed limit for the according street segment. Start point of the segment is (<var>X1</var>, <var>Y1</var>), endpoint is (<var>X2</var>,<var>X2</var>).<sup>[<a href="#table2_sup1">1</a>]</sup></td>
+    </tr>
+
+    <tr>
+      <td valign="top">trips.csv</td>
+      <td valign="top">Trips{</td>
+      <td>Moid:<br>
+          Tripid:<br>
+          Tstart:<br>
+          Tend:<br>
+          Xstart:<br>
+          Ystart:<br>
+          Xend:<br>
+          Yend:
+      </td>
+      <td>int,<br>
+          int,<br>
+          date,<br>
+          date,<br>
+          real,<br>
+          real,<br>
+          real,<br>
+          real}.
+      </td>
+      <td valign="bottom">Contains the same movement data as table Journey. However, here the complete movements are decomposed into several shorter movements called trips. The <var>Moid</var> is the same as used in <var>dataMcar</var> and <var>Journey</var>. Each trip is composed by a set of tuples, each defining a steady linear movement.</td>
+    </tr>
+  </tbody>
+</table>
+</center>
+</div>
+
+
+<H2>ESRI Shape format</H2>
+
+<div class=normal>
+The data represented is the same as in CSV format. However, the ESRI Shape file standard requires, that standard data is stored in a DBF file, and spatial data be represented using Shape types within a separate SHP file. Joining the DBF and the SHP file then provides the full tables. Dates are exported in the same format as described for CSV files. Spatio-temporal data is also exported as described for the CSV files, meaning that start and end instants are given as <code>varchar</code>-attributes <var>Tstart</var>, <var>Tend</var>; the start and endpoints are described as pairs (<var>Xstart</var>, <var>Ystart</var>), resp. (<var>Xend</var>, <var>Yend</var>) of coordinates.
+
+<center>
+<table cellpadding="4" cellspacing="2" border="2" frame="hsides" rules="groups" bgcolor="#FFFFFF"
+ style="page-break-before: always;" summary="This table lists the value representation for types used in the CSV files.">
+  <caption><a name="table3">Table 3</a>: Shape Table Descriptions.</caption>
+  <thead>
+    <tr>
+      <th>DBF File</th>
+      <th>SHP File</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>cars.dbf</td>
+      <td>&nbsp;</td>
+      <td>Attributes represented as in CSV table <var>dataMcars</var>.</td>
+    </tr>
+
+    <tr>
+      <td>journey.dbf</td>
+      <td>&nbsp;</td>
+      <td>Attributes represented as in the according CSV table.</td>
+    </tr>
+
+    <tr>
+      <td>queryinstants.dbf</td>
+      <td>&nbsp;</td>
+      <td>Attributes represented as in the according CSV table.</td>
+    </tr>
+
+    <tr>
+      <td>querylicences.dbf</td>
+      <td>&nbsp;</td>
+      <td>Attributes represented as in the according CSV table.</td>
+    </tr>
+
+    <tr>
+      <td>queryperiods.dbf</td>
+      <td>&nbsp;</td>
+      <td>Attributes represented as in the according CSV table.</td>
+    </tr>
+
+    <tr>
+      <td>querypoints.dbf</td>
+      <td>querypoints.shp</td>
+      <td>Attribute <var>Pos</var> is represented by the shape file.</td>
+    </tr>
+
+    <tr>
+      <td>queryregions.dbf</td>
+      <td>queryregions.shp</td>
+      <td>Attribute <var>Region</var> is represented by the shape file.</td>
+    </tr>
+
+    <tr>
+      <td>streets.dbf</td>
+      <td>streets.shp</td>
+      <td>Attribute <var>geoData</var> is represented by the shape file.</td>
+    </tr>
+
+    <tr>
+      <td>trips.dbf</td>
+      <td>&nbsp;</td>
+      <td>Attributes represented as in the according CSV table.</td>
+    </tr>
+  </tbody>
+</table>
+</center>
+</div>
+
+<div class=normal>
+<table>
+  <tr>
+    <td>
+      <a href="http://validator.w3.org/check?uri=referer">
+  <img style="border:0;width:88px;height:31px" src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Transitional">
+      </a>
+    </td>
+    <td>
+      <a href="http://jigsaw.w3.org/css-validator/check/referer">
+  <img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="CSS is valid!">
+      </a>
+    </td>
+    <td>&nbsp;</td>
+    <td>Last modification: 2011-02-07 by Christian D&uuml;ntgen.</td>
+  </tr>
+</table>
+</div>
+
+
+</body>
+</html>
+

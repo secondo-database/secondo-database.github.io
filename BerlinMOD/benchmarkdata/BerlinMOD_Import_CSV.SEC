@@ -1,0 +1,57 @@
+let dataMcar =
+    csvimport2('BerlinMOD/datamcar.csv',1,"",",",FALSE,FALSE)
+    projectextend[; Moid: str2int(.Moid), Licence: .Licence, Type: .Type, Model: .Model]
+    consume
+
+
+let QueryInstants =
+    csvimport2('BerlinMOD/queryinstants.csv',1,"",",",FALSE,FALSE)
+    projectextend[; Id: str2int(.Id), Instant: str2instant(.Instant)]
+    consume
+
+
+let QueryLicences =
+    csvimport2('BerlinMOD/querylicences.csv',1,"",",",FALSE,FALSE)
+    projectextend[Licence; Id: str2int(.Id)]
+    consume
+
+
+let QueryPeriods =
+    csvimport2('BerlinMOD/queryperiods.csv',1,"",",",FALSE,FALSE)
+    projectextend[; Id: str2int(.Id), Begin: str2instant(.Begin), End: str2instant(.End)]
+    consume
+
+
+let QueryPoints =
+    csvimport2('BerlinMOD/querypoints.csv',1,"",",",FALSE,FALSE)
+    projectextend[; Id: str2int(.Id), Pos: makepoint(str2real(.Pos_x), str2real(.Pos_y))]
+    consume
+
+
+let QueryRegions =
+    csvimport2('BerlinMOD/queryregions.csv', 1, "", ",", FALSE, FALSE) 
+    projectextend[; Id: str2int(.Id), 
+                    Segment: makeline(makepoint(str2real(.Xstart), str2real(.Ystart)), 
+                                      makepoint(str2real(.Xend), str2real(.Yend)))] 
+    groupby[Id; L: group feed projecttransformstream[Segment] collect_line[TRUE]] 
+    projectextend[Id; GeoData: .L line2region] 
+    consume
+
+
+let streets =
+    csvimport2('BerlinMOD/streets.csv',1,"",",",FALSE,FALSE)
+    projectextend[; Id: str2int(.Id), Vmax: str2int(.Vmax), 
+                    Segment: makeline(makepoint(str2real(.X1), str2real(.Y1)), makepoint(str2real(.X2), str2real(.Y2)))]
+    groupby[Id, Vmax; Line: group feed projecttransformstream[Segment] collect_line[FALSE]]
+    consume
+
+
+let trips = 
+    csvimport2('BerlinMOD/trips.csv',1,"",",",FALSE,FALSE)
+    projectextend[; Moid: str2int(.Moid), Tripid: str2int(.Tripid), 
+                    Tstart: str2instant(.Tstart), Tend: str2instant(.Tend), 
+                    Pstart: makepoint(str2real(.Xstart), str2real(.Ystart)), 
+                    Pend: makepoint(str2real(.Xend), str2real(.Yend))] 
+    projectextend[Moid, Tripid; U: the_unit(.Pstart, .Pend, .Tstart, .Tend, TRUE, FALSE)] 
+    groupby[Moid, Tripid; Trip: group feed makemvalue[U]] 
+    consume
