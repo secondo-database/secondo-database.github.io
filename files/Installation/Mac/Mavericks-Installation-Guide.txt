@@ -26,7 +26,7 @@ the JDK for Mac OS X, and install it.
 Now it's time to install the Secondo environment and Secondo itself.
 Download the Mavericks SDK from:
 
-  http://dna.fernuni-hagen.de/secondo/files/Installation/Mac/SDK_OSX_MAVERICKS.zip
+  https://github.com/secondo-database/secondo-database.github.io/raw/main/files/Installation/Mac/SDK_OSX_MAVERICKS.zip
 
 If not done automatically, unpack the file. Within the terminal, navigate 
 to the SDK's directory. Enter:
