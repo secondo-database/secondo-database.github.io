@@ -1,0 +1,89 @@
+2016-09-26 Notes on Release 4.0.0
+===============================================================================
+
+New algebra modules:
+--------------------
+
+* Distributed2Algebra
+     Provides distributed query processing. One Secondo system called the 
+     master controls many Secondo instances called workers running on 
+     different computers/cores. So-called distributed arrays are provided 
+     whose field are stored in a distributed manner on the workers. 
+     Operations are applied in parallel to all fields of a distributed array. 
+     Fields can be of any available Secondo type, in particular, relations or 
+     nested relations.
+     
+* MainMemoryAlgebra
+     This algebra allows one to load existing Secondo objects (e.g. 
+     relations) or query results into main memory and keep them there for 
+     further querying. The algebra controls available and used amounts of 
+     memory and maintain a catalog of objects loaded. AVL-trees, R-trees, and 
+     M-trees are available for main-memory indexing.
+     
+* DBScanAlgebra, OpticsAlgebra
+     These two algebras provide the well-known algorithms for density-based 
+     clustering, DBScan, and OPTICS. Clustering may depend on geometric 
+     distances or arbitrary user-defined similarity functions.
+     
+* TrajectorySimilarityAlgebra
+     Provides operations to measure similarity of trajectories in different 
+     ways, to support different applications.
+     
+* GuideAlgebra
+     A comprehensive algebra for the purpose of teaching all aspects of 
+     algebra implementation in Secondo.
+     
+* FileIndexAlgebra
+     Allows one to create B-tree or R-tree indices on top of binary files 
+     storing relations. Useful in a distributed environment, as index files 
+     can easily be moved to other computers.
+     
+* CassandraAlgebra
+     Supports the coupling of Secondo with Cassandra. See the work on 
+     Distributed Secondo 
+     (http://dna.fernuni-hagen.de/Secondo.html/DSecondo/DSECONDO-Website/index.
+     html).
+     
+
+
+Optimizer
+---------
+
+The optimizer is now available in a basic version (directory OptimizerBasic) 
+and the current version (directory Optimizer). The basic version reflects the 
+state of optimizer implementation from about 2006. It is provided to 
+facilitate understanding of the basic concepts of the Secondo optimizer 
+(omitting all the extensions of the current version to keep it simple).
+
+On the other hand, the basic algorithm for conjunctive query optimization has 
+been extended to support the management of properties for intermediate 
+results. This could be the order of a stream of tuples, or the distribution 
+criteria for a distributed intermediate result. In both directories, the old 
+query optimization algorithm is still available in the file optimizer.pl, the 
+new one in file optimizerNewProperties.pl.
+
+New textual user interfaces have been introduced that allow one to mix 
+queries at the SQL level with queries in Secondo executable language. They are:
+
+  * SecondoPLTTY
+  * SecondoPLTTYCS
+  * SecondoPLTTYNT
+
+The first one is a stand-alone interface comparable to SecondoTTYBDB, the 
+second the client-server version comparable to SecondoTTYCS, and the third 
+one the stand-alone version running without transactions, like SecondoTTYNT.
+All three versions can run scripts combining executable language and SQL 
+commands.
+
+In contrast to SecondoPL, which requires Prolog terms as input, these 
+interfaces as well as the Javagui allow one to enter SQL queries and commands 
+in a more natural syntax, as it is NOT necesssary any more to use lower case 
+names. Instead, all names of Secondo objects can be written in the same way 
+as in the kernel, including relation and attribute names.
+
+
+
+
+
+
+

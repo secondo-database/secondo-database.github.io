@@ -1,0 +1,10 @@
+
+
+                       **** SECONDO Release Notes ****
+
+
+2009-10-05 Notes on Release 2.9.1
+===============================================================================
+
+
+Correction for the plugin tool for windows platforms.

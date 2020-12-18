@@ -1,0 +1,8 @@
+2013-04-02 Notes on Release 3.3.1
+===============================================================================
+
+This version contains patches for the Algebra Hadoop and HadoopParallel. 
+Because these algebras run only on Linux based systems, the source code
+of this version is not available for Windows systems.
+
+

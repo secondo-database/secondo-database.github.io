@@ -1,0 +1,11 @@
+                    **** SECONDO Release Notes ****
+
+2008-12-18 Notes on Release 2.8.2
+
+===============================================================================
+A feedproject operator which combines feed and project has been made fully 
+available, that is, integrated into query optimization and equipped with 
+progress estimation. For relations with many attributes, feedproject is 
+much faster than separate feed and project.
+
+Bugfix for the updateRel predicate of the optimizer.

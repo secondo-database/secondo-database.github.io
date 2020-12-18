@@ -1,0 +1,18 @@
+                    **** SECONDO Release Notes ****
+
+2009-06-04 Notes on Release 2.8.4
+
+===============================================================================
+
+Kernel:
+
+Some bug fixes and many memory leaks removed.
+
+New algebra modules NetWork and TemporalNet
+
+New operators in some algebras
+
+
+Javagui:
+
+Viewer for SVG graphics

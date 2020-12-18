@@ -1,0 +1,25 @@
+
+
+                       **** SECONDO Release Notes ****
+
+
+2007-10-25 Notes on Release 2.6 
+===============================================================================
+
+This version contains some bug fixes and a new algebra module called
+"SimulationAlgebra".
+
+In order to use this you may need to update your system, since we need now
+the GNU Scientific Library (GSL). Please install this library on your
+system (also the gsl-devel package). However, if you don't need this algebra
+uncomment the modules.
+
+ * SimulationAlgebra 
+ * GSLAlgebra
+
+in makefile.algebras
+
+
+Best Regards
+
+M. Spiekermann

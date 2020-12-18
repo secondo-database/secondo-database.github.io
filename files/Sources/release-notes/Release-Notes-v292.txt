@@ -1,0 +1,10 @@
+
+
+                       **** SECONDO Release Notes ****
+
+
+2010-01-25 Notes on Release 2.9.2
+===============================================================================
+
+
+Extensions of the RTreeAlgebra.

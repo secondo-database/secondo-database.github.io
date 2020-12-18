@@ -1,0 +1,29 @@
+2011-09-09 Notes on Release 3.2.0
+===============================================================================
+
+Unfortunately Release 3.1.0 was not entirely stable. This release is essentially 
+a corrected version of 3.1. 
+
+Moreover the following changes have been applied:
+
+  * The plugins for NearestNeighborAlgebra, TBTreeAlgebra and STPatternAlgebra 
+  have been integrated into the standard distribution.
+  
+  * The knearest operator has been improved to work correctly with  
+  geographical coordinates. In this case an additional parameter can be used
+  to specify that coordinates should be converted to Gauss-Krueger before 
+  computing distance functions. Output is still in the original coordinates 
+  and can be displayed with a map background.
+  
+  * Moving point units (upoint) are now correctly projected to a map background.
+  
+  * A dialog to set a scale factor at the GUI (Settings-> Scale Factor) has been 
+  introduced. This makes it possible to keep data in geographical coordinates 
+  multiplied by a factor (e.g. 1000.0) and still to visualize them in fron of a 
+  tiled map.
+  
+  * The spatialjoin operator has been improved using for the join of objects within 
+  a cell a main memory R-tree rather than a nested loop join.
+  
+  * Example tracking data have been added (createmvtrips.sec and Trk110731.csv in 
+  the secondo/bin directory).

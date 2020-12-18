@@ -1,0 +1,55 @@
+2012-10-31 Notes on Release 3.3.0
+===============================================================================
+
+New algebra modules:
+--------------------
+
+* SymbolicTrajectoryAlgebra:
+     This algebra manages time-dependent strings and provides a pattern matching on such structures.
+
+* OSM Algebra
+     The OSM Algebra provides import functions for Open Street Map data.
+
+* Map Matching Algebra
+     This algebra provides methods to map moving points to an underlying network.
+
+* Hadoop, HadoopParallel Algebra
+    These algebras provide mechanisms for parallel execution of queries on several computers.
+
+* Distributed Algebra
+    This algebra is an alternative approach for using Secondo in parallel.
+
+* Trie Algebra
+    The Trie algebra provides inverted files as an index structure for large documents.
+
+* GroupBy Algebra
+    This algebra provides a hash based group by operation.
+
+
+Optimizer Extension
+-------------------
+The optimizer now can handle queries with an arbitrary number of relations and predicates.
+
+Main Memory Management
+----------------------
+Instead of assigning a fixed amount of main memory to each operator, Secondo's QueryProcessor now
+distributes the available memory to all operators asking for it.
+
+Query Construction Viewer
+-------------------------
+This new viewer helps users to formulate queries.
+
+Extensions of Algebras
+-----------------------
+Algebra modules were extended by new types and operators, e.g., for searching for regular expressions
+within texts. 
+
+
+Adaption to new Operating Systems
+----------------------------------
+
+Secondo Version 3.3.0 works with SuSe 12.2 and Ubuntu 12.04.
+
+
+
+

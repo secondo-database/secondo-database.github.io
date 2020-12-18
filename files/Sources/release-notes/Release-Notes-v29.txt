@@ -1,0 +1,40 @@
+
+
+                       **** SECONDO Release Notes ****
+
+
+2009-08-11 Notes on Release 2.9
+===============================================================================
+
+A plugin system has been established. A Secondo plugin is an optional extension
+to parts of the database system (new algebra, new viewers, new display classes, 
+and/ or extensions of the optimizer) provided as a single zip-file. Besides the 
+parts containing the source code (i.e. source files and code sections), a plugin 
+contains an XML file containing information about where the new code is to place, 
+the name of the extension etc. 
+This allows for an automatical installation of an extension using a tool which 
+is part of a Secondo distribution. So, if the inventor of a new data structure 
+or of a new algorithm provides it as a secondo plugin, other researcher can 
+compare their solutions with this approach without the effort of reimplementing 
+the algorithms/ data structures.
+
+The following Algebra are now distributed as plugins:
+
+    * X-Tree and M-Tree
+    * Periodic
+
+The following algebras are all NEW and are distributed as plugins:
+
+    * Nearest Neighbor
+    * TB-Tree
+    * Spatiotemporal Pattern Queries
+
+This release includes various bug fixes, improving the general stability.
+
+An optional type inference module and optional new cost functions have been 
+added to the optimizer. Also, more information on indexes and files is available
+in order to implement smarter cost functions. The optimizer now can handle 
+subqueries and can optimize the mayority of the BerlinMOD/R benchmark queries.
+
+
+

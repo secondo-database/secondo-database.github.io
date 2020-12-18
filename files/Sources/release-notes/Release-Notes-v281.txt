@@ -1,0 +1,30 @@
+
+
+                       **** SECONDO Release Notes ****
+
+
+2008-12-16 Notes on Release 2.8.1
+===============================================================================
+Fixed some problems with the optimizer.
+
+
+2008-12-08 Notes on Release 2.8
+===============================================================================
+
+The on disk tuple representation has been changed to save disk space and to allow 
+for attribute selection during feed operations. 
+
+Trajectory operator has been improved. 
+
+A new algebra module (ImEx-Algebra) provides operator for data import and export from
+and to shape files, db3 files, and csv files. Also operators for manipulating the 
+local file system are contained. 
+
+Major changes to the optimizer module concerning the naming schema and management of 
+indexes and data samples.
+
+Various bug fixes, improving stability (e.g. error when terminating the database server).
+
+Added several operators to existing algebras.
+
+

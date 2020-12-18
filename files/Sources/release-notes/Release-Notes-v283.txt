@@ -1,0 +1,8 @@
+                    **** SECONDO Release Notes ****
+
+2009-01-05 Notes on Release 2.8.3
+
+===============================================================================
+
+Some bug fixes. 
+This version also runs with Mac OS X v10.5 Leopard.

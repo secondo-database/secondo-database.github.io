@@ -1,0 +1,9 @@
+2014-09-17 Notes on Release 3.4.0
+===============================================================================
+
+There are some new algebra modules, e.g., Raster2 and Tile algebra for handling
+raster data.
+
+There are several bug fixes within algebras and the framework.
+
+A lot of new operators have been added,
