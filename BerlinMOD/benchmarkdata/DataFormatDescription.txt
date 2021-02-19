@@ -1,9 +1,9 @@
 The accompaning files represent benchmark data created using the Secondo DBMS with the BerlinMOD data generator.
 Please go to the following websites to learn more about Secondo and BerlinMOD:
 
- - http://dna.fernuni-hagen.de/Secondo.html/index.html
+ - https://secondo-database.github.io/
 
- - http://dna.fernuni-hagen.de/secondo/BerlinMOD/BerlinMOD.html
+ - https://secondo-database.github.io/BerlinMOD/BerlinMOD.html
 
 The data format is as follows:
 

@@ -55,7 +55,7 @@ The sequential version is very simple. SECONDO has to read both relations, compu
   <div class="code">
   let join_result = customer feed {r1} revenue feed {r2} itHashJoin[customerid_r1, customerid_r2] consume;
   </div>
-If you want to learn more about the SECONDO query language, please see the <a href="http://dna.fernuni-hagen.de/secondo/">SECONDO website</a> for more information.
+If you want to learn more about the SECONDO query language, please see the <a href="https://secondo-database.github.io/">SECONDO website</a> for more information.
 
 <h3>The parallel version</h3>
 In the first step, both relations are exported to Cassandra with the cspread operator. This operator reads all tuples from a relation an stores them into Cassandra. In addition, a partition key must be specified. The partition key determines, which attribute is capable for the placement of the tuple within the logical ring. SECONDO has to join both relations on the attribute customerid, so tuples with the same customerid have to be placed on the same position in the logical ring. <br>
@@ -113,8 +113,8 @@ mkdir -p $DSECONDO_DIR/secondo<br>
 </div>
 </li>
 
-<li><a href="http://dna.fernuni-hagen.de/secondo/content_downloads.html">Download</a> the last SECONDO version.</li>
-<li>Configure and install SECONDO as described <a href="http://dna.fernuni-hagen.de/secondo/content_downloads.html">here</a>.</li>
+<li><a href="https://secondo-database.github.io/content_downloads.html">Download</a> the last SECONDO version.</li>
+<li>Configure and install SECONDO as described <a href="https://secondo-database.github.io/content_downloads.html">here</a>.</li>
 
 <li>Add these lines to your .secondorc and adjust the names of the QPNs an SNs. The placeholder <tt>%%YOUR_DSECONDO_DIR%%</tt> needs to be replaced with the full path of the directory $DSECONDO_DIR. The placeholder <tt>%%YOUR_QPN_INSTALL_DIR%%</tt> needs to be replaced with the name of the directory were SECONDO should be installed on the QPNs (e.g. /opt/dsecondo).
 <div class="code">
@@ -233,7 +233,7 @@ The Management Node is responsible for installing the query procesing nodes. To 
 
 <a name="related"></a>
 <h1>Related work</h1>
-With <a href="http://dna.fernuni-hagen.de/secondo/ParallelSecondo/">Parallel SECONDO</a>, another SECONDO based prototype for distributed processing of huge amounts of data exists. Parallel SECONDO couples Hadoop with SECONDO to achieve scalability and data distribution. In contrast to Distributed SECONDO, Parallel SECONDO does not focus on data updates and its architecture contains a master node, which is a single point of failure. 
+With <a href="https://secondo-database.github.io/ParallelSecondo/">Parallel SECONDO</a>, another SECONDO based prototype for distributed processing of huge amounts of data exists. Parallel SECONDO couples Hadoop with SECONDO to achieve scalability and data distribution. In contrast to Distributed SECONDO, Parallel SECONDO does not focus on data updates and its architecture contains a master node, which is a single point of failure. 
 
 <a name="papers"></a>
 <h1>Documentation / Papers</h1>
@@ -242,7 +242,7 @@ With <a href="http://dna.fernuni-hagen.de/secondo/ParallelSecondo/">Parallel SEC
 </ul>
 <a name="about"></a>
 <h1>About us</h1>
-<a href="http://dna.fernuni-hagen.de/">Our group</a> is a database research group at FernUniversität Hagen, Germany, led by Prof. Dr. Ralf Hartmut Güting. The group focuses on database technologies for non-standard data types, especially for moving objects data and on extensible database systems. During the last 10 years, the group has developed the <a href="http://dna.fernuni-hagen.de/secondo/">SECONDO system</a>, an open-source extensible DBMS prototype. 
+<a href="http://dna.fernuni-hagen.de/">Our group</a> is a database research group at FernUniversität Hagen, Germany, led by Prof. Dr. Ralf Hartmut Güting. The group focuses on database technologies for non-standard data types, especially for moving objects data and on extensible database systems. During the last 10 years, the group has developed the <a href="https://secondo-database.github.io/">SECONDO system</a>, an open-source extensible DBMS prototype. 
 
 <h2>Contact</h2>
 Main developer: <a href="mailto:jan.nidzwetzki@fernuni-hagen.de">Jan Kristof Nidzwetzki</a> <br>
