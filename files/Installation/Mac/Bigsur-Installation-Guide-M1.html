@@ -13,7 +13,7 @@
 
 <h2>Please Note</h2> 
 <div>
-  <b>Warning:</b> The M1 Port of SECONDO is current under development. Some features like the optimizer server can currently not be compiled. There are no native ARM-based JDKs available at the moment. Thefore, no SWI-Prolog with JNI support can be compiled.
+  <b>Warning:</b> The M1 Port of SECONDO is current under development. Some features might be unstable.
  </div>
  
  <br>
@@ -39,19 +39,12 @@ The default shell can be set via command line by calling '<tt>chsh -s /bin/bash<
 If the xcode tools are already present, the gcc's version is 
 printed out. Otherwise a window pops up. Just click on <kbd>install</kbd>.
 
-<h3>Step 2: Installing Java-SDK</h3>
+<h3>Step 2: Install a M1 native SDK</h3>
 
 <ul>
- <li> open a terminal or use the one of the xcode installation </li>
- <li> enter the following line <br>
-      <kbd>javac -version </kbd>
- </li>
+ <li> For building SECONDO on a M1 CPU, a native SDK needs to be installed.</li>
+ <li> SECONDO is tested with the <a hef="https://www.azul.com/downloads/zulu-community">Azul 13.0 SDK for ARM 64-bit</a>
 </ul>
-If the Java SDK is already installed, the java compiler's version is
-displayed. Otherwise a browser is opened showing Oracle's Java download 
-page. Accept the licence, download the latest SDK for Max-OS and install
-it.
-
 
 <h3>Step 3: Install the Required Tools</h3>
  
@@ -59,6 +52,14 @@ it.
       <li>Install <a href="https://brew.sh/">Homebrew</a> package manager for OS X.</li>
       <li>
        <kbd>brew install jpeg swi-prolog berkeley-db</kbd>
+      </li>
+      <li> Rebuild swi-prolog with Java Support
+        <br>
+        <kdb>brew edit swi-prolog</kdb>
+        <br>
+        Set -DSWIPL_PACKAGES_JAVA=ON
+      </li>
+       <kdb>brew reinstall swi-prolog -s -v</kdb>
       </li>
 </ul>
 
