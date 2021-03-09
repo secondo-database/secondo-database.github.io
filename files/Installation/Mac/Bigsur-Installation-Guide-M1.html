@@ -11,7 +11,10 @@
 
 <h1>Secondo on macOS Big Sur (11.0): Installation Instructions for ARM-CPUs (M1)</h1>
 
-<b>Please Note:</b> The M1 Port of SECONDO is current in development. Some features like the optimizer server can currently not be compiled. There a no ARM-Native based JDKs available at the moment.
+<b>Please Note:</b> 
+<div>
+  The M1 Port of SECONDO is current under development. Some features like the optimizer server can currently not be compiled. There are no native ARM-based JDKs available at the moment. Thefore, no SWI-Prolog with JNI support can be compiled.
+ </div>
   
 To be able to compile the Secondo database system, 
 some tools and libraries must be installed. This 
@@ -59,7 +62,7 @@ it.
 
 
 
-<h3>Step 5: Install further tools and set environments variables</h3>
+<h3>Step 4: Install further tools and set environments variables</h3>
  <ul>
    <li> open a terminal and navigate into a directory of your choice </li>
    <li>  download the required tools for Big Sur <br>
@@ -75,7 +78,7 @@ it.
         during the installation process </li> 
 </ul>
 
-<h3>Step 6: Compiling Secondo</h3>
+<h3>Step 5: Compiling Secondo</h3>
  <ul>
    <li> open a terminal and navigate into the Secondo directory <br>
         <kbd> cd $HOME/secondo </kbd> </li>
@@ -95,15 +98,6 @@ Step 5 from the installation processs
 </div>
 <br>
 <div>
-
-<div>
-If you have upgraded your Prolog Installation, please execute the following commands:<br>
-<br>
-<tt>JPL=$(find /Applications -name "libjpl.dylib")</tt><br>
-<tt>PL=$(find /Applications -name "libswipl.dylib")</tt><br>
-<tt>SWIPLDIR=$(dirname $PL)</tt><br>
-<tt>install_name_tool -add_rpath $SWIPLDIR $JPL</tt><br>
-</div>
 
 <br>
 
