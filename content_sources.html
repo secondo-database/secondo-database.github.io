@@ -22,16 +22,16 @@ you should remove this old version completely (or just rename the containing fol
 <h2> Technical Details </h2>
 
 <table>
- <tr> <th align=right> Release Date:  </th> <td> 2020-05-29 </td></tr>
- <tr> <th align=right> Version:       </th> <td> Secondo 4.2.0 </td> </tr>
- <tr> <th align=right> Download Size: </th> <td> 81 MB </td> </tr>
+ <tr> <th align=right> Release Date:  </th> <td> 2021-09-03 </td></tr>
+ <tr> <th align=right> Version:       </th> <td> Secondo 4.3.0 </td> </tr>
+ <tr> <th align=right> Download Size: </th> <td> 100 MB </td> </tr>
  <tr> <th align=right> Encoding:      </th> <td> Latin-1 </td></tr>
- <tr> <th align=right> md5sum:        </th> <td> a4e55c2a79aaab193ed2dc125ad710af </td></tr>
- <tr> <th align=right> sha1sum:       </th> <td> 9311456a0a704bb8f60d223da4f79b94a60acf51 </td></tr>
+ <tr> <th align=right> md5sum:        </th> <td> b3b1818a026741a1ea46a9d6e9c863b2 </td></tr>
+ <tr> <th align=right> sha1sum:       </th> <td> f1e20411d93771929d4cd474e8aa89c315ca13be </td></tr>
  <tr> <th valign=top align=right > Known to Work With: </th> <td>
         <ul>
-          <li> Ubuntu 16.04, 18.04, 20.04 </li>
-          <li> Debian 10 </li>
+          <li> Ubuntu 16.04, 18.04, 20.04, 20.10 </li>
+          <li> Debian 10 / 11 </li>
           <li> OS X 10.15 Catalina, macOS 11.00 Big Sur</li>
         </ul>
       </td> </tr>
@@ -39,7 +39,7 @@ you should remove this old version completely (or just rename the containing fol
 
 <h2> Download </h2>
 
-The <span class="secondo">Secondo</span> sources can be downloaded <a href="https://github.com/secondo-database/secondo/archive/RC_420.tar.gz">here</a>. <br>
+The <span class="secondo">Secondo</span> sources can be downloaded <a href="http://merian.fernuni-hagen.de/secondo/download/secondo-RC_430-LAT1.tar.gz">here</a>. <br>
 <br>
 The sources of the current development version can be found on <a href="https://github.com/secondo-database/secondo/" target="_blank">GitHub</a>.
 <!--<a class="btn" href="https://github.com/secondo-database/secondo/archive/RC_420.tar.gz">Download</a>-->
@@ -75,6 +75,29 @@ At this place, we provide some patches for the current <span class="secondo">Sec
 </table>
 -->
 
+  
+<h2> Release Notes, Version 4.3.0 </h2>
+<ul>
+  <li> Support new compiler versions </li>
+  <li> Support new operating systems (OS X 11, OS X on ARM / M1 chips, Ubuntu 20.10, Debian 11) </li>
+  <li> Improved OS X installer, based on Homebrew </li>
+  <li> Extended algebra modules
+     <ul>
+       <li> Distributed5Algebra: Implements overlapping scheduling of distributed queries</li>
+       <li> Distributed2Algebra: Added areduce operator for dynamic scheduling</li>
+       <li> New Types and Operators in several algebra modules </li>
+     </ul>
+  </li>
+  <li> New algebra modules 
+     <ul>
+       <li> PropertyGraph2: Allows the creation of property graphs based on stored relations </li>
+       <li> PyStreamAlgebra: Provides an API for Python scripts </li>
+     </ul>
+  </li>
+  <li> Several bug fixes have been done in different modules </li>
+  <li> Parallel building with "make -j <number>" is supported </li>
+</ul>
+  
 <h2> Release Notes, Version 4.2.0 </h2>
 <ul>
   <li> Support new compiler versions </li>
@@ -292,6 +315,18 @@ For some nostalgic reasons, here some old and even older versions can be found.
 <th>Notes</th>
 </tr>
 
+  
+<tr>
+<td>2020-05-29</td>
+<td>4.2.0</td>
+<td><a href="https://github.com/secondo-database/secondo/archive/secondo_V4_1_3_RC1.tar.gz">Source Code</a>(81 MB)<br>
+     md5sum: a4e55c2a79aaab193ed2dc125ad710af <br>
+     sha1sum: 9311456a0a704bb8f60d223da4f79b94a60acf51
+</td>
+<td></td>
+</tr>
+
+  
 <tr>
 <td>29/11/2019</td>
 <td>4.1.3</td>
