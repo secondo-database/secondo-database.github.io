@@ -14,7 +14,7 @@
 
 <h1>Installation on Ubuntu using <tt>apt-get</tt></h1>
 
-We provide <tt>.deb</tt> packages for Ubuntu 20.04 (LTS), 18.04 (LTS), and 16.04 (LTS). These
+We provide <tt>.deb</tt> packages for Ubuntu 21.10, 20.04 (LTS), 18.04 (LTS), and 16.04 (LTS). These
 packages work on 64-Bit installations. 
 These packages can be used to setup <span class="secondo">Secondo</span> within 
 a few minutes on your computer. We recommend this installation type for new users, 
@@ -33,19 +33,25 @@ sudo su -l root
 </pre>
 After that extend your repository list by entering:<br>
 <br>
+Ubuntu 21.10<br>
+<pre>
+echo "deb http://merian.fernuni-hagen.de/secondo/download/repos/impishindri ./" >> /etc/apt/sources.list
+</pre>
+
 Ubuntu 20.04<br>
 <pre>
-echo "deb https://secondo-database.github.io/files/Installation/Ubuntu/repos/focalfossa ./" >> /etc/apt/sources.list
+echo "deb http://merian.fernuni-hagen.de/secondo/download/repos/focalfossa ./" >> /etc/apt/sources.list
 </pre>
+
 
 Ubuntu 18.04<br>
 <pre>
-echo "deb https://secondo-database.github.io/files/Installation/Ubuntu/repos/bionicbeaver ./" >> /etc/apt/sources.list
+echo "deb http://merian.fernuni-hagen.de/secondo/download/repos/bionicbeaver ./" >> /etc/apt/sources.list
 </pre>
 
 Ubuntu 16.04<br>
 <pre>
-echo "deb https://secondo-database.github.io/files/Installation/Ubuntu/repos/xenial ./" >> /etc/apt/sources.list
+echo "deb http://merian.fernuni-hagen.de/secondo/download/repos/xenial ./" >> /etc/apt/sources.list
 </pre>
 
 Update the list of the available packages:<br>
