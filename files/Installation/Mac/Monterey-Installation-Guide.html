@@ -80,7 +80,18 @@ be distributed together with Secondo.
    <li>open SWI-Prolog at least one time to ensure it can be opened </li>
 </ul>
 
-<h3>Step 5: Install further tools and set environments variables</h3>
+<h3>Step 5: Install the Required Tools</h3>
+ 
+<b>Note:</b> Some algebras of SECONDO are using further dependencies. We recommend installing the <a href="https://brew.sh/">Homebrew</a> package manager for OS X. Using the package manager, these dependencies can be easily installed. 
+
+<ul>
+      <li>Install the <a href="https://brew.sh/">Homebrew</a> package manager for OS X.</li>
+      <li>
+       <kbd>brew install jpeg gmp</kbd>
+      </li>
+</ul>
+
+<h3>Step 6: Install further tools and set environments variables</h3>
  <ul>
    <li> open a terminal and navigate into a directory of your choice </li>
    <li>  download the required tools for Big Sur <br>
@@ -96,7 +107,7 @@ be distributed together with Secondo.
         during the installation process </li> 
 </ul>
 
-<h3>Step 6: Compiling Secondo</h3>
+<h3>Step 7: Compiling Secondo</h3>
  <ul>
    <li> open a terminal and navigate into the Secondo directory <br>
         <kbd> cd $HOME/secondo </kbd> </li>
@@ -105,7 +116,6 @@ be distributed together with Secondo.
    <li> Start Secondo according to the <a href="/secondo/files/Documentation/General/SecondoManual.pdf" target="_blank">Secondo's User Manual </a></li>
  </ul>
 
-<b>Note:</b> Some algebras of SECONDO are using further dependencies. We recommend installing the <a href="https://brew.sh/">Homebrew</a> package manager for OS X. Using the package manager, these dependencies can be easily installed (e.g., <tt>brew install gmp</tt> or <tt>brew install libjpeg</tt>). 
 
 <h2>Upgrade</h2>
 <div>Please ensure that you have installed at least Xcode 13 and the Xcode 13 command line tools are active (see Xcode &rarr; Preferences &rarr; Locations &rarr; Command Line Tools). 
