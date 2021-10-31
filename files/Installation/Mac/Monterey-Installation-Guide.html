@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <link rel="stylesheet" type="text/css" href="/Secondo.html/secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+
+<h1>Secondo on macOS Monterey (12.0): Installation Instructions</h1>
+
+To be able to compile the Secondo database system, 
+some tools and libraries must be installed. This 
+document describes how to install all required tools.
+
+<h2>Fresh Installation</h2>
+<h3>Step 1: Installing xcode command line tools</h3>
+<ul>
+ <li> open a terminal </li>
+ <li> enter the following line: <br>
+      <kbd> gcc --version </kbd>
+ </li>
+</ul>
+If the xcode tools are already present, the gcc's version is 
+printed out. Otherwise a window pops up. Just click on <kbd>install</kbd>.
+
+<h3>Step 2: Installing Java-SDK</h3>
+
+<ul>
+ <li> open a terminal or use the one of the xcode installation </li>
+ <li> enter the following line <br>
+      <kbd>  javac -version </kbd>
+ </li>
+</ul>
+If the Java SDK is already installed, the java compiler's version is
+displayed. Otherwise a browser is opened showing Oracle's Java download 
+page. Accept the licence, download the latest SDK for Max-OS and install
+it.
+
+
+<h3>Step 3: Installing the Berkeley DB</h3>
+Secondo uses the Berkeley-DB as a storage manager. Thus, an installation
+of this tool is required. Because of licensing issues, this library cannot
+be distributed together with Secondo. 
+<ul>
+  <li> open a browser and navigate to the 
+   <a href="http://www.oracle.com/technetwork/database/berkeleydb/downloads/index.html" target="_blank">
+   Berkeley-DB download page </a> </li>
+  <li> download the <kbd>db...tar.gz</kbd> file of the latest Berkeley-DB version   </li>
+  <li>  this requires an Oracle account  <br>
+        if you don't have such account, just create it. it's for free </li>
+  <li> open a terminal and navigate to the folder containing the <kbd>db....tar.gz</kbd> archive </li>
+  <li> enter the following commands <br>
+       (for other  versions of the Berkeley-DB, just change the names in the first
+       two commands): <br>
+   <kbd> tar -xzf db-18.1.40.tar.gz </kbd> <br>
+   <kbd> cd  db-18.1.40 </kbd> <br>
+   <kbd> cd build_unix </kbd> <br>
+   <kbd> ../dist/configure --prefix=$HOME/BDB --enable-cxx </kbd> <br>
+   <kbd> make </kbd> <br>
+   <kbd> mkdir $HOME/BDB </kbd> <br>
+   <kbd> make install </kbd>
+   </li>
+</ul>
+
+
+<h3>Step 4: Installing SWI-Prolog</h3>
+ 
+ <ul>
+   <li> open a browser and go to the <a href="https://www.swi-prolog.org/" target="_blank">home of SWI-Prolog</a></li>
+   <li> click on <strong>Download &rarr; Swi-Prolog</strong> </li>
+   <li> click on <strong>Stable release</strong>. The SDK is tested with <a href="https://www.swi-prolog.org/download/stable/bin/">Prolog 8.2.2</a>. Prolog 8.2.3 is not supported because of an <a href="https://github.com/SWI-Prolog/packages-jpl/issues/91">issue</a> in this version. Prolog 8.2.4 should work again.</li>
+   <li> click on the MacOSX version to download the <kbd>dmg</kbd> file </li>
+   <li> open <i>Finder</i>, go to Downloads and double click on this dmg file  </li>
+   <li> some time later, a SWI-Prolog icon is shown together with the 
+       application folder </li>
+   <li>drag the SWI-Prolog icon into the application folder </li>
+   <li>open SWI-Prolog at least one time to ensure it can be opened </li>
+</ul>
+
+<h3>Step 5: Install further tools and set environments variables</h3>
+ <ul>
+   <li> open a terminal and navigate into a directory of your choice </li>
+   <li>  download the required tools for Big Sur <br>
+     <kbd>cd ~/Downloads</kbd><br>
+     <kbd>   curl -L http://merian.fernuni-hagen.de/secondo/download/SDK_OSX_MONTEREY.tar.gz --output SDK_OSX_MONTEREY.tar.gz</kbd> </li>
+   <li> unpack the downloaded file <br>
+     <kbd>  tar -xzf SDK_OSX_MONTEREY.tar.gz </kbd> </li>
+   <li>  change the directory <br>
+     <kbd> cd SDK_Monterey </kbd> </li>
+   <li> run the installation script <br>
+     <kbd> ./Install_On_Monterey.sh</kbd> </li>
+   <li> if applicable change your <kbd>.profile</kbd> file according to the instructions printed out
+        during the installation process </li> 
+</ul>
+
+<h3>Step 6: Compiling Secondo</h3>
+ <ul>
+   <li> open a terminal and navigate into the Secondo directory <br>
+        <kbd> cd $HOME/secondo </kbd> </li>
+   <li> compile Secondo <br>
+        <kbd> make </kbd> </li>
+   <li> Start Secondo according to the <a href="/secondo/files/Documentation/General/SecondoManual.pdf" target="_blank">Secondo's User Manual </a></li>
+ </ul>
+
+<b>Note:</b> Some algebras of SECONDO are using further dependencies. We recommend installing the <a href="https://brew.sh/">Homebrew</a> package manager for OS X. Using the package manager, these dependencies can be easily installed (e.g., <tt>brew install gmp</tt> or <tt>brew install libjpeg</tt>). 
+
+<h2>Upgrade</h2>
+<div>Please ensure that you have installed at least Xcode 13 and the Xcode 13 command line tools are active (see Xcode &rarr; Preferences &rarr; Locations &rarr; Command Line Tools). 
+<div>
+To upgrade from a previous OS X / SDK version, please execute:<br>
+<br>
+<tt>mv ${SECONDO_SDK} ${SECONDO_SDK}.old</tt><br>
+Step 5 from the installation processs
+<br>
+</div>
+<br>
+<div>
+
+<div>
+If you have upgraded your Prolog Installation, please execute the following commands:<br>
+<br>
+<tt>JPL=$(find /Applications -name "libjpl.dylib")</tt><br>
+<tt>PL=$(find /Applications -name "libswipl.dylib")</tt><br>
+<tt>SWIPLDIR=$(dirname $PL)</tt><br>
+<tt>install_name_tool -add_rpath $SWIPLDIR $JPL</tt><br>
+</div>
+
+<br>
+
+In your Secondo source directory please execute:<br>
+<br>
+<tt>make clean</tt><br>
+<tt>make</tt>
+</div>
+
+<br>
+That is all, your Secondo SDK is successfully upgraded.
+<br>
+
+<div class="footnote">
+ Last Changed: 2021-11-01 (JNI)
+</div>
+
+
+</body>
+</html>
+
+

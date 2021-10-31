@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <link rel="stylesheet" type="text/css" href="/secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+
+<h1>Secondo on macOS Monterey (12): Installation Instructions for ARM-CPUs (M1)</h1>
+
+<h2>Please Note</h2> 
+<div>
+  <b>Warning:</b> The M1 Port of SECONDO is current under development. Some features might be unstable.
+ </div>
+ 
+ <br>
+ <br>
+To be able to compile the Secondo database system, 
+some tools and libraries must be installed. This 
+document describes how to install all required tools.
+
+<h2>Fresh Installation</h2>
+<h3>Step 1: Installing xcode command line tools</h3>
+<ul>
+ <li> open a terminal </li>
+ <li> enter the following line: <br>
+      <kbd> clang --version </kbd>
+ </li>
+</ul>
+If the xcode tools are already present, the compiler version is 
+printed out. Otherwise a window pops up. Just click on <kbd>install</kbd>.
+
+<h3>Step 2: Install a M1 native Java SDK</h3>
+
+<ul>
+ <li> For building SECONDO on a M1 CPU, a native Java SDK needs to be installed.</li>
+ <li> SECONDO is tested with the <a href="https://www.azul.com/downloads/zulu-community">Azul 13.0 SDK for ARM 64-bit (DMG installer)</a>
+ <li> Verify that this SDK is used by calling <kbd>/usr/libexec/java_home</kbd>
+</ul>
+
+<h3>Step 3: Install the Required Tools</h3>
+ 
+ <ul>
+      <li>Install the <a href="https://brew.sh/">Homebrew</a> package manager for OS X.</li>
+      <li>
+       <kbd>brew install jpeg swi-prolog berkeley-db</kbd>
+      </li>
+      <li> Rebuild swi-prolog with Java Support
+        <br>
+        <kbd>brew edit swi-prolog</kbd>
+        <br>
+        Set -DSWIPL_PACKAGES_JAVA=ON
+      </li>
+       <kbd>brew reinstall swi-prolog -s -v</kbd>
+      </li>
+</ul>
+
+
+
+<h3>Step 4: Install further tools and set environments variables</h3>
+ <ul>
+   <li> open a terminal and navigate into a directory of your choice </li>
+   <li>  download the required tools for Monterey <br>
+     <kbd>cd ~/Downloads</kbd><br>
+     <kbd>   curl -L http://merian.fernuni-hagen.de/secondo/download/SDK_OSX_MONTEREY.tar.gz --output SDK_OSX_MONTEREY.tar.gz</kbd> </li>
+   <li> unpack the downloaded file <br>
+     <kbd>  tar -xzf SDK_OSX_MONTEREY.tar.gz </kbd> </li>
+   <li>  change the directory <br>
+     <kbd> cd SDK_Bigsur </kbd> </li>
+   <li> run the installation script <br>
+     <kbd> ./Install_On_Monterey.sh</kbd> </li>
+   <li> if applicable change your <kbd>.profile</kbd> file according to the instructions printed out
+        during the installation process </li> 
+</ul>
+
+<h3>Step 5: Compiling Secondo</h3>
+ <ul>
+   <li> open a terminal and navigate into the Secondo directory <br>
+        <kbd> cd $HOME/secondo </kbd> </li>
+   <li> compile Secondo <br>
+        <kbd> make </kbd> </li>
+   <li> Start Secondo according to the <a href="/secondo/files/Documentation/General/SecondoManual.pdf" target="_blank">Secondo's User Manual </a></li>
+ </ul>
+
+<h2>Upgrade</h2>
+<div>Please ensure that you have installed at least Xcode 13 and the Xcode 13 command line tools are active (see Xcode &rarr; Preferences &rarr; Locations &rarr; Command Line Tools). 
+<div>
+To upgrade from a previous OS X / SDK version, please execute:<br>
+
+<ul>
+ <li><tt>mv ${SECONDO_SDK} ${SECONDO_SDK}.old</tt></li>
+ <li>Repeat the installation processs</li>
+ <li>
+   In your Secondo source directory please execute:<br>
+    <br>
+     <tt>make clean</tt><br>
+     <tt>make</tt>
+  </li>
+</ul>
+
+<br>
+That is all, your Secondo SDK is successfully upgraded.
+<br>
+
+<div class="footnote">
+ Last Changed: 2021-11-01 (JNI)
+</div>
+
+
+</body>
+</html>
+
+
