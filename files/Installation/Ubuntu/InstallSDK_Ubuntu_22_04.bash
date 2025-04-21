@@ -51,7 +51,7 @@ if [ "$platform" == "i686" ]; then
 	echo 'export PL_LIB_DIR=$SWI_HOME_DIR/lib/i386/' >>$HOME/.secondorc
 	echo 'export PL_DLL_DIR=$PL_LIB_DIR' >> $HOME/.secondorc
 	echo 'export PL_INCLUDE_DIR=$SWI_HOME_DIR/include' >>$HOME/.secondorc
-	echo 'export PL_VERSION=70203' >>$HOME/.secondorc
+	echo 'export PL_VERSION=80402' >>$HOME/.secondorc
 	echo 'export JPL_DLL=$PL_LIB_DIR/libjpl.so' >>$HOME/.secondorc
 	echo 'export JPL_JAR=$SWI_HOME_DIR/lib/jpl.jar' >>$HOME/.secondorc
 	echo 'export readline=true' >>$HOME/.secondorc
@@ -86,7 +86,7 @@ else
        fi
 	echo 'export PL_DLL_DIR=$PL_LIB_DIR' >> $HOME/.secondorc
 	echo 'export PL_INCLUDE_DIR=$SWI_HOME_DIR/include' >>$HOME/.secondorc
-	echo 'export PL_VERSION=70203' >>$HOME/.secondorc
+	echo 'export PL_VERSION=80402' >>$HOME/.secondorc
 	echo 'export JPL_DLL=$PL_LIB_DIR/libjpl.so' >>$HOME/.secondorc
 	echo 'export JPL_JAR=$SWI_HOME_DIR/lib/jpl.jar' >>$HOME/.secondorc
 	echo 'export readline=true' >>$HOME/.secondorc
