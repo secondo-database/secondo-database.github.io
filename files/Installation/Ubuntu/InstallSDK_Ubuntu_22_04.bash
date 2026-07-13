@@ -19,7 +19,7 @@ sudo apt-get -y update
 sudo apt-get -y upgrade
 
 # Install all tools required to compile Secondo
-sudo apt-get -y install flex bison gcc g++ libdb5.3 libdb5.3-dev libdb5.3++ libdb5.3++-dev db5.3-util libjpeg62 libjpeg62-dev libgsl0-dev openjdk-8-jdk libreadline-dev librecode-dev libgmp-dev libncurses-dev libxml2-dev original-awk libquadmath0 libgmp-dev libgmp10 original-awk libboost-all-dev libbison-dev
+sudo apt-get -y install flex bison gcc g++ libdb5.3 libdb5.3-dev libdb5.3++ libdb5.3++-dev db5.3-util libjpeg62 libjpeg62-dev libgsl0-dev openjdk-8-jdk libreadline-dev librecode-dev libgmp-dev libncurses-dev libxml2-dev original-awk libquadmath0 libgmp-dev libgmp10 original-awk libboost-all-dev libbison-dev nlohmann-json3-dev
 
 #   Install latex and okular to be able to use pdview within Secondo:
 sudo apt-get -y install texlive okular

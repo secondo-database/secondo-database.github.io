@@ -132,7 +132,8 @@ just follow the instructions for your system.
 On macOS, all tools required by <span class="secondo">Secondo</span> are installed
 with the <a href="https://brew.sh/">Homebrew</a> package manager &mdash; a separate
 SDK download is <b>no longer needed</b>. The steps below are verified on
-macOS&nbsp;15 on both Intel (x86_64) and Apple Silicon (arm64). Enter the commands
+macOS&nbsp;15 (Sequoia) and macOS&nbsp;26 (Tahoe), on both Intel (x86_64) and
+Apple Silicon (arm64). Enter the commands
 in a terminal.
 </p>
 
@@ -156,7 +157,7 @@ xcode-select --install
 <li>
 <b>Install the build tools and libraries:</b>
 <pre>
-brew install flex bison berkeley-db gsl jpeg-turbo boost gmp libxml2 readline
+brew install flex bison berkeley-db gsl jpeg-turbo boost gmp libxml2 readline nlohmann-json
 </pre>
 Homebrew's <code>flex</code> and <code>bison</code> are "keg-only" and are not put
 on the <code>PATH</code> automatically. Add them to your <code>~/.zshrc</code>:
