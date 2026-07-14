@@ -14,62 +14,63 @@
 
 <h1>Installation on Ubuntu using <tt>apt-get</tt></h1>
 
-We provide <tt>.deb</tt> packages for Ubuntu 21.10, 20.04 (LTS), 18.04 (LTS), and 16.04 (LTS). These
-packages work on 64-Bit installations. 
-These packages can be used to setup <span class="secondo">Secondo</span> within 
-a few minutes on your computer. We recommend this installation type for new users, 
-who want to gain first experience with the <span class="secondo">Secondo</span> system. 
-For advanced users, who want to develop their own extensions, we recommend to install 
-the <span class="secondo">Secondo</span>-SDK.
+We provide <tt>.deb</tt> packages for Ubuntu 26.04, 24.04 (LTS), and 22.04 (LTS) on the
+Intel/AMD architecture (<tt>x86_64/amd64</tt>).
+
+These packages can be used to setup <span class="secondo">Secondo</span> within
+a few minutes on your computer. We recommend this installation type for new users,
+who want to gain first experience with the <span class="secondo">Secondo</span> system.
+For advanced users, who want to develop their own extensions, we recommend to build
+<span class="secondo">Secondo</span> from the sources.
 
 <h2>Installation of <span class="secondo">Secondo</span></h2>
 
-To install <span class="secondo">Secondo</span> via <tt>apt-get</tt>, 
-add the <span class="secondo">Secondo</span> repository to your <tt>sources.list</tt>.
-This must be done using the <code>root</code> account. Note that the <code>sudo</code> command 
-does not work with redirecting into files. To get the <code>root</code> account, enter:<br>
-<pre>
-sudo su -l root
-</pre>
-After that extend your repository list by entering:<br>
+To install <span class="secondo">Secondo</span> via <tt>apt-get</tt>,
+add the <span class="secondo">Secondo</span> repository for your Ubuntu release to
+your package sources. Pick the line that matches your release:<br>
 <br>
-Ubuntu 21.10<br>
+
+Ubuntu 26.04<br>
 <pre>
-echo "deb http://newton2.fernuni-hagen.de/secondo/download/repos/impishindri ./" >> /etc/apt/sources.list
+echo 'deb [trusted=yes] https://secondo-database.github.io/secondo/apt/ubuntu/26.04/ ./' | sudo tee /etc/apt/sources.list.d/secondo.list
 </pre>
 
-Ubuntu 20.04<br>
+Ubuntu 24.04<br>
 <pre>
-echo "deb http://newton2.fernuni-hagen.de/secondo/download/repos/focalfossa ./" >> /etc/apt/sources.list
+echo 'deb [trusted=yes] https://secondo-database.github.io/secondo/apt/ubuntu/24.04/ ./' | sudo tee /etc/apt/sources.list.d/secondo.list
 </pre>
 
-
-Ubuntu 18.04<br>
+Ubuntu 22.04<br>
 <pre>
-echo "deb http://newton2.fernuni-hagen.de/secondo/download/repos/bionicbeaver ./" >> /etc/apt/sources.list
+echo 'deb [trusted=yes] https://secondo-database.github.io/secondo/apt/ubuntu/22.04/ ./' | sudo tee /etc/apt/sources.list.d/secondo.list
 </pre>
 
-Ubuntu 16.04<br>
-<pre>
-echo "deb http://newton2.fernuni-hagen.de/secondo/download/repos/xenial ./" >> /etc/apt/sources.list
-</pre>
+The repository is not signed, which is what the <tt>[trusted=yes]</tt> option tells
+<tt>apt</tt>.<br>
+<br>
 
 Update the list of the available packages:<br>
 <pre>
-apt-get update
+sudo apt-get update
 </pre>
 
 Install <span class="secondo">Secondo</span> and all required dependencies:<br>
 <pre>
-apt-get install secondo
+sudo apt-get install secondo
 </pre>
 
 <h2>Running <span class="secondo">Secondo</span></h2>
 
-Before starting the first session, each user who wants to work with <span class="secondo">Secondo</span> 
+Before starting the first session, each user who wants to work with <span class="secondo">Secondo</span>
 has to execute the <span class="secondo">Secondo</span> installer. This script creates the required environment:
 <pre>
 /opt/secondo/bin/secondo_installer.sh
+</pre>
+
+The installer writes the file <tt>~/.secondorc</tt> and makes your shell read it on login.
+To use <span class="secondo">Secondo</span> in the current shell without logging in again, enter:
+<pre>
+source ~/.secondorc
 </pre>
 
 
@@ -108,7 +109,7 @@ Single User programs accessing the same database directory.
 For details see the User Manual.
 
 <div class="footnote">
-Last Changed: 2020-05-29 (JNI)
+Last Changed: 2026-07-14 (JNI)
 </div>
 
 
