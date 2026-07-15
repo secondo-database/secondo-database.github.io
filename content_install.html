@@ -16,8 +16,25 @@
 
 <h1> Installation Instructions </h1>
 
-This page explains how to install the tools required for creating <span class="secondo">Secondo</span> on your computer. Currently supported
-operating systems are several Linux distributions and Mac OS variants. The installation of <span class="secondo">Secondo</span> itselfs is explained on the <a href="content_sources.html">Sources</a> page.
+This page explains how to install <span class="secondo">Secondo</span> and the tools it
+requires on your computer. The currently supported and CI-verified paths are a build from
+sources on <b>Ubuntu / Debian</b>, precompiled <tt>.deb</tt> binary packages for Ubuntu,
+and a build on <b>macOS</b> using <a href="https://brew.sh/">Homebrew</a>. Older
+distributions are covered by the
+<a href="content_install_legacy.html">historical installation guides</a>. The build of
+<span class="secondo">Secondo</span> from sources itself is explained on the
+<a href="content_sources.html">Sources</a> page.
+
+<h2> Which installation is right for you? </h2>
+<ul>
+  <li> Just want to try <span class="secondo">Secondo</span> on Ubuntu &rarr;
+       <a href="#deb">binary <tt>.deb</tt> packages (apt-get)</a> </li>
+  <li> Build or extend <span class="secondo">Secondo</span> on Ubuntu / Debian &rarr;
+       <a href="#ubuntu">installation from sources</a> </li>
+  <li> macOS &rarr; <a href="#macos">installation with Homebrew</a> </li>
+  <li> Older distributions (Fedora, SuSE, older Ubuntu) &rarr;
+       <a href="content_install_legacy.html">historical installation guides</a> </li>
+</ul>
 
 <p>
 <b>No <span class="secondo">Secondo</span> SDK is required for current
@@ -30,103 +47,78 @@ is then derived automatically from the installed tools by
 hand.
 </p>
 
-<h2> Installation for Specific Operating Systems </h2>
+<h2 id="ubuntu"> Installation on Ubuntu / Debian (from sources) </h2>
 
-<span class="secondo">Secondo</span> needs some tools for compiling the sources. If you find your operating system listed here,
-just follow the instructions for your system.
+<p>
+The steps below install the tools required to compile
+<span class="secondo">Secondo</span> and then build the system from sources. They are
+verified in continuous integration on <b>Ubuntu&nbsp;22.04, 24.04 and 26.04</b> (on the
+Intel/AMD <code>x86_64</code> architecture). <b>Debian&nbsp;13 (Trixie) works in exactly
+the same way</b> &mdash; the package names below are identical on Debian. Enter the
+commands in a terminal.
+</p>
 
+<ol>
 
-<h3> Script-based Installation of the <span class="secondo">Secondo</span> Tools (Linux) </h3>
+<li>
+<b>Install the build tools and libraries.</b> These include the C/C++ compiler, Berkeley&nbsp;DB,
+the Boost libraries, a Java Development Kit (<code>default-jdk</code>) for the Java GUI and
+optimizer server, and SWI-Prolog with its Java bridge (JPL) for the optimizer:
+<pre>
+sudo apt-get update
+sudo apt-get install flex bison gcc g++ build-essential \
+    libdb5.3 libdb5.3-dev libdb5.3++ libdb5.3++-dev db5.3-util \
+    libjpeg-dev libgsl0-dev libreadline-dev librecode-dev \
+    libgmp-dev libgmp10 libncurses-dev libxml2-dev libboost-all-dev \
+    libbison-dev libfl-dev libquadmath0 nlohmann-json3-dev original-awk \
+    default-jdk swi-prolog swi-prolog-nox swi-prolog-java
+</pre>
+</li>
 
-<table BORDER="1" summary="3 columns. The 2nd is a link to a text file, the 3rd may provide a link to additional tools.">
-<tr>
-<th>Platform</th>
-<th>Installation Guide</th>
-<th>Additional Software Needed</th>
-</tr>
+<li>
+<b>Get the sources and build <span class="secondo">Secondo</span>.</b> The build
+environment (compiler, Berkeley&nbsp;DB, SWI-Prolog and JPL paths, ...) is derived
+automatically from the installed tools; you only have to set
+<code>SECONDO_BUILD_DIR</code> and source the detection script:
+<pre>
+export SECONDO_BUILD_DIR=$HOME/secondo
+source $SECONDO_BUILD_DIR/CM-Scripts/secondo-detect.sh
+</pre>
+It is convenient to add these two lines to your <code>~/.bashrc</code>, so the
+environment is set up automatically in every new terminal:
+<pre>
+echo 'export SECONDO_BUILD_DIR=$HOME/secondo' >> ~/.bashrc
+echo 'source $SECONDO_BUILD_DIR/CM-Scripts/secondo-detect.sh' >> ~/.bashrc
+</pre>
+Then download the sources and build the system as described on the
+<a href="content_sources.html">Sources</a> page (in short: run <code>make</code>
+in <code>$SECONDO_BUILD_DIR</code>).
+</li>
 
-<tr><th colspan="3"> Fedora </th></tr>
-
-<tr>
-  <td> Fedora 31 </td>
-  <td> <a href="files/Installation/Fedora/Fedora31-Installation-Guide.txt">Fedora 31 Installation Guide</a></td>
-  <td>  <a href="files/Installation/Fedora/SecondoOnFedora31.sh"> Installation Script </a> </td>
-</tr>
-
-<tr>
-  <td> Fedora 20 </td>
-  <td> <a href="files/Installation/Fedora/Fedora20-Installation-Guide.txt">Fedora 20 Installation Guide</a></td>
-  <td>  <a href="files/Installation/Fedora/SecondoOnFedora20.sh"> Installation Script </a> </td>
-</tr>
-
-<tr><th colspan="3">SuSE</th></tr>
-
-<tr>
-  <td> SuSE 15.0 </td>
-  <td> <a href="files/Installation/Suse/SuSe15.0-Installation-Guide.txt">SuSE 15.0 Installation Guide</a></td>
-  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_15_0.bash"> Installation Script </a> </td>
-</tr>
-<tr>
-  <td> SuSE 42.3 <br> SuSE 42.2 <br> SuSE 42.1 </td>
-  <td> <a href="files/Installation/Suse/SuSe42.1-Installation-Guide.txt">SuSE 42.1 Installation Guide</a></td>
-  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_42_1.bash"> Installation Script </a> </td>
-</tr>
-<tr>
-  <td> SuSE 12.2 </td>
-  <td> <a href="files/Installation/Suse/SuSe12.2-Installation-Guide.txt">SuSE 12.2 Installation Guide</a></td>
-  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_12_2.bash"> Installation Script </a> </td>
-</tr>
-
-<tr>
-  <td> SuSE 12.1 </td>
-  <td> <a href="files/Installation/Suse/SuSe12.1-Installation-Guide.txt">SuSE 12.1 Installation Guide</a></td>
-  <td>  <a href="files/Installation/Suse/secondoSDK_Suse_12_1.bash"> Installation Script </a> </td>
-</tr>
-<tr>
-  <td> SuSE 11.3 </td>
-  <td> <a href="files/Installation/Suse/SuSe11.3-Installation-Guide.txt">SuSE 11.3 Installation Guide</a></td>
-  <td> &nbsp; </td>
-</tr>
+</ol>
 
 
-<tr><th colspan="3">Ubuntu on Intel/AMD (x86_64) (Binary Installation)</th></tr>
-<tr>
-  <td> Ubuntu <br>22.04, 24.04, 26.04</td>
-  <td colspan="2"> <a href="files/Installation/Ubuntu/content_Installation_repos.html">Ubuntu Installation Guide using apt-get</a></td>
-</tr>
+<h2 id="deb"> Binary Installation via <tt>.deb</tt> Packages (Ubuntu, apt-get) </h2>
+
+<p>
+For users who just want to try <span class="secondo">Secondo</span> without compiling it,
+we provide precompiled <tt>.deb</tt> packages for Ubuntu&nbsp;22.04, 24.04 and 26.04. They
+install <span class="secondo">Secondo</span> and all of its dependencies within a few
+minutes via <tt>apt-get</tt>, and are the recommended starting point for new users.
+Developers who want to build their own extensions should instead build
+<a href="#ubuntu">from sources</a> as described above.
+</p>
+
+<p>
+See the
+<a href="files/Installation/Ubuntu/content_Installation_repos.html">Ubuntu installation
+guide using apt-get</a> for the full instructions. Note that these packages are built for
+the <code>x86_64</code>/<code>amd64</code> architecture only; on other architectures
+(e.g. arm64) please <a href="#ubuntu">build from sources</a>.
+</p>
 
 
-<tr><th colspan="3">Ubuntu (Full Installation)</th></tr>
-<tr>
-  <td> Ubuntu 24.04 </td>
-  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_24_04.html">Ubuntu 24.04 Installation Guide</a></td>
-  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_24_04.bash"> Installation Script </a> </td>
-</tr>
-<tr>
-  <td> Ubuntu 22.04 </td>
-  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_22_04.html">Ubuntu 22.04 Installation Guide</a></td>
-  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_22_04.bash"> Installation Script </a> </td>
-</tr>
-<tr>
-  <td> Ubuntu 21.10 </td>
-  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_21_10.html">Ubuntu 21.10 Installation Guide</a></td>
-  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_21_10.bash"> Installation Script </a> </td>
-</tr>
-<tr>
-  <td> Ubuntu 20.10 <br> Ubuntu 20.04 </td>
-  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_20_04.html">Ubuntu 20.04 Installation Guide</a></td>
-  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_20_04.bash"> Installation Script </a> </td>
-</tr>
-<tr>
-  <td> Ubuntu 18.04<br> Ubuntu 16.04 </td>
-  <td> <a href="files/Installation/Ubuntu/content_Installation_Ubuntu_16_04.html">Ubuntu 16.04 Installation Guide</a></td>
-  <td> <a href="files/Installation/Ubuntu/InstallSDK_Ubuntu_16_04.bash"> Installation Script </a> </td>
-</tr>
-</table>
-
-
-
-<h3>Installation on macOS (Intel and Apple Silicon)</h3>
+<h2 id="macos">Installation on macOS (Intel and Apple Silicon)</h2>
 
 <p>
 On macOS, all tools required by <span class="secondo">Secondo</span> are installed
@@ -222,7 +214,7 @@ in <code>$SECONDO_BUILD_DIR</code>).
 </ol>
 
 
-<h4>Upgrading the macOS version</h4>
+<h3>Upgrading the macOS version</h3>
 
 After an upgrade of the macOS operating system, the Xcode developer tools
 have to be reinstalled. If you have upgraded your system and the call of <code> make </code>
@@ -240,8 +232,17 @@ installation is finished. After that, the <code>make</code> process should run
 as before.
 
 
+<h2> Installation Guides for Historical Distributions </h2>
+
+<p>
+Older operating-system releases (Fedora, SuSE, and older Ubuntu versions) were installed
+with per-version scripts that are no longer maintained. They are kept for reference on the
+<a href="content_install_legacy.html">historical installation guides</a> page.
+</p>
+
+
 <div class="footnote">
- Last Changed: 2026-07-12 (JNI)
+ Last Changed: 2026-07-15 (JNI)
 </div>
 
 
