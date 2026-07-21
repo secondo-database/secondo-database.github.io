@@ -1,0 +1,419 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
+
+
+<h1> Analyzing SECONDO Crashes </h1>
+
+<p>
+This page describes how a crash of <span class="secondo">Secondo</span> can be analyzed.
+For the demonstration of a crash, the <code>faultcrash</code> operator is used, which is
+part of the <code>AuxiliaryAlgebra</code>. This operator forwards a stream of tuples and
+crashes the system with a certain probability. This operator is primarily used in
+<span class="secondo">Secondo</span> to demonstrate the error recovery capability of the
+distributed algebras. For example, the query
+<code>query plz feed faultcrash[100] count</code> crashes the system with a probability of
+(1/100) = 1% per processed tuple.
+</p>
+
+<h3> Table of Contents </h3>
+<ul>
+  <li> <a href="#autostacktrace">Automatically Generated Stacktrace</a> </li>
+  <li> <a href="#manualdecode">Decode the Stacktrace Manually</a> </li>
+  <li> <a href="#valgrind">Using Valgrind</a> </li>
+  <li> <a href="#gdb">Using the GNU Debugger (GDB) and Core Dumps on Linux</a> </li>
+  <li> <a href="#lldb">Using the Low-Level Debugger (lldb) on macOS</a> </li>
+</ul>
+
+
+<h2><a name="autostacktrace"></a> Automatically Generated Stacktrace </h2>
+
+<p>
+After <span class="secondo">Secondo</span> has crashed, a signal handler is called, which
+tries to dump the current stack. To be more precise: in
+<code>Tools/Utilities/Application.cpp</code>, a signal handler is defined and called on
+<a href="https://en.wikipedia.org/wiki/Signal_(IPC)#POSIX_signals" target="_blank">signals</a>
+like <code>SIGINT</code>, <code>SIGTERM</code>, or <code>SIGFPE</code>.
+</p>
+
+<h3> Default Stacktrace </h3>
+
+<p>
+The generated stacktrace is a convenient way to get a first impression of which method has
+caused the crash. A wrapper script (i.e., <code>bin/SecondoTTYBDB</code>) parses the output
+of the stacktrace and tries to resolve the addresses of the stack to line numbers. However,
+this method has two significant drawbacks: (1) when the stack becomes corrupted before the
+crash occurs, the stacktrace can not be generated, and (2) depending on the used compiler
+options (e.g., <code>-fPIC</code> for position independent code), the addresses of the output
+do not resolve to the real line numbers (see
+<a href="https://github.com/secondo-database/secondo/issues/6" target="_blank">#6</a>):
+</p>
+
+<pre>$ ./SecondoTTYBDB
+
+[...]
+
+Secondo =&gt; query plz feed faultcrash[100] count;
+command
+'query plz feed faultcrash[100] count'
+started at: Thu Oct 22 08:31:50 2020
+
+noMemoryOperators = 0
+perOperator = 0
+
+ Generating stack trace ...
+ ************ BEGIN STACKTRACE ************
+No stacktrace output file defined, dumping stacktrace to stdout
+./SecondoBDB(_ZN7WinUnix10stacktraceEPKcS1_+0x6d)[0x55d4f31ca5b1]
+./SecondoBDB(_ZN11Application20AbortOnSignalHandlerEi+0xf8)[0x55d4f31c1860]
+/lib/x86_64-linux-gnu/libc.so.6(+0x3efd0)[0x7fc65d4bcfd0]
+./SecondoBDB(_ZN9auxiliary14FaultLocalInfoILNS_9CrashTypeE0EE12forwardTupleEv+0x4f)[0x55d4f425dc6b]
+./SecondoBDB(_ZN9auxiliary11InjectFaultILNS_9CrashTypeE0EEEiP4WordRS2_iS4_Pv+0xfe)[0x55d4f425d944]
+./SecondoBDB(_ZN14QueryProcessor4EvalEPvR4Wordi+0xe33)[0x55d4f31f71f3]
+./SecondoBDB(_ZN14QueryProcessor7RequestEPvR4Word+0x62)[0x55d4f31f794c]
+./SecondoBDB(_Z12TCountStreamP4WordRS_iS1_Pv+0xcf)[0x55d4f335e1a0]
+./SecondoBDB(_ZN14QueryProcessor4EvalEPvR4Wordi+0xe33)[0x55d4f31f71f3]
+./SecondoBDB(_ZN14QueryProcessor5EvalPEPvR4Wordi+0xea)[0x55d4f31f5fb2]
+./SecondoBDB(main+0x1f6)[0x55d4f3175314]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7fc65d49fb97]
+./SecondoBDB(_start+0x2a)[0x55d4f3114cfa]
+*********** END STACKTRACE **********************
+
+*** Signal SIGILL (4) caught! Calling default signal handler ...</pre>
+
+<p>
+<b>Note:</b> A stacktrace has to be read from the bottom up. At the bottom you will find the
+entry point into the application, whereas at the top are the most recently called functions
+and methods.
+</p>
+
+<p>
+In the example, the first three entries are the most important ones.
+<code>_ZN7WinUnix10stacktraceEPKcS1_+0x6d</code> shows that the <code>stacktrace</code> method
+of the class <code>WinUnix</code> was run as the last method. Before this method was called,
+the <code>AbortOnSignalHandler</code> method of the class <code>Application</code> was called
+(<code>_ZN11Application20AbortOnSignalHandlerEi+0xf8</code>). The third entry on the stack is
+the most important one: <code>_ZN9auxiliary14FaultLocalInfoILNS_9CrashTypeE0EE12forwardTupleEv+0x4f</code>.
+It can be seen that the <code>forwardTuple</code> method of a class called
+<code>auxiliary</code> was called before the crash handler was executed. This is exactly the
+method of the <code>faultcrash</code> operator in the <code>AuxiliaryAlgebra</code>. In the
+next examples, the exact line number is determined where the crash has occurred.
+</p>
+
+<p>
+It can also be seen that <span class="secondo">Secondo</span> has crashed with an
+<i>Illegal Instruction Exception</i> (SIGILL).
+</p>
+
+<h3> Automatically Decoded Stacktrace </h3>
+
+<p>
+When (1) the tool <code>addr2line</code> is installed, (2)
+<span class="secondo">Secondo</span> is started from the script <code>SecondoTTYBDB</code>,
+and (3) the relocation info can be fetched from the linker, the addresses of the stacktrace
+are automatically mapped to source code lines. This gives a much clearer view of where the
+crash has occurred. However, this only works in certain environments.
+</p>
+
+<pre>========
+SECONDO has crashed, printing stack trace....
+========
+
+Binary relocation: 0x55bae030b000
+
+[... raw stacktrace addresses ...]
+
+========
+ Trying to decode the stacktrace...
+========
+
+WinUnix::stacktrace(char const*, char const*, char const*) at WinUnix.cpp:247
+Application::AbortOnSignalHandler(int) at Application.cpp:330
+?? ??:0
+auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple() at AuxiliaryAlgebra.cpp:376
+int auxiliary::InjectFault&lt;(auxiliary::CrashType)0&gt;(Word*, Word&amp;, int, Word&amp;, void*) at AuxiliaryAlgebra.cpp:421
+QueryProcessor::Eval(void*, Word&amp;, int) at QueryProcessor.cpp:4491
+QueryProcessor::Request(void*, Word&amp;) at QueryProcessor.cpp:4691
+TCountStream(Word*, Word&amp;, int, Word&amp;, void*) at RelationAlgebra.cpp:2096
+[...]
+main at MainTTY.cpp:164</pre>
+
+
+<h2><a name="manualdecode"></a> Decode the Stacktrace Manually </h2>
+
+<p>
+In certain situations (e.g., when working with the Distributed Algebra and
+<span class="secondo">Secondo</span> workers), only the default stacktrace is contained in a
+logfile. This stacktrace needs to be decoded manually by the <code>addr2line</code> tool and
+a possible <code>binary relocation</code> has to be subtracted first (see the output of the
+stacktrace). <span class="secondo">Secondo</span> ships with the helper script
+<code>bin/decode_stacktrace.sh</code> to ease the calculation and the decoding of the
+stacktrace.
+</p>
+
+<p>
+<b>Important:</b> This only works when the <span class="secondo">Secondo</span> binary on the
+used system is equal to the binary of the crashed <span class="secondo">Secondo</span>.
+Otherwise, the addresses are different in the binary, and wrong line numbers are displayed.
+</p>
+
+<p>
+To use the tool, copy the stacktrace into a textfile and start the script with the filename
+as a parameter (e.g., <code>./decode_stacktrace.sh stacktrace.txt</code>). Please ensure that
+a possible <code>Binary relocation:</code> is contained in the stacktrace file. A stacktrace
+file (e.g., <code>stacktrace.txt</code>) should look as follows:
+</p>
+
+<pre>Binary relocation: 0x55a0eaea6000
+
+./SecondoBDB(_ZN7WinUnix10stacktraceEPKcS1_S1_+0x74)[0x55a0ec18bdc6]
+./SecondoBDB(_ZN11Application20AbortOnSignalHandlerEi+0x107)[0x55a0ec18316d]
+/lib/x86_64-linux-gnu/libc.so.6(+0x3efd0)[0x7f0df2aacfd0]
+./SecondoBDB(_ZN9auxiliary14FaultLocalInfoILNS_9CrashTypeE0EE12forwardTupleEv+0x4f)[0x55a0ed25c20b]
+[...]
+./SecondoBDB(main+0x1f6)[0x55a0ec136c66]
+/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7f0df2a8fb97]
+./SecondoBDB(_start+0x2a)[0x55a0ec0d665a]</pre>
+
+<p>
+This file can now be decoded by calling <code>decode_stacktrace.sh</code>:
+</p>
+
+<pre>$ ./decode_stacktrace.sh stacktrace.txt
+
+========
+ Trying to decode the stacktrace...
+========
+
+Executing: addr2line --demangle=auto -p -fs -e SecondoBDB 0x12E5DC6 0x12DD16D [...]
+
+WinUnix::stacktrace(char const*, char const*, char const*) at WinUnix.cpp:247
+Application::AbortOnSignalHandler(int) at Application.cpp:330
+?? ??:0
+auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple() at AuxiliaryAlgebra.cpp:376
+int auxiliary::InjectFault&lt;(auxiliary::CrashType)0&gt;(Word*, Word&amp;, int, Word&amp;, void*) at AuxiliaryAlgebra.cpp:421
+QueryProcessor::Eval(void*, Word&amp;, int) at QueryProcessor.cpp:4491
+[...]
+main at MainTTY.cpp:164</pre>
+
+
+<h2><a name="valgrind"></a> Using Valgrind </h2>
+
+<p>
+<a href="https://valgrind.org/" target="_blank">Valgrind</a> is a tool to profile and debug C
+and C++ software. It allows us to detect memory leaks and also shows debug data when software
+crashes. <span class="secondo">Secondo</span> automatically calls Valgrind when the option
+<code>--valgrind</code> is provided. A drawback is that Valgrind performs many checks, which
+causes some overhead during the execution of <span class="secondo">Secondo</span> and
+significantly slows down the execution.
+</p>
+
+<pre>$ ./SecondoTTYBDB  --valgrind
+
+[...]
+
+Secondo =&gt; query plz feed faultcrash[100] count;
+
+[...]
+
+*** Signal SIGILL (4) caught! Calling default signal handler ...
+==14132==
+==14132== Process terminating with default action of signal 4 (SIGILL)
+==14132==    at 0x5EA2715: raise (raise.c:46)
+==14132==    by 0x139C8AF: Application::AbortOnSignalHandler(int) (Application.cpp:311)
+==14132==    by 0x81A2FCF: ??? (in /lib/x86_64-linux-gnu/libc-2.27.so)
+==14132==    by 0x2438C5F: auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple() (AuxiliaryAlgebra.cpp:373)
+==14132==    by 0x2438943: int auxiliary::InjectFault&lt;(auxiliary::CrashType)0&gt;(Word*, Word&amp;, int, Word&amp;, void*) (AuxiliaryAlgebra.cpp:420)
+==14132==    by 0x13D21F2: QueryProcessor::Eval(void*, Word&amp;, int) (QueryProcessor.cpp:4491)
+[...]
+==14132==    by 0x1350313: main (MainTTY.cpp:164)
+==14132==
+==14132== HEAP SUMMARY:
+==14132==     in use at exit: 38,668,949 bytes in 57,824 blocks
+==14132==   total heap usage: 241,221 allocs, 183,397 frees, 170,810,525 bytes allocated
+==14132==</pre>
+
+<p>
+Valgrind produces a cleaner stacktrace with line numbers. The stack can be read from the top
+to the bottom to see which methods have been called before the crash occurred. The most
+important lines show that the <code>AbortOnSignalHandler</code> of the class
+<code>Application</code> was called before the application crashes. Before that, the
+<code>forwardTuple</code> method of the class <code>auxiliary</code> was executed. This method
+can be found in the file <code>AuxiliaryAlgebra.cpp</code> at line 373.
+</p>
+
+
+<h2><a name="gdb"></a> Using the GNU Debugger (GDB) and Core Dumps on Linux </h2>
+
+<p>
+To overcome the slowdown that Valgrind introduces, the
+<a href="https://www.gnu.org/software/gdb/" target="_blank">GNU debugger</a> can be used
+together with <a href="https://en.wikipedia.org/wiki/Core_dump" target="_blank">core dumps</a>.
+Core dumps are generated on Unix systems after a software crashes. The core dumps contain the
+memory image of the crashed software; the call stack is a part of this memory image. To save
+disk space, most Unix systems don't generate core dumps by default. To store these files on
+disk, the command <code>ulimit -c unlimited</code> has to be executed. This sets the maximal
+size of core dumps (<code>-c</code>) to an <code>unlimited</code> amount of bytes. After the
+command is called, the core dumps of all programs that are started from this shell are written
+to disk.
+</p>
+
+<pre>$ ulimit -c unlimited
+$ ./SecondoTTYBDB
+
+[...]
+
+Secondo =&gt; query plz feed faultcrash[100] count;
+
+*** Signal SIGILL (4) caught! Calling default signal handler ...
+
+./SecondoTTYBDB: line 34: 14367 Floating point exception(core dumped) $runner $*</pre>
+
+<p>
+After <span class="secondo">Secondo</span> has crashed, a file named <code>core</code> was
+written:
+</p>
+
+<pre>$ ls -l core
+-rw------- 1 nidzwetzki nidzwetzki 51212288 Okt 22 08:41 core</pre>
+
+<p>
+This file can now be loaded into the GNU Debugger (gdb). In addition, the path to the binary
+file that has generated this core dump has to be provided. In most cases, this is
+<code>SecondoBDB</code>. However, when a problem in the server component of
+<span class="secondo">Secondo</span> has caused the crash, the appropriate binary (e.g.,
+<code>SecondoListener</code>) has to be provided as a parameter.
+</p>
+
+<pre>$ gdb SecondoBDB core
+[...]
+Core was generated by `./SecondoBDB'.
+Program terminated with signal SIGILL, Arithmetic exception.
+#0  0x000055e1bfb17c6b in auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple (this=0x55e1c210c280) at AuxiliaryAlgebra.cpp:376
+376	             __builtin_trap();
+[Current thread is 1 (Thread 0x7f6b742f37c0 (LWP 14367))]</pre>
+
+<p>
+After the core dump has been processed by <code>gdb</code>, two important pieces of
+information can be seen: (1) the method <code>forwardTuple</code> is shown together with the
+file and line number <code>AuxiliaryAlgebra.cpp:376</code> that has caused the crash, and (2)
+the line of code that has caused the crash (<code>__builtin_trap();</code>) is also shown.
+This line executes an illegal instruction, which crashes
+<span class="secondo">Secondo</span>.
+</p>
+
+<p>
+GDB provides a lot of
+<a href="https://sourceware.org/gdb/current/onlinedocs/gdb/index.html" target="_blank">useful commands</a>.
+For example, the command <code>bt</code> (short for back trace) dumps the complete stacktrace.
+</p>
+
+<pre>(gdb) bt
+#0  0x000055e1bfb17c6b in auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple (this=0x55e1c210c280) at AuxiliaryAlgebra.cpp:376
+#1  0x000055e1bfb17944 in auxiliary::InjectFault&lt;(auxiliary::CrashType)0&gt; (args=0x55e1c2413430, result=..., message=2, local=..., s=0x55e1c24133f0) at AuxiliaryAlgebra.cpp:420
+#2  0x000055e1beab11f3 in QueryProcessor::Eval (this=0x55e1c1ec96c0, node=0x55e1c24133f0, result=..., message=2) at QueryProcessor.cpp:4491
+[...]
+#15 0x000055e1bea2f314 in main (argc=1, argv=0x7ffe4780b4e8) at MainTTY.cpp:164</pre>
+
+<p>
+<b>Note:</b> Don't forget to delete the core file after the examination of the crash is done.
+This saves space and allows <span class="secondo">Secondo</span> to generate a new core dump
+on the next crash. If the core file is not generated on a Linux system, have a look at the
+file <code>/proc/sys/kernel/core_pattern</code> (e.g.,
+<code>cat /proc/sys/kernel/core_pattern</code>). Some Linux distributions write the core dumps
+to other directories, append the process id (i.e., <code>core.12345</code>), or forward the
+core dumps to a crash handler software.
+</p>
+
+
+<h2><a name="lldb"></a> Using the Low-Level Debugger (lldb) on macOS </h2>
+
+<p>
+macOS uses a slightly different toolchain for debugging software. To debug
+<span class="secondo">Secondo</span> on macOS, we recommend starting
+<span class="secondo">Secondo</span> directly in the
+<a href="http://lldb.llvm.org/use/tutorial.html" target="_blank">low-level debugger (lldb)</a>.
+A crash is captured and handled by the debugger automatically, and a readable stacktrace can
+be generated.
+</p>
+
+<p>
+To start <span class="secondo">Secondo</span> in lldb, please execute the command
+<code>lldb ./SecondoBDB</code> in the <code>bin</code> directory of
+<span class="secondo">Secondo</span>. After the debugger is running, the path to prolog needs
+to be provided. This can be done by executing
+<code>env LD_LIBRARY_PATH="/Applications/SWI-Prolog.app/Contents/Frameworks"</code>. As the
+last step, <code>run</code> needs to be executed to start
+<span class="secondo">Secondo</span>.
+</p>
+
+<p>
+In the following example, <span class="secondo">Secondo</span> is started in the debugger, and
+a query containing the <code>faultcrash</code> operator is executed:
+</p>
+
+<pre>$ lldb ./SecondoBDB
+(lldb) target create "./SecondoBDB"
+Current executable set to '/Users/kristofnidzwetzki/secondo/bin/SecondoBDB' (x86_64).
+
+(lldb) env LD_LIBRARY_PATH="/Applications/SWI-Prolog.app/Contents/Frameworks"
+
+(lldb) run
+
+[...]
+
+Secondo =&gt; query plz feed faultcrash[100] count;
+
+[...]
+
+Process 33348 stopped
+* thread #1, queue = 'com.apple.main-thread', stop reason = EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0)
+    frame #0: 0x00000001018bbef2 SecondoBDB`auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple(this=0x0000000107235bf0) at AuxiliaryAlgebra.cpp:372:14
+   369 	      int randValue = rand();
+   370 	      if(randValue % crashAfter == 0) {
+   371 	          if(crashType == CRASH) {
+-&gt; 372 	             __builtin_trap();
+   373 	             exit(1);
+   374 	          } else {
+   375 	             // Loop forever!
+Target 0: (SecondoBDB) stopped.</pre>
+
+<p>
+It can be seen that the resulting crash is captured and handled by the debugger. The operation
+that caused the crash is marked with a <code>-&gt;</code>. In this example, this is line 372 in
+the file <code>AuxiliaryAlgebra.cpp</code>.
+</p>
+
+<p>
+By typing in <code>bt</code> (short for back trace), a full stacktrace can be generated. lldb
+provides almost the same commands as gdb. More information about the differences can be found
+<a href="http://lldb.llvm.org/use/map.html" target="_blank">here</a>.
+</p>
+
+<pre>(lldb) bt
+* thread #1, queue = 'com.apple.main-thread', stop reason = EXC_BAD_INSTRUCTION (code=EXC_I386_INVOP, subcode=0x0)
+  * frame #0: 0x00000001018bbef2 SecondoBDB`auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple(...) at AuxiliaryAlgebra.cpp:372:14
+    frame #1: 0x00000001018b8dc7 SecondoBDB`int auxiliary::InjectFault&lt;(auxiliary::CrashType)0&gt;(...) at AuxiliaryAlgebra.cpp:415:13
+    frame #2: 0x000000010016d95f SecondoBDB`QueryProcessor::Eval(...) at QueryProcessor.cpp:4492:29
+    [...]
+    frame #15: 0x00000001000851cd SecondoBDB`main(argc=1, argv=0x00007ffeefbff050) at MainTTY.cpp:164:10
+    frame #16: 0x00007fff2035d631 libdyld.dylib`start + 1
+(lldb) quit</pre>
+
+
+<div class="footnote">
+ Last Changed: 2026-07-21 (JNI)
+</div>
+
+
+</body>
+</html>

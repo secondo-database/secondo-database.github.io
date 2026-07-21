@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO - FAQ</title>
+  <meta name="description" content="extensible database system">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
+
+
+<h1> FAQ </h1>
+
+<p>
+This page collects frequently asked questions, known problems and their solutions when
+building, running, and operating <span class="secondo">Secondo</span>.
+</p>
+
+
+<h2> A operation in SECONDO is slow. How can I investigate this? </h2>
+
+<p>
+You can use a profiler like
+<a href="https://valgrind.org/docs/manual/cl-manual.html" target="_blank">callgrind</a>
+to investigate the problem.
+</p>
+
+<p>
+In one shell, execute:
+</p>
+<pre>watch "callgrind_control -e -b"</pre>
+
+<p>
+In another shell, execute:
+</p>
+<pre>./SecondoTTYBDB --profile</pre>
+
+<p>
+You will now see in the first shell the current stack trace of
+<span class="secondo">Secondo</span> while it is running. Execute the slow operation
+and have a look at the stack trace, and you see in which operations the CPU time is
+spent.
+</p>
+
+<p>
+After you have finished your operation and you have quit
+<span class="secondo">Secondo</span>, a file named <code>callgrind.out.&lt;pid&gt;</code>
+is written into the current directory. This file contains the stack trace and can be
+analyzed by executing <code>callgrind_annotate &lt;filename&gt;</code>.
+</p>
+
+
+<h2> ld: [...] building for macOS-arm64 but attempting to link with file built for macOS-x86_64 </h2>
+
+<p>
+It seems you are using a Mac with an ARM-based CPU, while your
+<span class="secondo">Secondo</span>-SDK was built on an Intel CPU. Please delete your
+old <span class="secondo">Secondo</span>-SDK (e.g., <code>rm ~/secondo-sdk</code>) and
+reinstall the latest <span class="secondo">Secondo</span>-SDK. Please also re-install
+your BerkeleyDB installation.
+</p>
+
+
+<h2> E_SMI_BDB sysErrCode=12 Cannot allocate memory </h2>
+
+<pre>---------------------------
+  Secondo-SMI Error Stack
+---------------------------
+E_SMI_BDB sysErrCode=12 Cannot allocate memory -&gt; [bdbFile.cpp:1622]</pre>
+
+<p>
+This error is most likely caused by a too small memory area for lock objects (more
+information can be found
+<a href="https://docs.oracle.com/cd/E17275_01/html/programmer_reference/lock_am_conv.html" target="_blank">here</a>
+and
+<a href="https://docs.oracle.com/database/bdb181/html/bdb-sql/lockingnotes.html" target="_blank">here</a>).
+To solve this problem, two known solutions exist:
+</p>
+
+<ul>
+  <li> Disable the transactions in <span class="secondo">Secondo</span>. This can be done
+       by setting <code>RTFlags += SMI:NoTransactions</code> in your
+       <code>SecondoConfig.ini</code>. </li>
+  <li> Increase the memory area for locks. This is controlled by the following settings in
+       the <code>SecondoConfig.ini</code>:
+<pre>[BerkeleyDB]
+
+MaxLockers=100
+MaxLocks=5000
+MaxLockObjects=5000</pre>
+       In most cases the values for <code>MaxLocks</code> and <code>MaxLockObjects</code>
+       need to be increased. </li>
+</ul>
+
+
+<h2> Compile error 'syntax error, unexpected string, expecting =' in *.y files </h2>
+
+<p>
+This error indicates that you are using an outdated version of Bison. Please ensure that
+you have updated your
+<a href="content_install.html">project dependencies</a>. At least Bison 3.0.4 is required
+to build the project.
+</p>
+
+
+<h2> Compile error ''register' storage class specifier is deprecated and incompatible with C++17' </h2>
+
+<p>
+This error indicates that you are using an outdated version of Flex. Please ensure that you
+have updated your
+<a href="content_install.html">project dependencies</a>. At least Flex 2.6.4 is required to
+build the project.
+</p>
+
+
+<h2> Compile error 'undefined reference to `TempRelation::BasicType[abi:cxx11]()' </h2>
+
+<p>
+A part of the project was built with an older C++ standard, another part with the C++17
+standard (<code>-std=c++17</code>). The linker is unable to link these files. Please update
+your <span class="secondo">Secondo</span> to the most recent version and run:
+</p>
+<pre>make clean
+make</pre>
+
+
+<h2> Compile error 'fatal error: libxml/xmlreader.h: No such file or directory' </h2>
+
+<p>
+The <i>GNOME XML library</i> was not found on the system. Please install the library and the
+needed development files on the system. On Debian/Ubuntu based systems, this can be done by
+executing <code>apt-get install libxml2-dev</code>.
+</p>
+
+
+<h2> How to run checkpd in git as a pre-commit check </h2>
+
+<p>
+Commits on GitHub are tested asynchronously by <code>checkpd</code> and a
+<i>GitHub Action</i>. Due to the asynchronous execution, it may take some time before an
+error is reported. To execute <code>checkpd</code> locally before a commit is made, use the
+included <i>pre-commit check</i>. This check can be enabled by executing the command
+<code>cp -av CM-Scripts/pre-commit .git/hooks/pre-commit</code> from the root directory of
+your git repository.
+</p>
+
+
+<h2> How to speed up the compilation process? </h2>
+
+<p>
+You can use <code>ccache</code> to cache compilation units (even
+<code>make clean / make -j $(nproc)</code> is quite fast afterwards). Simply add the
+following lines to your <code>.secondorc</code> file:
+</p>
+<pre>export SECONDO_CC="ccache gcc"
+export SECONDO_CPP="ccache g++"</pre>
+
+<p>
+The cache can be checked by running <code>ccache -s</code>.
+</p>
+
+
+<h2> How can I keep long-running queries alive on a remote system? </h2>
+
+<p>
+Executing queries on a large data set in <span class="secondo">Secondo</span> can take some
+time. Usually, the secure shell (SSH) is used to connect to a remote system. Keeping an SSH
+connection open for a long time can be challenging. The following tips can be used to keep a
+connection open or prevent the termination of <span class="secondo">Secondo</span> when the
+SSH connection is terminated.
+</p>
+
+<h3> Enabling the 'ServerAliveInterval' in the SSH Client </h3>
+
+<p>
+IP gateways (such as firewalls) can terminate idle TCP connections after some time. To prevent
+a TCP connection from becoming idle, SSH can send some keep-alive packets in the background on
+the TCP connection automatically. To enable the feature, add the following lines to your SSH
+client configuration (e.g., <code>/etc/ssh/ssh_config</code> or
+<code>~/.ssh/ssh_config</code>):
+</p>
+
+<pre>Host *
+    ServerAliveInterval 60</pre>
+
+<p>
+The setting will send a keep-alive packet every 60 seconds. If the connection is terminated
+earlier, please reduce the setting to a lower value (e.g., 15). Please note this is a setting
+for the <i>SSH client</i> <code>ssh_config</code>, <b>not</b> for the <i>SSH server</i>
+<code>sshd_config</code>.
+</p>
+
+<h3> Using screen to Execute SECONDO </h3>
+
+<p>
+<a href="https://www.gnu.org/software/screen/" target="_blank">screen</a> is a terminal
+multiplexer for Linux. It allows the execution of multiple terminal sessions within one window
+or SSH connection. Besides, the screen session (and all programs started from the session) is
+not terminated when the SSH connection is lost. Another SSH session can be used to re-attach to
+the previously opened session. <code>screen</code> can be used to start
+<span class="secondo">Secondo</span> and to re-attach to the same
+<span class="secondo">Secondo</span> session when the connection was lost. A complete overview
+of the functionality of <code>screen</code> can be found
+<a href="https://www.gnu.org/software/screen/manual/screen.html" target="_blank">here</a>.
+</p>
+
+<p>
+Example:
+</p>
+
+<pre># Connect to the remote system
+$ ssh user@remote.system.tld
+
+# Start a new screen session and run SECONDO
+$ screen
+$ cd ~/secondo/bin
+$ ./SecondoTTYBDB
+
+# You can now detach from the SECONDO session by pressing CTRL-a and d
+# (press CTRL-a first, then press d)
+
+# Re-attach to the previously opened screen session
+# This can also be done from another SSH session if the connection was lost
+$ screen -x</pre>
+
+
+<div class="footnote">
+ Last Changed: 2026-07-21 (JNI)
+</div>
+
+
+</body>
+</html>

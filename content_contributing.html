@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>SECONDO</title>
+  <meta name="description" content="extensible database system">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" type="text/css" href="secondo.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="window.status='SECONDO - An Extensible Database System'">
+<div align="center">
+<img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
+
+
+<h1> Contributing </h1>
+
+<p>
+This page describes how you can contribute to the <span class="secondo">Secondo</span>
+project. The development of <span class="secondo">Secondo</span> takes place on
+<a href="https://github.com/secondo-database/secondo" target="_blank">GitHub</a> using
+<code>git</code>. General information about the usage of GitHub can be found
+<a href="https://guides.github.com/activities/hello-world/" target="_blank">here</a>.
+</p>
+
+<p>
+The tasks are performed with <code>git</code> on the command line. Many IDEs (e.g., Visual
+Studio Code) contain a git client, which allows performing the commands directly from the
+IDE. In addition, there are standalone tools like
+<a href="http://gitextensions.github.io/" target="_blank">Git Extensions</a> to perform the
+operations without using the command line.
+</p>
+
+<p>
+<b>Note:</b> <span class="secondo">Secondo</span> was originally developed in a self-hosted
+CVS repository, with GitHub serving only as a read-only mirror. The migration to git and
+GitHub has since been completed, and GitHub is now used as the primary repository for the
+development. For users migrating from <code>cvs</code>, the corresponding
+<code>cvs</code> commands are noted below.
+</p>
+
+
+<h2> Contributing when you have write access to the SECONDO project </h2>
+
+<ul>
+  <li> <b>Check out the repository</b> with
+       <code>git clone https://github.com/secondo-database/secondo.git</code>. This command
+       will create a folder named <code>secondo</code> in the current directory, which
+       contains the source code of the <span class="secondo">Secondo</span> project. The
+       command is only needed if you don't already have a copy of the repository on your
+       local computer. From now on, you can update your local copy of the repository, as
+       shown in the next step. The command does the same as <code>cvs checkout</code>. </li>
+
+  <li> <b>Update the repository</b> with <code>git pull</code>. This command fetches the
+       changes from GitHub and updates the local repository. This command does the same as
+       <code>cvs update</code>. </li>
+
+  <li> <b>Make your changes and commit the changes:</b> After you have completed your changes,
+       you can review the changed files with the command <code>git status</code>. To commit
+       the changes, you need to add them to the current commit via
+       <code>git add &lt;file&gt;</code>. In contrast to CVS, this command is needed for all
+       changed files (when using CVS, only files that are newly created need to be added). Now
+       you can create a commit via <code>git commit</code>; as in <code>cvs commit</code>,
+       your default editor opens, and you can type in a commit message. Now the commit is
+       created in your local copy of the repository. The commit needs to be pushed to the
+       repository at GitHub; this is done by calling <code>git push</code>. </li>
+</ul>
+
+
+<h2> Contributing when you have no write access to the SECONDO project </h2>
+
+<p>
+The workflow is almost the same as described above. The exception is that you have to fork the
+project before you can push changes to the project. In addition, the pushed changes need to be
+integrated into the project via a pull request. Both tasks can be done in the web interface of
+GitHub. Forking a project and creating a pull request is described
+<a href="https://guides.github.com/activities/forking/" target="_blank">here</a>.
+</p>
+
+
+<div class="footnote">
+ Last Changed: 2026-07-21 (JNI)
+</div>
+
+
+</body>
+</html>
