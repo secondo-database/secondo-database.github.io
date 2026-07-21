@@ -12,70 +12,72 @@
 <img alt="SECONDO" src="images/logo.gif" height="107" width="598"> </div>
 
 
-<h1> Sources </h1>
+<h1> Release Notes </h1>
 
-At this page, we provide the sources of the last <span class="secondo">Secondo</span> 
-release. Note that if you have an old installation of <span class="secondo">Secondo</span>,
-you should remove this old version completely (or just rename the containing folder).
+<h2> Release Notes, Version 4.3.0 </h2>
+<ul>
+  <li> Support new compiler versions </li>
+  <li> Support new operating systems (OS X 11, OS X on ARM / M1 chips, Ubuntu 20.10, Debian 11) </li>
+  <li> Improved OS X installer, based on Homebrew </li>
+  <li> Extended algebra modules
+     <ul>
+       <li> Distributed5Algebra: Implemented overlapping scheduling of distributed queries</li>
+       <li> Distributed2Algebra: Added areduce operator for dynamic scheduling</li>
+       <li> New Types and Operators in several algebra modules </li>
+     </ul>
+  </li>
+  <li> New algebra modules 
+     <ul>
+       <li> PropertyGraph2: Allows the creation of property graphs based on stored relations </li>
+       <li> PyStreamAlgebra: Provides an API for Python scripts </li>
+     </ul>
+  </li>
+  <li> Several bug fixes have been done in different modules </li>
+  <li> Parallel building with "make -j ..." is supported </li>
+</ul>
+  
+<h2> Release Notes, Version 4.2.0 </h2>
+<ul>
+  <li> Support new compiler versions </li>
+  <li> Support new operating systems (OS X 10.15, Ubuntu 20.04, Debian 10) </li>
+  <li> Extended algebra modules
+     <ul>
+       <li> SymbolicTrajectoryAlgebra: Split into SymbolicTrajectoryBasicAlgebra and SymbolicTrajectoryAlgebra</li>
+       <li> Distributed2Algebra: Added operators slotSizes, loadBalance, and collectB</li>
+       <li> New Types and Operators in several algebra modules </li>
+     </ul>
+  </li>
+  <li> New algebra modules 
+     <ul>
+       <li> KafkaAlgebra: Integration of SECONDO with Apache Kafka </li>
+     </ul>
+  </li>
+  <li> Several bug fixes have been done in different modules </li>
+</ul>
+
+<h2> Release Notes, Version 4.1.2 </h2>
+<ul>
+  <li> Support new compiler versions </li>
+  <li> Improved support of main memory objects </li>
+  <li> Extended algebra modules
+     <ul>
+       <li> SymbolicTrajectoryAlgebra: Additional version of pattern matching on tuples of time-dependent values</li>
+       <li> New Types and Operators in several algebra modules </li>
+     </ul>
+  </li>
+  <li> New algebra modules 
+     <ul>
+       <li> RoutePlanningAlgebra: Can be used for route planning with height information </li>
+       <li> SpatialLRAlgebra: Alternative implementation for line and region type </li>
+       <li> DFSAlgebra: Provides a distributed file system </li>
+       <li> CRelAlgebra: Column oriented relation model </li>
+       <li> CStreamAlgebra: Allows to distribute tuple streams between Secondo instances </li>
+       <li> ImageSimilarityAlgebra: Finds images that are similar to a query image </li>
+     </ul>
+   <li> Several bug fixes have been done in different modules </li>
+</ul>
 
 
-<h2> Technical Details </h2>
-
-<table>
- <tr> <th align=right> Release Date:  </th> <td> 2016-12-20 </td></tr>
- <tr> <th align=right> Version:       </th> <td> Secondo 4.1.0 </td> </tr>
- <tr> <th align=right> Download Size: </th> <td> 38 MB </td> </tr>
- <tr> <th align=right> Encoding:      </th> <td> Latin-1 </td></tr>
- <tr> <th align=right> md5sum:        </th> <td> 6f08e2fd5a86744f90ee2d51c92c40cc </td></tr>
- <tr> <th valign=top align=right > Known to Work With: </th> <td>
-        <ul>
-          <li> Ubuntu 14.04 </li>
-          <li> Ubuntu 16.04 </li>
-          <li> SuSe 13.1 </li>
-          <li> SuSe 42.1 </li>
-          <li> OS X 10.11 El Capitan </li>
-        </ul>
-      </td> </tr>
-</table>
-
-<h2> Download Link </h2>
-
-The <span class="secondo">Secondo</span> sources can be downloaded <a href="files/Sources/secondo-v410-LAT1.tgz">here</a>. <br>
-<br>
-<a class="btn" href="files/Sources/secondo-v410-LAT1.tgz">Download</a>
-
-
-
-<h2> Installation </h2>
-
-The first step for installing <span class="secondo">Secondo</span> is to install the
-<a href="content_install.html">Secondo SDK</a>.
-After that, download the current <span class="secondo">Secondo</span> sources using the link above.
-Unpack the file into your home directory. This will create a subdirectory <code>secondo</code>. 
-Now, navigate into that directory and type <code>make</code>. This will create all parts of the 
-<span class="secondo">Secondo</span> system (the kernel, the optimizer, and the gui).
-
-
-
-<h2> Patches</h2>
-
-At this place, we provide some patches for the current <span class="secondo">Secondo</span> version.<br><br>
-
-<i> For version 4.1.0 no patches are available. </i>
-
-<!--
-<table>
-<tr> <th> Patch </th> <th> Installation Info </th> <th> Info </th> </tr>
-<tr> <td> <a href="files/Sources/patches/v400/FTextAlgebra.patch">FTextAlgebra.patch</a> </td>
-     <td> <a href="files/Sources/patches/v400/FTextAlgebra.txt">FTextAlgebra.txt</a> </td>
-     <td> bug fix if using a text within a btree </td>
-</tr>
-<tr> <td> <a href="files/Sources/patches/v400/ExtRelationAlgebra.patch">ExtRelationAlgebra.patch</a> </td>
-     <td> <a href="files/Sources/patches/v400/ExtRelationAlgebra.txt">ExtRelationAlgebra.txt</a> </td>
-     <td> bug fix in nth operator </td>
-</tr>
-</table>
--->
 
 <h2>Release Notes, Version 4.1.0 </h2>
 
@@ -85,7 +87,7 @@ more types and operators.</li>
 
 <li>Readded the TransportationModeAlgebra.</li>
 
-<li>Several bug fixes has been done in different modules. Embedded patches of version 4.0.0.</li>
+<li>Several bug fixes have been done in different modules. Embedded patches of version 4.0.0.</li>
 </ul>
 
 
@@ -144,7 +146,7 @@ more types and operators.</li>
 <dt>CassandraAlgebra</dt>
 <dd> 
      Supports the coupling of Secondo with Cassandra. See the work on 
-     <a href="http://dna.fernuni-hagen.de/Secondo.html/DSecondo/DSECONDO-Website/index.html">Distributed Secondo</a>.
+     <a href="/DSecondo/DSECONDO-Website/index.html">Distributed Secondo</a>.
 </dd>
 </dl>
 
@@ -247,67 +249,98 @@ For some nostalgic reasons, here some old and even older versions can be found.
 <tr>
 <th>Date</th>
 <th>Version</th>
-<th>MS-Windows (CP1252)</th>
-<th>Linux (ISO-Latin), also for Mac OS X</th>
+<th>Source Code</th>
 <th>Notes</th>
 </tr>
 
+  
+<tr>
+<td>2020-05-29</td>
+<td>4.2.0</td>
+<td><a href="https://github.com/secondo-database/secondo/archive/secondo_V4_1_3_RC1.tar.gz">Source Code</a>(81 MB)<br>
+     md5sum: a4e55c2a79aaab193ed2dc125ad710af <br>
+     sha1sum: 9311456a0a704bb8f60d223da4f79b94a60acf51
+</td>
+<td></td>
+</tr>
 
+  
+<tr>
+<td>29/11/2019</td>
+<td>4.1.3</td>
+<td><a href="https://github.com/secondo-database/secondo/archive/secondo_V4_1_3_RC1.tar.gz">Source Code</a>(77 MB)<br>
+    md5sum: 51aa7c3e9b74fc57aaa167f7ba41214b
+</td>
+<td></td>
+</tr>
+
+
+<tr>
+<td>03/06/2019</td>
+<td>4.1.2</td>
+<td><a href="https://github.com/secondo-database/secondo/archive/RC_412.tar.gz">Source Code</a>(76 MB)<br>
+    md5sum: 75c1bcc02c038961bab01198dbfa73b3 
+</td>
+<td></td>
+</tr>
+
+<tr>
+<td>12/20/2016</td>
+<td>4.1.0</td>
+<td><a href="https://github.com/secondo-database/secondo/archive/RC4_1.tar.gz">Source Code</a>(38 MB)<br>
+    md5sum:  6f08e2fd5a86744f90ee2d51c92c40cc
+</td>
+<td></td>
+</tr>
 
 <tr>
 <td>05/10/2016</td>
 <td>4.0.0</td>
-<td>&nbsp;</td>
-<td><a href="files/Sources/old/secondo-v400-LAT1.tgz">Source Code</a>(38 MB)<br>
+<td><a href="https://github.com/secondo-database/secondo/archive/Release-4-0-0.tar.gz">Source Code</a>(38 MB)<br>
     md5sum: 2910ed4b0f3cd31bc0710cc4c34f77ce
 </td>
-
-<td><a href="files/Sources/old/Release-Notes-v400.txt">Release Notes</a></td>
+<td><a href="files/Sources/release-notes/Release-Notes-v400.txt">Release Notes</a></td>
 </tr>
 
 <tr>
   <td> 09/17/2014 </td>
   <td> 3.4.0 </td>
-  <td> <a href="files/Sources/old/secondo-v340-CP1252.zip">Source Code</a> (98 MB) </td>
-  <td> <a href="files/Sources/old/secondo-v340-LAT1.tar.gz">Source Code</a> (94 MB)</td>
-  <td> <a href="files/Sources/old/Release-Notes-v340.txt">notes</a></td>
+  <td> <a href="https://github.com/secondo-database/secondo/archive/rc340.tar.gz">Source Code</a> (94 MB)</td>
+  <td> <a href="files/Sources/release-notes/Release-Notes-v340.txt">notes</a></td>
 </tr>
 
 
 <tr>
-  <td> 10/31//2012 </td>
+  <td> 10/31/2012 </td>
   <td> 3.3.0 </td>
-  <td> <a href="files/Sources/old/secondo-v330-HalloweenEdition-CP1252.zip">Source Code</a> (33 MB)  </td>
-  <td> <a href="files/Sources/old/secondo-v330-HalloweenEdition-LAT1.tar.gz">Source Code</a> (31 MB)</td>
-  <td> <a href="files/Sources/old/Release-Notes-v330.txt">notes</a> </td>
+  <td> <a href="https://github.com/secondo-database/secondo/archive/RC330.tar.gz">Source Code</a> (31 MB)</td>
+  <td> <a href="files/Sources/release-notes/Release-Notes-v330.txt">notes</a> </td>
 </tr>
 
 
 <tr>
   <td> 12/16/2011 </td>
   <td> 3.2.1 </td>
-  <td> <a href="files/Sources/old/secondo-v321-CP1252.zip">Source Code</a> (27 MB)  </td>
-  <td> <a href="files/Sources/old/secondo-v321-LAT1.tar.gz">Source Code</a> (25 MB)</td>
-  <td> <a href="files/Sources/old/Release-Notes-v321.txt">notes</a> </td>
+  <td> <a href="https://github.com/secondo-database/secondo/archive/R322.tar.gz">Source Code</a> (25 MB)</td>
+  <td> <a href="files/Sources/release-notes/Release-Notes-v321.txt">notes</a> </td>
 </tr>
 
 
 <tr>
   <td> 09/08/2011 </td>
   <td> 3.2.0 </td>
-  <td> <a href="files/Sources/old/secondo-v320-CP1252.zip">Source Code</a> (28 MB)  </td>
-  <td> <a href="files/Sources/old/secondo-v320-LAT1.tar.gz">Source Code</a> (26 MB)</td>
-  <td> <a href="files/Sources/old/Release-Notes-v320.txt">notes</a> </td>
+  <td> <a href="https://github.com/secondo-database/secondo/archive/v321.tar.gz">Source Code</a> (26 MB)</td>
+  <td> <a href="files/Sources/release-notes/Release-Notes-v320.txt">notes</a> </td>
 </tr>
 
 <tr>
   <td> 07/20/2011 </td>
-  <td> 3.1.0 </td>
-  <td> <a href="files/Sources/old/secondo-v310-CP1252.zip">Source Code</a> (24 MB)  </td>
-  <td> <a href="files/Sources/old/secondo-v310-LAT1.tar.gz">Source Code</a> (24 MB)</td>
-  <td> <a href="files/Sources/old/Release-Notes-v310.txt">notes</a> </td>
+  <td> 3.1.1 </td>
+  <td> <a href="https://github.com/secondo-database/secondo/archive/Secondo3_1_1rc2.tar.gz">Source Code</a> (24 MB)</td>
+  <td> <a href="files/Sources/release-notes/Release-Notes-v310.txt">notes</a> </td>
 </tr>
 
+<!--
 <tr>
   <td> 06/25/2010 </td>
   <td> 3.0.0 </td>
@@ -395,20 +428,13 @@ For some nostalgic reasons, here some old and even older versions can be found.
  <td> <a href="files/Sources/old/secondo-v25-LAT1.tar.gz"> Source Code</a> (11 MB) </td>
  <td> <a href="files/Sources/old/Release-Notes.txt">notes</a> </td> 
 </tr> 
+-->
 
 </table>
 
 
-
-
-
-
-
-
-
-
 <div class="footnote">
- Last Changed: 2016-09-26
+ Last Changed: 2020-05-29 (JNI)
 </div>
 
 
