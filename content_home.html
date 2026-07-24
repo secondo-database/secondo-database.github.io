@@ -9,12 +9,12 @@
 <body>
 
 
-<div align="center">
-<table summary="">
-<tr><td> <img alt="FernUni Hagen" src="images/feulogo.gif" width="363" height="78"></td></tr>
-<tr><td> <img alt="SECONDO" width="598" height="107" src="images/logo.gif"> </td></tr>
-<tr><td><h1> An Extensible Database System </h1></td></tr>
-</table>
+<div class="short">
+	<div align="center">
+	<img alt="FernUni Hagen" src="images/feulogo.gif" width="363" height="78"><br>
+	<img alt="SECONDO" width="598" height="107" src="images/logo.gif"><br>
+	<h1> An Extensible Database System </h1>
+	</div>
 </div>
 
 <h2> What is <span class="secondo">Secondo</span> </h2>
@@ -45,11 +45,23 @@ user to access and modify every part of the database system. <span class="second
 comes with a carefully written user manual, programmer's guide and installation instructions.
 </div>
 
-<h2> Functionality </h2>
-<div style="text-indent:2cm;">
-	<img src="images/architecture.gif" alt="Architecture" width="317" height="276"><br>
-</div><br>	
+<h2> Architecture </h2>
+<div class="short">
+<div style="text-indent:2cm;" align="center">
+	<a href="images/sec_architecture.svg" target="_blank">
+		<img src="images/sec_architecture.svg" alt="Architecture" width="80%"><br>
+	</a>
+</div>
+<br>
+The SECONDO architecture is based on a layered design. The core of the system is the SECONDO kernel,
+which provides basic database functionality. The kernel is extended by algebra modules, which
+implement data types and operations for specific applications. The user interface allows users to
+interact with the system through queries and commands. A RESTful API is also provided for programmatic
+access to the system and used by the SECONDO web interface. The architecture is designed to be modular and
+extensible, allowing for easy integration of new features and data models.
+</div>
 
+<h2> Functionality </h2>
 <div class="short">
 Objects of an arbitrary type defined in one of the
 <span class="secondo">Secondo</span> algebra modules can be stored in a database.
@@ -93,13 +105,22 @@ Gate. Then, the result is presented graphically.
             distance(r:geoData, s:geodata) < 2000]
 </pre>
 <br><br>
-<div style="text-indent:2cm">
-<img src="images/screenshot1.gif" width="640" height="495" alt="Screenshot"> 
+
+<div class="short">
+	<div align="center">
+		<a href="images/secondo_webui_light.jpg" target="_blank">
+			<img src="images/secondo_webui_light.jpg" alt="Screenshot" width="90%">
+		</a>
+		Screenshot of the SECONDO WebUI showing the result of the query above. <br>
+		Map data © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap contributors</a>.
+	</div>
 </div>
+
+
 <br><br>
 
 <div class="footnote">
-  Last Changed: 2009-08-06
+  Last Changed: 2026-07-24
 </div>
 
 </body>

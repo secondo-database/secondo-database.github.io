@@ -149,10 +149,11 @@ a.navi:hover,a.navi:focus{
 img{ border-style:none;
      padding:0pt;
      margin:0pt;
+     display:block;
      }
 
 span.algebraname{
-    color:rgb(255,192,128);
+    color:rgb(0, 0, 0);
     font-weight:bolder;
 }
 
