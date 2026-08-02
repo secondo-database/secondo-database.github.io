@@ -50,8 +50,8 @@ the same way; the package names below are identical on Debian.
 
 <li>
 <b>Install the build tools and libraries.</b> These include the C/C++ compiler, Berkeley&nbsp;DB,
-the Boost libraries, a Java Development Kit (<code>default-jdk</code>) for the Java GUI and
-optimizer server, and SWI-Prolog with its Java bridge (JPL) for the optimizer:
+the Boost libraries, a Java Development Kit (<code>default-jdk</code>) for the Java GUI, and
+SWI-Prolog for the optimizer:
 <pre>
 sudo apt-get update
 sudo apt-get install flex bison gcc g++ build-essential \
@@ -59,13 +59,13 @@ sudo apt-get install flex bison gcc g++ build-essential \
     libjpeg-dev libgsl0-dev libreadline-dev librecode-dev \
     libgmp-dev libgmp10 libncurses-dev libxml2-dev libboost-all-dev \
     libbison-dev libfl-dev libquadmath0 nlohmann-json3-dev \
-    default-jdk swi-prolog swi-prolog-nox swi-prolog-java
+    default-jdk swi-prolog swi-prolog-nox
 </pre>
 </li>
 
 <li>
 <b>Get the sources and build <span class="secondo">Secondo</span>.</b> The build
-environment (compiler, Berkeley&nbsp;DB, SWI-Prolog and JPL paths, ...) is derived
+environment (compiler, Berkeley&nbsp;DB, SWI-Prolog paths, ...) is derived
 automatically from the installed tools; you only have to set
 <code>SECONDO_BUILD_DIR</code> and source the detection script:
 <pre>
@@ -135,53 +135,26 @@ xcode-select --install
 </li>
 
 <li>
-<b>Install the build tools and libraries:</b>
+<b>Install the build tools and libraries.</b> These include SWI-Prolog for the
+optimizer and a Java Development Kit for the Java GUI:
 <pre>
-brew install flex bison berkeley-db gsl jpeg-turbo boost gmp libxml2 readline nlohmann-json
+brew install flex bison berkeley-db gsl jpeg-turbo boost gmp \
+     libxml2 readline nlohmann-json swi-prolog openjdk@21
 </pre>
-Homebrew's <code>flex</code> and <code>bison</code> are "keg-only" and are not put
-on the <code>PATH</code> automatically. Add them to your <code>~/.zshrc</code>:
+Homebrew's <code>flex</code>, <code>bison</code> and <code>openjdk@21</code> are
+"keg-only" and are not put on the <code>PATH</code> automatically. Add flex and
+bison to your <code>~/.zshrc</code>:
 <pre>
 echo 'export PATH="$(brew --prefix bison)/bin:$(brew --prefix flex)/bin:$PATH"' >> ~/.zshrc
 source ~/.zshrc
 </pre>
-</li>
-
-<li>
-<b>Install a Java Development Kit (JDK 21).</b> It is used to build the Java GUI
-and the optimizer server:
-<pre>
-brew install openjdk@21
-</pre>
-Follow the <code>caveats</code> printed by Homebrew to make this JDK visible to the
-system (or install an equivalent JDK&nbsp;21, e.g. Temurin).
-</li>
-
-<li>
-<b>Install SWI-Prolog with Java (JPL) support.</b> The Prolog
-optimizer needs SWI-Prolog, and the
-Java-based optimizer server additionally needs its JPL bridge
-(<code>jpl.jar</code> and <code>libjpl.dylib</code>). Homebrew's
-<code>swi-prolog</code> bottle is built <em>without</em> JPL, so build it from
-source with the Java package enabled. Open the formula:
-<pre>
-brew edit swi-prolog
-</pre>
-change the CMake option <code>-DSWIPL_PACKAGES_JAVA=OFF</code> to
-<code>-DSWIPL_PACKAGES_JAVA=ON</code>, save, and reinstall from source (the JDK
-from the previous step must be installed):
-<pre>
-brew reinstall --build-from-source swi-prolog
-</pre>
-This places <code>jpl.jar</code> and <code>libjpl.dylib</code> in the SWI-Prolog
-library directory, where <span class="secondo">Secondo</span> finds them
-automatically. If you do not need the optimizer server, you can instead install
-the plain bottle with <code>brew install swi-prolog</code>.
+For the JDK, follow the <code>caveats</code> printed by Homebrew to make it visible
+to the system (or install an equivalent JDK&nbsp;21, e.g. Temurin).
 </li>
 
 <li>
 <b>Get the sources and build <span class="secondo">Secondo</span>.</b> The build
-environment (compiler, Berkeley&nbsp;DB, SWI-Prolog and JPL paths, ...) is derived
+environment (compiler, Berkeley&nbsp;DB, SWI-Prolog paths, ...) is derived
 automatically from the installed tools; you only have to set
 <code>SECONDO_BUILD_DIR</code> and source the detection script:
 <pre>

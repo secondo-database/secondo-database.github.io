@@ -14,20 +14,46 @@
 
 <h1> News </h1>
 
-<p>
+<div class="short">
 This page collects news and announcements about the development of
 <span class="secondo">Secondo</span>. For a structured list of the changes
 per release, see the <a href="content_releasenotes.html">Release Notes</a>.
-</p>
+</div>
 
+
+<h2> 26.06.2026 &ndash; Optimizer Integration </h2>
+<div class="short">
+The SECONDO Optimizer has now been integrated into the SECONDO kernel, 
+functioning as a first-class component. As a result, the <tt>OptServer</tt> has
+been removed, along with the old hybrid SECONDO binaries such as
+<tt>SecondoPLTTY</tt>, <tt>SecondoPLTTYCS</tt>, and <tt>SecondoPLTTYNT</tt>.
+The standard SECONDO binaries now support the optimizer and can be used for
+all applications. Additionally, the Java GUI has been adapted to work with
+the new optimizer interface. The option for custom optimizer connection
+settings has been removed.
+</div>
+<br>
+<div class="short">
+SQL Queries like <tt>select count(*) from plz as p where [p:plz > 40000];</tt>
+are directly supported by <tt>SecondoTTYBDB</tt> and <tt>SecondoTTYCS</tt>. 
+By prefixing a query with <tt>optimize</tt>, the optimizer returns the
+best plan for the query. 
+</div>
+<br>
+<div class="short">
+Using <tt>showOptions();</tt>, <tt>setOption(xxx);</tt>, and <tt>delOption(xxx);</tt>,
+the user can configure the optimizer. By executing <tt>updateCatalog();</tt>, the
+knowledge base of the optimizer is updated.
+</div>
 
 <h2> 19.06.2026 &ndash; Project Improvements </h2>
 
 <p>
 During the last days, the network, process management, and BDB stack of
 <span class="secondo">Secondo</span> was improved:
-</p>
+</div>
 
+<div class="short">
 <ul>
   <li> <b>Support for newer distributions</b>
      <ul>
@@ -106,118 +132,118 @@ During the last days, the network, process management, and BDB stack of
      </ul>
   </li>
 </ul>
-
+</div>
 
 <h2> 11.02.2022 &ndash; Development migrated to git/GitHub </h2>
-<p>
+<div class="short">
 So far, <span class="secondo">Secondo</span> was developed in a self-hosted CVS
 repository. This project here was only a read-only mirror of the CVS repository.
 We have now completed the migration to git, and this repository is used for the
 development.
-</p>
+</div>
 
 
 <h2> 03.09.2021 &ndash; SECONDO 4.3.0 released </h2>
-<p>
-We are happy to announce the release of <span class="secondo">Secondo</span> 4.3.0.
+<div class="short">
+  We are happy to announce the release of <span class="secondo">Secondo</span> 4.3.0.
 See the <a href="content_releasenotes.html">Release Notes</a> for more information.
-</p>
+</div>
 
 
 <h2> 23.08.2021 &ndash; Parallel building </h2>
-<p>
+<div class="short">
 The current version of <span class="secondo">Secondo</span> supports the
 parallelization of the building process (e.g., <code>make -j 32</code>). This allows
 to build <span class="secondo">Secondo</span> much faster. We measured a building
 time of 13 minutes (parallel) vs. 71 minutes (sequential) on our test system.
-</p>
+</div>
 
 
 <h2> 01.08.2021 &ndash; Debian 11 is supported </h2>
-<p>
+<div class="short">
 We are happy to announce that Debian 11 is now supported by
 <span class="secondo">Secondo</span>.
-</p>
+</div>
 
 
 <h2> 10.03.2021 &ndash; M1 (ARM64) based Apple computers are now a supported platform </h2>
-<p>
+<div class="short">
 <span class="secondo">Secondo</span> now supports Apple computers with an M1 (ARM64)
 CPU as platform. See the <a href="content_install.html">Install Guide</a> for more
 information. Please note that no manual download of the BerkeleyDB or SWI-Prolog is
 required anymore. All dependencies on macOS are now managed by Homebrew.
-</p>
+</div>
 
 
 <h2> 20.01.2021 &ndash; Ubuntu 20.10 is supported </h2>
-<p>
+<div class="short">
 We are happy to announce that Ubuntu 20.10 is now supported by
 <span class="secondo">Secondo</span>. The source code can now be built by
 <i>gcc 10</i> and <i>SWI-Prolog 8.2</i> is supported.
-</p>
+</div>
 
 
 <h2> 18.12.2020 &ndash; SECONDO source code available on GitHub </h2>
-<p>
+<div class="short">
 The <span class="secondo">Secondo</span> source code is available on
 <a href="https://github.com/secondo-database/secondo" target="_blank">GitHub</a>.
 The repository was originally a read-only mirror of the CVS repository; the project
 has since retired CVS and switched completely to this repository.
-</p>
+</div>
 
 
 <h2> 11.12.2020 &ndash; New article about debugging SECONDO on macOS </h2>
-<p>
+<div class="short">
 A new article about the debugging of <span class="secondo">Secondo</span> on macOS is
 <a href="content_debugging.html#lldb">available</a>.
-</p>
+</div>
 
 
 <h2> 03.12.2020 &ndash; Website is available on GitHub </h2>
-<p>
+<div class="short">
 The website of the project is now available on
 <a href="https://secondo-database.github.io/">https://secondo-database.github.io/</a>.
-</p>
+</div>
 
 
 <h2> 15.11.2020 &ndash; macOS 11 Big Sur &ndash; SECONDO SDK available </h2>
-<p>
+<div class="short">
 An SDK for macOS 11 (Big Sur) is now
 <a href="files/Installation/Mac/Bigsur-Installation-Guide.html">available</a> for download.
-</p>
+</div>
 
 
 <h2> 01.10.2020 &ndash; Bison 3.0 deprecation warnings </h2>
-<p>
+<div class="short">
 All Bison 3.0 deprecation warnings (<code>warning: deprecated directive</code>) are fixed
 in the current version of the software.
-</p>
+</div>
 
 
 <h2> 24.09.2020 &ndash; C++17 </h2>
-<p>
+<div class="short">
 We have changed the used C++ standard in the project to C++17. This means that you can use
 these new
 <a href="https://gcc.gnu.org/projects/cxx-status.html#cxx17" target="_blank">language features</a>
 in your code. Please note that you have to run <code>make clean</code> to re-build the
 complete project.
-</p>
+</div>
 
 
 <h2> 23.09.2020 &ndash; Removal of the '-D_GLIBCPP_DEPRECATED' compiler flag </h2>
-<p>
+<div class="short">
 Until now, <span class="secondo">Secondo</span> was built with the flag
 <code>-D_GLIBCPP_DEPRECATED</code> to get access to some deprecated functions in the glibc.
 The code base was updated and these functions are not used anymore. Therefore, the compiler
 flag was removed.
-</p>
+</div>
 
 
 <h2> 22.09.2020 &ndash; Build server is upgraded to openSUSE Leap 15.2 </h2>
-<p>
+<div class="short">
 We have successfully upgraded the build- and CVS-server to openSUSE Leap 15.2; the system is
 now up and running.
-</p>
+</div>
 
 
 <div class="footnote">
