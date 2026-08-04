@@ -4,10 +4,11 @@
 
 /* page format */
 body{
+   margin:0;
    /* font-size:14pt; */
-   font-style:normal; 
+   font-style:normal;
    font-weight:normal;
-   font-family:serif; 
+   font-family:serif;
    color:black;
    background-color:rgb(240,240,240);
    text-align:justify;
@@ -47,13 +48,45 @@ h4,h5,h6{
     font-weight:bold;
     font-family:serif; }
 
-/* navigation sidebar (navigation2.html) */
-body.navbody{
-    margin:0;
-    padding:0;
-    min-height:100vh;
+/* navigation sidebar (_includes/nav.html) */
+aside.sidebar{
+    position:fixed;
+    top:0;
+    left:0;
+    width:270px;
+    height:100vh;
+    overflow-y:auto;
     font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-size:16px;
+    line-height:normal;
+    text-align:left;
     background:linear-gradient(180deg, rgb(184,0,0) 0%, rgb(138,0,0) 100%);
+}
+
+aside.sidebar *{
+    line-height:normal !important;
+    text-align:left !important;
+    color:white !important;
+}
+
+/* main content area, offset by the fixed sidebar width */
+main{
+    display:block;
+    margin-left:270px;
+    padding:20px;
+    overflow-x:auto;
+}
+
+@media (max-width:800px){
+    aside.sidebar{
+        position:static;
+        width:auto;
+        height:auto;
+        overflow-y:visible;
+    }
+    main{
+        margin-left:0;
+    }
 }
 
 a.nav-logo,
@@ -74,6 +107,8 @@ a.nav-logo:focus{
     width:100%;
     max-width:210px;
     height:auto;
+    padding:0;
+    margin:0;
 }
 
 nav.navi{
@@ -218,6 +253,30 @@ div.footnote{
  border-top-style:solid;
  padding-top:15px;
  font-size:x-small;
+}
+
+/* content classes used by BerlinMOD/BerlinMOD.html */
+div.normal{
+     margin-left:1cm;
+     text-align:justify;
+     max-width:20cm;
+}
+
+div.deprecated{
+    color:gray;
+    font-style:italic;
+}
+
+a.deprecated{
+    color:gray;
+}
+
+div.indented{
+    margin-left:1cm;
+}
+
+span.object{
+    font-family:monospace;
 }
 
 /* publication list (content_papers.html) */
