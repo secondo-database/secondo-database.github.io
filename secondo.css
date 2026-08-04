@@ -47,36 +47,63 @@ h4,h5,h6{
     font-weight:bold;
     font-family:serif; }
 
-/* table content for navigation */
-td.navi{
-    background-color:rgb(184,0,0);
-    border-top-style:dashed;
-    border-top-width:1px;
-    border-top-color:white;
-    border-bottom-style:none;
-    border-bottom-width:0;
-    border-bottom-color:white;
-    margin:5pt;	
-    color:white;
+/* navigation sidebar (navigation2.html) */
+body.navbody{
+    margin:0;
+    padding:0;
+    min-height:100vh;
+    font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg, rgb(184,0,0) 0%, rgb(138,0,0) 100%);
 }
-td.navifirst{
-    font-size:large;
-    background-color:rgb(184,0,0);
-    border-top-style:none;
-    border-top-width:0;
-    border-top-color:white;
-    border-bottom-style:none;
-    border-bottom-width:0;
-    border-bottom-color:white;
-    color:white;
+
+a.nav-logo,
+a.nav-logo:link,
+a.nav-logo:visited,
+a.nav-logo:hover,
+a.nav-logo:focus{
+    display:block;
+    margin:16px 14px 8px;
+    padding:12px 10px 10px;
+    background:white;
+    border-radius:8px;
+    text-align:center;
+    box-shadow:0 2px 6px rgba(0,0,0,0.3);
 }
-table.navi{
-   background-color:rgb(184,0,0);
-   border-style:none;
-   border-color:rgb(184,0,0);
-   padding:5pt;
-   font-size:large;
-}  
+
+.nav-logo img{
+    width:100%;
+    max-width:210px;
+    height:auto;
+}
+
+nav.navi{
+    padding:8px 8px 24px;
+}
+
+nav.navi ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+nav.navi li{
+    margin:1px 0;
+}
+
+nav.navi .navi-label{
+    display:block;
+    padding:12px 12px 4px;
+    color:white;
+    font-weight:bold;
+    font-size:0.85rem;
+    letter-spacing:0.3px;
+}
+
+nav.navi > ul > li > ul{
+    margin:2px 4px 8px 10px;
+    padding-left:10px;
+    border-left:1px solid rgba(255,255,255,0.3);
+}
 
 
 ul{
@@ -94,56 +121,71 @@ ul.algebra{
 
 /* Links  don't change the order of this definitions */
 /* not visited */
-a:link{ color:blue;
-        font-style:italic;
+a:link{ color:rgb(184,0,0);
+        font-style:normal;
         text-decoration:underline;
-        border-style:hidden;
-        padding:0pt;
-        margin:0pt;
+        text-decoration-color:rgba(184,0,0,0.4);
+        text-underline-offset:2px;
+        transition:color .15s ease, text-decoration-color .15s ease;
 }
 
-a.navi{
-   font-weight:bolder;
-   font-style:italic;
+nav.navi a.navi{
+   display:block;
+   padding:9px 12px;
+   font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+   font-weight:600;
+   font-style:normal;
    color:white;
-   font-size:large;
+   font-size:0.9rem;
    text-decoration:none;
+   border-left:3px solid transparent;
+   border-radius:0 5px 5px 0;
+   transition:background-color .15s ease, border-color .15s ease;
+}
+
+nav.navi > ul > li > ul a.navi{
+   font-weight:400;
+   font-size:0.82rem;
+   padding:6px 10px;
+   color:rgba(255,255,255,0.85);
 }
 
 /*  visited*/
-a:visited{color:green;
-           font-style:italic;
+a:visited{color:rgb(138,64,54);
+           font-style:normal;
            text-decoration:underline;
-           border-style:hidden;
-           padding:0pt;
-           margin:0pt;
+           text-decoration-color:rgba(138,64,54,0.4);
+           text-underline-offset:2px;
 }
 
-a.navi:visited{
-   font-weight:bolder;
-   color:rgb(220,220,220);
-   text-decoration:none;
-   font-size:large;
+nav.navi a.navi:visited{
+   color:white;
+}
+
+nav.navi > ul > li > ul a.navi:visited{
+   color:rgba(255,255,255,0.85);
 }
 
 
 /* activ  */
-a:hover,a:focus{ color:rgb(184,0,0);
-                 font-family:serif;
-                 font-style:italic;
+a:hover,a:focus{ color:rgb(120,0,0);
+                 font-style:normal;
                  text-decoration:underline;
-                 background-color:yellow;
-                 padding:0pt;
-                 margin:0pt;
+                 text-decoration-color:rgb(120,0,0);
                }
 
 
-a.navi:hover,a.navi:focus{
-   font-weight:bolder;
-   color:green;
-   background-color:yellow;
-  text-decoration:none;
-  font-size:large;
+nav.navi a.navi:hover,
+nav.navi a.navi:focus{
+   background-color:rgba(255,255,255,0.16);
+   border-left-color:white;
+   color:white;
+   text-decoration:none;
+}
+
+nav.navi > ul > li > ul a.navi:hover,
+nav.navi > ul > li > ul a.navi:focus{
+   color:white;
 }
 
 img{ border-style:none;
@@ -176,6 +218,89 @@ div.footnote{
  border-top-style:solid;
  padding-top:15px;
  font-size:x-small;
+}
+
+/* publication list (content_papers.html) */
+ol.pub-list{
+  list-style:none;
+  margin:20px 0 0;
+  padding:0;
+  max-width:46cm;
+}
+
+ol.pub-list li{
+  display:flex;
+  align-items:flex-start;
+  gap:16px;
+  padding:14px 4px;
+  border-top:1px solid rgb(224,224,224);
+  border-left:3px solid transparent;
+  transition:background-color .15s ease, border-left-color .15s ease;
+}
+
+ol.pub-list li:first-child{
+  border-top:none;
+}
+
+ol.pub-list li:hover{
+  background-color:rgba(184,0,0,0.035);
+  border-left-color:rgb(184,0,0);
+}
+
+.pub-meta{
+  flex:1 1 auto;
+  min-width:0;
+}
+
+.pub-meta .authors{
+  display:block;
+  color:rgb(70,70,70);
+}
+
+.pub-meta .title{
+  display:block;
+  margin-top:2px;
+  font-weight:bold;
+  color:black;
+}
+
+.pub-meta .venue{
+  display:block;
+  margin-top:2px;
+  font-style:italic;
+  color:rgb(110,110,110);
+}
+
+.pub-badge{
+  display:inline-block;
+  margin-top:6px;
+  padding:2px 8px;
+  font-style:normal;
+  font-size:small;
+  font-weight:bold;
+  color:white;
+  background:rgb(184,0,0);
+  border-radius:10px;
+}
+
+.pub-links{
+  flex:0 0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:4px;
+  padding-top:2px;
+  text-align:right;
+}
+
+.pub-links a{
+  font-size:0.85rem;
+  white-space:nowrap;
+}
+
+@media (max-width:640px){
+  ol.pub-list li{ flex-direction:column; }
+  .pub-links{ flex-direction:row; flex-wrap:wrap; align-items:flex-start; text-align:left; }
 }
 
 
@@ -213,20 +338,27 @@ pre code{
 }
 
 
-a.btn {
-  border-radius: 15px;
-  font-family: Georgia;
-  color: #B80000;
-  font-size: 50px;
-  background: #b0b0ff;
-  padding: 0px 10px 0px 10px;
-  border: solid #000000 8px;
-  text-decoration: none;
+a.btn:link,
+a.btn:visited{
+  display:inline-block;
+  font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-weight:600;
+  font-style:normal;
+  font-size:0.95rem;
+  color:white;
+  background:rgb(184,0,0);
+  padding:8px 20px;
+  border-radius:6px;
+  border:none;
+  text-decoration:none;
+  transition:background-color .15s ease;
 }
 
-a.btn:hover {
-  background: #00ed47;
-  text-decoration: none;
+a.btn:hover,
+a.btn:focus {
+  color:white;
+  background:rgb(140,0,0);
+  text-decoration:none;
 }
 
 
