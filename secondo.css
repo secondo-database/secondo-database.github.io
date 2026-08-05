@@ -148,10 +148,7 @@ ul{
 
 ul.algebra{
    list-style-type:none;
-   list-style-image:url(images/bullet.gif);
 }
-
-
 
 
 /* Links  don't change the order of this definitions */
@@ -229,7 +226,7 @@ img{ border-style:none;
      }
 
 span.algebraname{
-    color:rgb(255,192,128);
+    color:rgb(0, 0, 0);
     font-weight:bolder;
 }
 
