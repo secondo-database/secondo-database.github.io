@@ -20,9 +20,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="0.52786545"
-     inkscape:cx="281.32169"
-     inkscape:cy="460.34458"
+     inkscape:zoom="0.81821334"
+     inkscape:cx="508.42486"
+     inkscape:cy="446.09393"
      inkscape:window-width="1342"
      inkscape:window-height="777"
      inkscape:window-x="0"
@@ -37,12 +37,7 @@
        id="guide1"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="228.12911,747.52474"
-       orientation="0,-1"
-       id="guide2"
-       inkscape:locked="false" />
-    <sodipodi:guide
-       position="210.10889,848.43799"
+       position="1074.292,729.73252"
        orientation="0,-1"
        id="guide3"
        inkscape:locked="false" />
@@ -923,4 +918,21 @@
      text-anchor="start"
      id="text23-5"
      style="stroke-width:1.09033">REST Bridge</text>
+  <rect
+     x="794.49615"
+     y="459.65561"
+     width="82.386078"
+     height="34.890537"
+     fill="#201e1d"
+     id="use1"
+     style="stroke-width:0.660347" />
+  <text
+     x="809.94141"
+     y="482.55255"
+     font-size="13.084px"
+     font-weight="600"
+     fill="#ffffff"
+     letter-spacing="1.6"
+     style="text-transform:uppercase;stroke-width:1.09033"
+     id="use2">Prolog</text>
 </svg>
