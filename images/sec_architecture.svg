@@ -5,7 +5,7 @@
    height="880.06006"
    version="1.1"
    id="svg68"
-   sodipodi:docname="Secondo Architecture_red_wo.svg"
+   sodipodi:docname="sec_architecture.svg"
    inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -21,7 +21,7 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="0.81821334"
-     inkscape:cx="508.42486"
+     inkscape:cx="509.03594"
      inkscape:cy="446.09392"
      inkscape:window-width="1342"
      inkscape:window-height="777"
@@ -919,15 +919,15 @@
      id="text23-5"
      style="stroke-width:1.09033">REST Bridge</text>
   <rect
-     x="794.49615"
+     x="789.60742"
      y="459.65561"
-     width="82.386078"
+     width="87.27478"
      height="34.890537"
      fill="#201e1d"
      id="use1"
-     style="stroke-width:0.660347" />
+     style="stroke-width:0.679657" />
   <text
-     x="807.94141"
+     x="802.89728"
      y="482.55255"
      font-size="13.084px"
      font-weight="600"
