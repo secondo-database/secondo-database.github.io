@@ -60,17 +60,17 @@ sudo apt-get install flex bison gcc g++ build-essential \
 <li>
 <b>Get the sources and build <span class="secondo">Secondo</span>.</b> The build
 environment (compiler, Berkeley&nbsp;DB, SWI-Prolog paths, ...) is derived
-automatically from the installed tools; you only have to set
-<code>SECONDO_BUILD_DIR</code> and source the detection script:
+automatically from the installed tools every time you run <code>make</code>, so
+there are only these two settings:
 <pre>
 export SECONDO_BUILD_DIR=$HOME/secondo
-source $SECONDO_BUILD_DIR/CM-Scripts/secondo-detect.sh
+export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini
 </pre>
 It is convenient to add these two lines to your <code>~/.bashrc</code>, so the
 environment is set up automatically in every new terminal:
 <pre>
 echo 'export SECONDO_BUILD_DIR=$HOME/secondo' >> ~/.bashrc
-echo 'source $SECONDO_BUILD_DIR/CM-Scripts/secondo-detect.sh' >> ~/.bashrc
+echo 'export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini' >> ~/.bashrc
 </pre>
 Then download the sources and build the system as described on the
 <a href="content_sources.html">Sources</a> page (in short: run <code>make</code>
@@ -148,18 +148,18 @@ to the system (or install an equivalent JDK&nbsp;21, e.g. Temurin).
 
 <li>
 <b>Get the sources and build <span class="secondo">Secondo</span>.</b> The build
-environment (compiler, Berkeley&nbsp;DB, SWI-Prolog paths, ...) is derived
-automatically from the installed tools; you only have to set
-<code>SECONDO_BUILD_DIR</code> and source the detection script:
+environment (compiler, Berkeley&nbsp;DB, SWI-Prolog paths, the keg-only Homebrew
+prefixes, ...) is derived automatically from the installed tools every time you
+run <code>make</code>, so there are only these two settings:
 <pre>
 export SECONDO_BUILD_DIR=$HOME/secondo
-source $SECONDO_BUILD_DIR/CM-Scripts/secondo-detect.sh
+export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini
 </pre>
 It is convenient to add these two lines to your <code>~/.zshrc</code>, so the
 environment is set up automatically in every new terminal:
 <pre>
 echo 'export SECONDO_BUILD_DIR=$HOME/secondo' >> ~/.zshrc
-echo 'source $SECONDO_BUILD_DIR/CM-Scripts/secondo-detect.sh' >> ~/.zshrc
+echo 'export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini' >> ~/.zshrc
 </pre>
 Then download the sources and build the system as described on the
 <a href="content_sources.html">Sources</a> page (in short: run <code>make</code>
