@@ -13,7 +13,8 @@ description: extensible database system
 This page explains how to install <span class="secondo">Secondo</span> and the tools it
 requires on your computer. The currently supported and CI-verified paths are a build from
 sources on <b>Ubuntu / Debian</b>, precompiled <tt>.deb</tt> binary packages for Ubuntu,
-and a build on <b>macOS</b> using <a href="https://brew.sh/">Homebrew</a>. Older
+a Container image for <b>Docker</b> and other container platforms, and a build on <b>macOS</b>
+using <a href="https://brew.sh/">Homebrew</a>. Older
 distributions are covered by the
 <a href="content_install_legacy.html">historical installation guides</a>. The build of
 <span class="secondo">Secondo</span> from sources itself is explained on the
@@ -21,7 +22,9 @@ distributions are covered by the
 
 <h2> Which installation is right for you? </h2>
 <ul>
-  <li> Just want to try <span class="secondo">Secondo</span> on Ubuntu &rarr;
+  <li> Just want to try <span class="secondo">Secondo</span> in a few seconds &rarr;
+       <a href="#container">using containers</a> </li>
+  <li> Just want to install <span class="secondo">Secondo</span> on Ubuntu &rarr;
        <a href="#deb">binary <tt>.deb</tt> packages (apt-get)</a> </li>
   <li> Build or extend <span class="secondo">Secondo</span> on Ubuntu / Debian &rarr;
        <a href="#ubuntu">installation from sources</a> </li>
@@ -29,6 +32,66 @@ distributions are covered by the
   <li> Older distributions (Fedora, SuSE, older Ubuntu) &rarr;
        <a href="content_install_legacy.html">historical installation guides</a> </li>
 </ul>
+
+<h2 id="container"> Using SECONDO in a Container </h2>
+
+<p>
+The fastest way to try <span class="secondo">Secondo</span> is to run the official
+container image. It bundles <span class="secondo">Secondo</span> and all of its
+dependencies, so no local installation is required &mdash; only
+<a href="https://docs.docker.com/get-docker/">Docker</a> (or another
+OCI-compatible container runtime).
+</p>
+
+<p>
+Start the container. A named volume (<tt>secondo-databases</tt>) keeps your
+databases on the host, so they survive container restarts and upgrades:
+<pre>
+docker run -d --name secondo -p 8000:8000 -p 1234:1234 \
+    -v secondo-databases:/var/lib/secondo/databases \
+    ghcr.io/secondo-database/secondo:latest
+</pre>
+</p>
+
+<p>
+Afterward, you can access the <span class="secondo">Secondo</span> GUI in your
+browser at <a href="http://localhost:8000">http://localhost:8000</a>.
+</p>
+
+<p>
+To instead work with the client-server console <tt>SecondoTTYCS</tt> inside the
+running container:
+<pre>
+docker exec -it secondo SecondoTTYCS
+</pre>
+</p>
+
+<p>
+Stop the container when you are done, and start it again later with
+<tt>docker start secondo</tt>:
+<pre>
+docker stop secondo
+</pre>
+</p>
+
+<h2 id="deb"> Binary Installation via <tt>.deb</tt> Packages (Ubuntu, apt-get) </h2>
+
+<p>
+For users who just want to try <span class="secondo">Secondo</span> without compiling it,
+we provide precompiled <tt>.deb</tt> packages for Ubuntu&nbsp;22.04, 24.04 and 26.04. They
+install <span class="secondo">Secondo</span> and all of its dependencies within a few
+minutes via <tt>apt-get</tt>, and are the recommended starting point for new users.
+Developers who want to build their own extensions should instead build
+<a href="#ubuntu">from sources</a> as described above.
+</p>
+
+<p>
+See the
+<a href="files/Installation/Ubuntu/content_Installation_repos.html">Ubuntu installation
+guide using apt-get</a> for the full instructions. Note that these packages are built for
+the <code>x86_64</code>/<code>amd64</code> architecture only; on other architectures
+(e.g. arm64) please <a href="#ubuntu">build from sources</a>.
+</p>
 
 <h2 id="ubuntu"> Installation on Ubuntu / Debian (from sources) </h2>
 
@@ -82,26 +145,6 @@ in <code>$SECONDO_BUILD_DIR</code>).
 </li>
 
 </ol>
-
-
-<h2 id="deb"> Binary Installation via <tt>.deb</tt> Packages (Ubuntu, apt-get) </h2>
-
-<p>
-For users who just want to try <span class="secondo">Secondo</span> without compiling it,
-we provide precompiled <tt>.deb</tt> packages for Ubuntu&nbsp;22.04, 24.04 and 26.04. They
-install <span class="secondo">Secondo</span> and all of its dependencies within a few
-minutes via <tt>apt-get</tt>, and are the recommended starting point for new users.
-Developers who want to build their own extensions should instead build
-<a href="#ubuntu">from sources</a> as described above.
-</p>
-
-<p>
-See the
-<a href="files/Installation/Ubuntu/content_Installation_repos.html">Ubuntu installation
-guide using apt-get</a> for the full instructions. Note that these packages are built for
-the <code>x86_64</code>/<code>amd64</code> architecture only; on other architectures
-(e.g. arm64) please <a href="#ubuntu">build from sources</a>.
-</p>
 
 
 <h2 id="macos">Installation on macOS (Intel and Apple Silicon)</h2>
@@ -205,5 +248,5 @@ with per-version scripts that are no longer maintained. They are kept for refere
 
 
 <div class="footnote">
- Last Changed: 2026-07-15 (JNI)
+ Last Changed: 2026-08-15 (JNI)
 </div>
