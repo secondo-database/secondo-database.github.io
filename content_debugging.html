@@ -20,7 +20,7 @@ distributed algebras. For example, the query
 <h3> Table of Contents </h3>
 <ul>
   <li> <a href="#autostacktrace">Automatically Generated Stacktrace</a> </li>
-  <li> <a href="#manualdecode">Decode the Stacktrace Manually</a> </li>
+  <li> <a href="#manualdecode">Reading a Stacktrace from a Logfile</a> </li>
   <li> <a href="#valgrind">Using Valgrind</a> </li>
   <li> <a href="#gdb">Using the GNU Debugger (GDB) and Core Dumps on Linux</a> </li>
   <li> <a href="#lldb">Using the Low-Level Debugger (lldb) on macOS</a> </li>
@@ -31,23 +31,27 @@ distributed algebras. For example, the query
 
 <p>
 After <span class="secondo">Secondo</span> has crashed, a signal handler is called, which
-tries to dump the current stack. To be more precise: in
+dumps the current stack. To be more precise: in
 <code>Tools/Utilities/Application.cpp</code>, a signal handler is defined and called on
 <a href="https://en.wikipedia.org/wiki/Signal_(IPC)#POSIX_signals" target="_blank">signals</a>
 like <code>SIGINT</code>, <code>SIGTERM</code>, or <code>SIGFPE</code>.
 </p>
 
-<h3> Default Stacktrace </h3>
+<p>
+The stacktrace is symbolized directly in the crashing process using libbacktrace.
+When a signal arrives, <code>WinUnix::stacktrace()</code> walks the stack and, for every frame,
+resolves the function name and the source file and line directly against the debug info of the
+shared object that frame belongs to &mdash; the main <span class="secondo">Secondo</span>
+binary, an algebra <code>.so</code>, or libc. This means every frame is fully resolved by the
+time it is printed.
+</p>
 
 <p>
-The generated stacktrace is a convenient way to get a first impression of which method has
-caused the crash. A wrapper script (i.e., <code>bin/SecondoTTYBDB</code>) parses the output
-of the stacktrace and tries to resolve the addresses of the stack to line numbers. However,
-this method has two significant drawbacks: (1) when the stack becomes corrupted before the
-crash occurs, the stacktrace can not be generated, and (2) depending on the used compiler
-options (e.g., <code>-fPIC</code> for position independent code), the addresses of the output
-do not resolve to the real line numbers (see
-<a href="https://github.com/secondo-database/secondo/issues/6" target="_blank">#6</a>):
+Resolution can still fail in two situations: (1) when the stack becomes corrupted before the
+crash occurs, it can not be unwound, and (2) a frame without debug info available (e.g., code
+built without <code>-g</code>, or a build configured with
+<code>SECONDO_NO_LIBBACKTRACE=1</code>) is printed as a bare address with no function name or
+source location.
 </p>
 
 <pre>$ ./SecondoTTYBDB
@@ -64,21 +68,17 @@ perOperator = 0
 
  Generating stack trace ...
  ************ BEGIN STACKTRACE ************
-No stacktrace output file defined, dumping stacktrace to stdout
-./SecondoBDB(_ZN7WinUnix10stacktraceEPKcS1_+0x6d)[0x55d4f31ca5b1]
-./SecondoBDB(_ZN11Application20AbortOnSignalHandlerEi+0xf8)[0x55d4f31c1860]
-/lib/x86_64-linux-gnu/libc.so.6(+0x3efd0)[0x7fc65d4bcfd0]
-./SecondoBDB(_ZN9auxiliary14FaultLocalInfoILNS_9CrashTypeE0EE12forwardTupleEv+0x4f)[0x55d4f425dc6b]
-./SecondoBDB(_ZN9auxiliary11InjectFaultILNS_9CrashTypeE0EEEiP4WordRS2_iS4_Pv+0xfe)[0x55d4f425d944]
-./SecondoBDB(_ZN14QueryProcessor4EvalEPvR4Wordi+0xe33)[0x55d4f31f71f3]
-./SecondoBDB(_ZN14QueryProcessor7RequestEPvR4Word+0x62)[0x55d4f31f794c]
-./SecondoBDB(_Z12TCountStreamP4WordRS_iS1_Pv+0xcf)[0x55d4f335e1a0]
-./SecondoBDB(_ZN14QueryProcessor4EvalEPvR4Wordi+0xe33)[0x55d4f31f71f3]
-./SecondoBDB(_ZN14QueryProcessor5EvalPEPvR4Wordi+0xea)[0x55d4f31f5fb2]
-./SecondoBDB(main+0x1f6)[0x55d4f3175314]
-/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7fc65d49fb97]
-./SecondoBDB(_start+0x2a)[0x55d4f3114cfa]
-*********** END STACKTRACE **********************
+0x55d4f31ca5b1 _ZN7WinUnix10stacktraceEPKc at WinUnix.cpp:247
+0x55d4f31c1860 _ZN11Application20AbortOnSignalHandlerEi at Application.cpp:330
+0x7fc65d4bcfd0 ??
+0x55d4f425dc6b _ZN9auxiliary14FaultLocalInfoILNS_9CrashTypeE0EE12forwardTupleEv at AuxiliaryAlgebra.cpp:376
+0x55d4f425d944 _ZN9auxiliary11InjectFaultILNS_9CrashTypeE0EEEiP4WordRS2_iS4_Pv at AuxiliaryAlgebra.cpp:421
+0x55d4f31f71f3 _ZN14QueryProcessor4EvalEPvR4Wordi at QueryProcessor.cpp:4491
+0x55d4f31f794c _ZN14QueryProcessor7RequestEPvR4Word at QueryProcessor.cpp:4691
+0x55d4f335e1a0 _Z12TCountStreamP4WordRS_iS1_Pv at RelationAlgebra.cpp:2096
+[...]
+0x55d4f3175314 main at MainTTY.cpp:164
+ *********** END STACKTRACE **********************
 
 *** Signal SIGILL (4) caught! Calling default signal handler ...</pre>
 
@@ -90,15 +90,17 @@ and methods.
 
 <p>
 In the example, the first three entries are the most important ones.
-<code>_ZN7WinUnix10stacktraceEPKcS1_+0x6d</code> shows that the <code>stacktrace</code> method
-of the class <code>WinUnix</code> was run as the last method. Before this method was called,
-the <code>AbortOnSignalHandler</code> method of the class <code>Application</code> was called
-(<code>_ZN11Application20AbortOnSignalHandlerEi+0xf8</code>). The third entry on the stack is
-the most important one: <code>_ZN9auxiliary14FaultLocalInfoILNS_9CrashTypeE0EE12forwardTupleEv+0x4f</code>.
-It can be seen that the <code>forwardTuple</code> method of a class called
-<code>auxiliary</code> was called before the crash handler was executed. This is exactly the
-method of the <code>faultcrash</code> operator in the <code>AuxiliaryAlgebra</code>. In the
-next examples, the exact line number is determined where the crash has occurred.
+<code>_ZN7WinUnix10stacktraceEPKc at WinUnix.cpp:247</code> shows that the
+<code>stacktrace</code> method of the class <code>WinUnix</code> was run as the last method.
+Before this method was called, the <code>AbortOnSignalHandler</code> method of the class
+<code>Application</code> was called
+(<code>_ZN11Application20AbortOnSignalHandlerEi at Application.cpp:330</code>). The third
+entry on the stack is the most important one:
+<code>_ZN9auxiliary14FaultLocalInfoILNS_9CrashTypeE0EE12forwardTupleEv at
+AuxiliaryAlgebra.cpp:376</code>. It can be seen that the <code>forwardTuple</code> method of a
+class called <code>auxiliary</code> was called before the crash handler was executed, at line
+376 of <code>AuxiliaryAlgebra.cpp</code>. This is exactly the method of the
+<code>faultcrash</code> operator in the <code>AuxiliaryAlgebra</code>.
 </p>
 
 <p>
@@ -106,96 +108,65 @@ It can also be seen that <span class="secondo">Secondo</span> has crashed with a
 <i>Illegal Instruction Exception</i> (SIGILL).
 </p>
 
-<h3> Automatically Decoded Stacktrace </h3>
+<h3> Demangled Stacktrace </h3>
 
 <p>
-When (1) the tool <code>addr2line</code> is installed, (2)
-<span class="secondo">Secondo</span> is started from the script <code>SecondoTTYBDB</code>,
-and (3) the relocation info can be fetched from the linker, the addresses of the stacktrace
-are automatically mapped to source code lines. This gives a much clearer view of where the
-crash has occurred. However, this only works in certain environments.
+The function names above are DWARF linkage (mangled) names &mdash;
+<code>libbacktrace</code> does not demangle them. When
+<span class="secondo">Secondo</span> is started through <code>bin/SecondoTTYBDB</code>, the
+stacktrace is captured to a temporary file, and once <span class="secondo">Secondo</span>
+exits, the script prints that file piped through <code>c++filt</code> (when available) to
+demangle the names:
 </p>
 
 <pre>========
 SECONDO has crashed, printing stack trace....
 ========
 
-Binary relocation: 0x55bae030b000
-
-[... raw stacktrace addresses ...]
-
-========
- Trying to decode the stacktrace...
-========
-
-WinUnix::stacktrace(char const*, char const*, char const*) at WinUnix.cpp:247
-Application::AbortOnSignalHandler(int) at Application.cpp:330
-?? ??:0
-auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple() at AuxiliaryAlgebra.cpp:376
-int auxiliary::InjectFault&lt;(auxiliary::CrashType)0&gt;(Word*, Word&amp;, int, Word&amp;, void*) at AuxiliaryAlgebra.cpp:421
-QueryProcessor::Eval(void*, Word&amp;, int) at QueryProcessor.cpp:4491
-QueryProcessor::Request(void*, Word&amp;) at QueryProcessor.cpp:4691
-TCountStream(Word*, Word&amp;, int, Word&amp;, void*) at RelationAlgebra.cpp:2096
+0x55d4f31ca5b1 WinUnix::stacktrace(char const*) at WinUnix.cpp:247
+0x55d4f31c1860 Application::AbortOnSignalHandler(int) at Application.cpp:330
+0x7fc65d4bcfd0 ??
+0x55d4f425dc6b auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple() at AuxiliaryAlgebra.cpp:376
+0x55d4f425d944 int auxiliary::InjectFault&lt;(auxiliary::CrashType)0&gt;(Word*, Word&amp;, int, Word&amp;, void*) at AuxiliaryAlgebra.cpp:421
+0x55d4f31f71f3 QueryProcessor::Eval(void*, Word&amp;, int) at QueryProcessor.cpp:4491
 [...]
-main at MainTTY.cpp:164</pre>
+0x55d4f3175314 main at MainTTY.cpp:164
+========</pre>
 
 
-<h2><a name="manualdecode"></a> Decode the Stacktrace Manually </h2>
+<h2><a name="manualdecode"></a> Reading a Stacktrace from a Logfile </h2>
 
 <p>
 In certain situations (e.g., when working with the Distributed Algebra and
-<span class="secondo">Secondo</span> workers), only the default stacktrace is contained in a
-logfile. This stacktrace needs to be decoded manually by the <code>addr2line</code> tool and
-a possible <code>binary relocation</code> has to be subtracted first (see the output of the
-stacktrace). <span class="secondo">Secondo</span> ships with the helper script
-<code>bin/decode_stacktrace.sh</code> to ease the calculation and the decoding of the
-stacktrace.
+<span class="secondo">Secondo</span> workers), only the stacktrace that ended up in a logfile
+is available, without the interactive <code>bin/SecondoTTYBDB</code> wrapper around it. This
+is not a problem: the stacktrace was already fully resolved to function names and source
+locations by <code>libbacktrace</code> on the machine where
+<span class="secondo">Secondo</span> crashed, so the logfile can simply be read as is.
 </p>
 
 <p>
-<b>Important:</b> This only works when the <span class="secondo">Secondo</span> binary on the
-used system is equal to the binary of the crashed <span class="secondo">Secondo</span>.
-Otherwise, the addresses are different in the binary, and wrong line numbers are displayed.
+<b>Note:</b> Resolving the trace only requires the debug info to be available on the
+<i>crashing</i> machine at the time of the crash (i.e., the binary that crashed must have been
+built with <code>libbacktrace</code> support and with debug symbols). The machine you are
+reading the logfile on does not need a matching copy of the binary.
 </p>
 
 <p>
-To use the tool, copy the stacktrace into a textfile and start the script with the filename
-as a parameter (e.g., <code>./decode_stacktrace.sh stacktrace.txt</code>). Please ensure that
-a possible <code>Binary relocation:</code> is contained in the stacktrace file. A stacktrace
-file (e.g., <code>stacktrace.txt</code>) should look as follows:
+The only thing that may still be missing is demangling: a stacktrace read straight out of a
+logfile still contains DWARF linkage (mangled) names, since only
+<code>bin/SecondoTTYBDB</code> pipes its captured trace through <code>c++filt</code>
+automatically. Piping the logfile content through <code>c++filt</code> demangles it:
 </p>
 
-<pre>Binary relocation: 0x55a0eaea6000
+<pre>$ c++filt &lt; stacktrace.txt
 
-./SecondoBDB(_ZN7WinUnix10stacktraceEPKcS1_S1_+0x74)[0x55a0ec18bdc6]
-./SecondoBDB(_ZN11Application20AbortOnSignalHandlerEi+0x107)[0x55a0ec18316d]
-/lib/x86_64-linux-gnu/libc.so.6(+0x3efd0)[0x7f0df2aacfd0]
-./SecondoBDB(_ZN9auxiliary14FaultLocalInfoILNS_9CrashTypeE0EE12forwardTupleEv+0x4f)[0x55a0ed25c20b]
+0x55a0ec18bdc6 WinUnix::stacktrace(char const*) at WinUnix.cpp:247
+0x55a0ec18316d Application::AbortOnSignalHandler(int) at Application.cpp:330
+0x7f0df2aacfd0 ??
+0x55a0ed25c20b auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple() at AuxiliaryAlgebra.cpp:376
 [...]
-./SecondoBDB(main+0x1f6)[0x55a0ec136c66]
-/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7f0df2a8fb97]
-./SecondoBDB(_start+0x2a)[0x55a0ec0d665a]</pre>
-
-<p>
-This file can now be decoded by calling <code>decode_stacktrace.sh</code>:
-</p>
-
-<pre>$ ./decode_stacktrace.sh stacktrace.txt
-
-========
- Trying to decode the stacktrace...
-========
-
-Executing: addr2line --demangle=auto -p -fs -e SecondoBDB 0x12E5DC6 0x12DD16D [...]
-
-WinUnix::stacktrace(char const*, char const*, char const*) at WinUnix.cpp:247
-Application::AbortOnSignalHandler(int) at Application.cpp:330
-?? ??:0
-auxiliary::FaultLocalInfo&lt;(auxiliary::CrashType)0&gt;::forwardTuple() at AuxiliaryAlgebra.cpp:376
-int auxiliary::InjectFault&lt;(auxiliary::CrashType)0&gt;(Word*, Word&amp;, int, Word&amp;, void*) at AuxiliaryAlgebra.cpp:421
-QueryProcessor::Eval(void*, Word&amp;, int) at QueryProcessor.cpp:4491
-[...]
-main at MainTTY.cpp:164</pre>
+0x55a0ec136c66 main at MainTTY.cpp:164</pre>
 
 
 <h2><a name="valgrind"></a> Using Valgrind </h2>
@@ -403,5 +374,5 @@ provides almost the same commands as gdb. More information about the differences
 
 
 <div class="footnote">
- Last Changed: 2026-07-21 (JNI)
+ Last Changed: 2026-08-19 (JNI)
 </div>
