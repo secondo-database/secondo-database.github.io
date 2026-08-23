@@ -13,7 +13,7 @@ description: A hands-on quick-start guide to SECONDO&#58; install it, restore th
 <div class="short">
 This guide walks you through a "do it yourself" demo of <span class="secondo">Secondo</span>,
 the moving objects database system. In about 15&ndash;20 minutes you will install
-<span class="secondo">Secondo</span>, restore two example databases, and run queries that
+<span class="secondo">Secondo</span>, restore an example database, and run queries that
 compute the trajectory of a moving underground train, find all trains passing through a
 region, and see the query optimizer in action &mdash; without having to read any manuals
 or papers first.
@@ -88,7 +88,7 @@ source, or macOS via Homebrew), see the full
 <a href="content_install.html">Installation Instructions</a> page and then come back here.
 </div>
 
-<h2 id="restore"> Step 2: Restore the Example Databases </h2>
+<h2 id="restore"> Step 2: Restore the Example Database </h2>
 <div class="short">
 <ol>
 <li>
@@ -102,7 +102,7 @@ Start a single-user session:
 <pre>./SecondoTTYBDB</pre>
 </li>
 <li>
-Restore the two example database used in this guide, then quit:
+Restore the example database used in this guide, then quit:
 <pre>restore database berlintest from berlintest;
 close database;
 q</pre>
@@ -114,7 +114,7 @@ A command at this interface is terminated by either a semicolon or an empty line
 </ol>
 </div>
 
-<h2 id="gui"> Step 3: Start the Kernel and the GUI </h2>
+<h2 id="gui"> Step 3: Start the Kernel and the WebUI </h2>
 <div class="short">
 <ol start="4">
 <li>
@@ -122,50 +122,75 @@ Still in <code>secondo/bin</code>, start the kernel process that user interfaces
 <pre>./SecondoMonitor -s</pre>
 </li>
 <li>
-Open a new shell, change to <code>secondo/Javagui</code> (not needed for the
-<code>.deb</code> or container installation), and start the graphical user interface:
-<pre>./sgui</pre>
-A popup "Errors in loading favoured queries" can also appear the first time the GUI runs,
-because that file does not exist yet; you can ignore it.
+Open a new shell, change to <code>secondo/WebUI</code> (not needed for the
+<code>.deb</code> or container installation), and start the WebUI:
+<pre>make venv native
+make prod</pre>
+
+After the command <code>make prod</code> has finished, the WebUI is available in your browser at
+<a href="http://localhost:8000">http://localhost:8000</a>.
 </li>
+
 <li>
-In the command window at the upper left of the GUI, open the test database:
+In the database and catalog view at the left of the WebUI, open the berlintest database. 
+Alternatively, you can also use the command line in the WebUI to open the database:
 <pre>open database berlintest</pre>
-</li>
-<li>
-From the "Viewers" drop-down menu, select <b>Hoese-Viewer</b>.
-</li>
-<li>
-From the "File" menu, select <b>Load Categories</b>, and open <code>BerlinU.cat</code>
-in the popup. The viewer confirms "categories loaded" &mdash; categories are display
-styles for geometric attributes.
 </li>
 </ol>
 </div>
 
 <h2 id="queries"> Step 4: Run Your First Queries </h2>
 <div class="short">
-<ol start="9">
+<ol start="7">
 <li>
-Load the underground network of Berlin as a background. In the command window, type:
+To load the underground network of Berlin as a background, type:
 <pre>query UBahn</pre>
-A popup asks for a display style for the attribute <code>geoData</code>; choose
-<b>UBahn</b> and click "ok". The Berlin underground network appears &mdash; we will use it
+Or click on the UBahn entry in the catalog view at the left. The network appears in the main view.
+
+<div style="text-align:center; margin:16px 0;">
+<img src="/images/screen_ubahn.jpg" width="640" height="495" alt="Secondo WebUI showing the Berlin underground network">
+</div>
+
+The Berlin underground network appears &mdash; we will use it
 as a background for the moving trains stored in the relation
 <code>Trains(Id: int, Line: int, Up: bool, Trip: mpoint)</code>, which holds 562 trains
-moving on 2003&#8209;11&#8209;20.
+moving on 2003&#8209;11&#8209;20.<br>
+<br>
+You can adjust the color and the width of the lines by clicking on the <code>UBahn</code> layer
+on the top right and adjusting it.
 </li>
+
+<li>The coordinates of the berlintest database are non-standard WGS 84 coordinates.
+To map them and be able to get a map background, click on the projection dropdown on the top left and
+select BerlinMOD -> OSM.
+
+<div style="text-align:center; margin:16px 0;">
+<img src="/images/screen_ubahn_mapped.jpg" width="640" height="495" alt="The Berlin underground network overlaid on an OpenStreetMap background">
+<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
+</div>
+</li>
+
 <li>
 Look at a single train, a value of type <code>mpoint</code>:
 <pre>query train7</pre>
-Choose display style <b>QueryMPoint</b>. Train7 appears as a red square at time
-2003-11-20-06:06:00.000. Use the animation "forward" button to see it move, and the
-double-arrow buttons to change the animation speed.
+Use the animation "forward" button to see it move along its trajectory. You can also adjust the speed or pause the animation. Furthermore, you can change the symbol of the train by clicking on the <code>train7</code> layer on the top right and adjusting it.
+
+<div style="text-align:center; margin:16px 0;">
+<img src="/images/screen_ubahn_moving.jpg" width="640" height="495" alt="Train7 shown as a moving point on the map, mid-animation along its route">
+<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
+</div>
+
 </li>
+
 <li>
 Compute the path <code>train7</code> has taken:
 <pre>query trajectory(train7)</pre>
-Choose display style <b>QueryLine</b>. The path taken by train7 appears in red.
+The width and the color of the line can be adjusted by clicking on the <code>trajectory(train7)</code> layer.
+<div style="text-align:center; margin:16px 0;">
+<img src="/images/screen_ubahn_trajectory.jpg" width="640" height="495" alt="The full trajectory of train7 drawn as a line on the map">
+<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
+</div>
+
 </li>
 <li>
 Compute the time-dependent distance between <code>train7</code> and the underground
@@ -173,8 +198,14 @@ station <code>mehringdamm</code>:
 <pre>query mehringdamm</pre>
 then
 <pre>query distance(train7, mehringdamm)</pre>
-Double-click the resulting <code>mreal</code> value on the left to see a plot of the
-distance over time &mdash; it drops to 0 when train7 passes through the station.
+
+On the left, you will see a value of type <code>mreal</code>, which is a time-dependent real number. It represents the distance between the train and the station over time; it drops to 0 when train7 passes through the station.
+
+<div style="text-align:center; margin:16px 0;">
+<img src="/images/screen_ubahn_mehringdam_mreal.jpg" width="640" height="495" alt="Plot of the time-dependent distance between train7 and the mehringdamm station, dropping to zero as the train passes through">
+<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
+</div>
+
 </li>
 <li>
 Find all trains passing through the static region <code>tiergarten</code>:
@@ -184,8 +215,11 @@ query Trains feed filter[.Trip passes tiergarten] consume</pre>
 This confirms 562 trains in total, of which 80 pass through <code>tiergarten</code>, and
 then displays them.
 </li>
+<li>You can clear the query results by clicking on the X button in the layers panel.</li>
 </ol>
 </div>
+
+
 
 <h2 id="optimizer"> Step 5: Use the Query Optimizer </h2>
 <div class="short">
@@ -199,7 +233,9 @@ See the individual trains with:
 <pre>select * from Trains where Trip passes mehringdamm</pre>
 </li>
 <li>
-Also more complex queries can be optimized. For example, find the names and addresses of all Italian restaurants within 2&nbsp;km of the
+Also more complex queries can be optimized, not just on moving objects. The
+<code>berlintest</code> database also contains restaurants and sights of interest in Berlin.
+Find the names and addresses of all Italian restaurants within 2&nbsp;km of the
 Brandenburg Gate:
 <pre>select [r:name, r:strasse, r:geoData]
 from   [restaurants as r, sehenswuerdpoi as s]
@@ -208,7 +244,8 @@ where  [ s:name="Brandenburger Tor",
          distance(r:geoData, s:geodata) < 2000]</pre>
 
 <div style="text-align:center; margin:16px 0;">
-<img src="/images/screenshot1.gif" width="640" height="495" alt="Secondo GUI showing Italian restaurants near the Brandenburg Gate plotted on a map of Berlin">
+<img src="/images/screen_restaurant.jpg" width="640" height="495" alt="Secondo GUI showing Italian restaurants near the Brandenburg Gate plotted on a map of Berlin">
+<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
 </div>
 </li>
 </ol>
