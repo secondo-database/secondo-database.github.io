@@ -1,6 +1,17 @@
 
 /* the color rgb(184,0,0) the the rgb value from the secondo-logo */
 
+:root{
+   --secondo-red-rgb: 184,0,0;
+   --secondo-red: rgb(var(--secondo-red-rgb));
+   --secondo-red-dark-rgb: 138,0,0;
+   --secondo-red-dark: rgb(var(--secondo-red-dark-rgb));
+   --secondo-red-hover: rgb(120,0,0);
+   --secondo-red-btn-hover: rgb(140,0,0);
+   --secondo-visited-rgb: 138,64,54;
+   --secondo-visited: rgb(var(--secondo-visited-rgb));
+}
+
 
 /* page format */
 body{
@@ -23,20 +34,20 @@ body{
 
 
 /* headlines */
-h1{ color:rgb(184,0,0);
+h1{ color:var(--secondo-red);
     text-align:center;
     font-size:xx-large;
     font-style:normal; 
     font-weight:bold;
     font-family:serif; }
 
-h2{ color:rgb(184,0,0);
+h2{ color:var(--secondo-red);
     font-size:x-large;
     font-style:normal; 
     font-weight:bold;
     font-family:serif; }
 
-h3{ color:rgb(184,0,0);
+h3{ color:var(--secondo-red);
     font-size:large;
     font-style:italic; 
     font-weight:bold;
@@ -60,7 +71,7 @@ aside.sidebar{
     font-size:16px;
     line-height:normal;
     text-align:left;
-    background:linear-gradient(180deg, rgb(184,0,0) 0%, rgb(138,0,0) 100%);
+    background:linear-gradient(180deg, var(--secondo-red) 0%, var(--secondo-red-dark) 100%);
 }
 
 aside.sidebar *{
@@ -92,7 +103,7 @@ main{
         z-index:1000;
         width:44px;
         height:44px;
-        background:rgb(184,0,0);
+        background:var(--secondo-red);
         color:white;
         font-size:22px;
         line-height:1;
@@ -192,10 +203,10 @@ ul.algebra{
 
 /* Links  don't change the order of this definitions */
 /* not visited */
-a:link{ color:rgb(184,0,0);
+a:link{ color:var(--secondo-red);
         font-style:normal;
         text-decoration:underline;
-        text-decoration-color:rgba(184,0,0,0.4);
+        text-decoration-color:rgba(var(--secondo-red-rgb),0.4);
         text-underline-offset:2px;
         transition:color .15s ease, text-decoration-color .15s ease;
 }
@@ -222,10 +233,10 @@ nav.navi > ul > li > ul a.navi{
 }
 
 /*  visited*/
-a:visited{color:rgb(138,64,54);
+a:visited{color:var(--secondo-visited);
            font-style:normal;
            text-decoration:underline;
-           text-decoration-color:rgba(138,64,54,0.4);
+           text-decoration-color:rgba(var(--secondo-visited-rgb),0.4);
            text-underline-offset:2px;
 }
 
@@ -239,10 +250,10 @@ nav.navi > ul > li > ul a.navi:visited{
 
 
 /* activ  */
-a:hover,a:focus{ color:rgb(120,0,0);
+a:hover,a:focus{ color:var(--secondo-red-hover);
                  font-style:normal;
                  text-decoration:underline;
-                 text-decoration-color:rgb(120,0,0);
+                 text-decoration-color:var(--secondo-red-hover);
                }
 
 
@@ -340,8 +351,8 @@ ol.pub-list li:first-child{
 }
 
 ol.pub-list li:hover{
-  background-color:rgba(184,0,0,0.035);
-  border-left-color:rgb(184,0,0);
+  background-color:rgba(var(--secondo-red-rgb),0.035);
+  border-left-color:var(--secondo-red);
 }
 
 .pub-meta{
@@ -376,7 +387,7 @@ ol.pub-list li:hover{
   font-size:small;
   font-weight:bold;
   color:white;
-  background:rgb(184,0,0);
+  background:var(--secondo-red);
   border-radius:10px;
 }
 
@@ -422,7 +433,7 @@ pre{
   font-family:monospace;
   background-color:rgb(245,245,245);
   border:1px solid rgb(210,210,210);
-  border-left:3px solid rgb(184,0,0);
+  border-left:3px solid var(--secondo-red);
   padding:10px 12px;
   overflow-x:auto;
   max-width:22cm;
@@ -443,7 +454,7 @@ a.btn:visited{
   font-style:normal;
   font-size:0.95rem;
   color:white;
-  background:rgb(184,0,0);
+  background:var(--secondo-red);
   padding:8px 20px;
   border-radius:6px;
   border:none;
@@ -454,8 +465,17 @@ a.btn:visited{
 a.btn:hover,
 a.btn:focus {
   color:white;
-  background:rgb(140,0,0);
+  background:var(--secondo-red-btn-hover);
   text-decoration:none;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration:0.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.01ms !important;
+    scroll-behavior:auto !important;
+  }
 }
 
 
