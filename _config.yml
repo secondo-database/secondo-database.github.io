@@ -1,2 +1,5 @@
 title: SECONDO - An Extensible Database System
 description: extensible database system
+url: "https://secondo-database.github.io"
+plugins:
+  - jekyll-sitemap
