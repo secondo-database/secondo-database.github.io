@@ -1,0 +1,294 @@
+---
+layout: default
+title: Getting Started - SECONDO
+description: A hands-on quick-start guide to SECONDO&#58; install it, restore the example databases, and run your first moving-objects queries in the GUI.
+---
+
+<style type="text/css">
+    ol li { margin-bottom: 0.8em; }
+  </style>
+
+<h1> Getting Started </h1>
+
+<div class="short">
+This guide walks you through a "do it yourself" demo of <span class="secondo">Secondo</span>,
+the moving objects database system. In about 15&ndash;20 minutes you will install
+<span class="secondo">Secondo</span>, restore two example databases, and run queries that
+compute the trajectory of a moving underground train, find all trains passing through a
+region, and see the query optimizer in action &mdash; without having to read any manuals
+or papers first.
+</div>
+
+<h2> What is a Moving Object? </h2>
+<div class="short">
+<span class="secondo">Secondo</span> can represent and query complete histories of movement.
+A trip taken by a vehicle can be stored as a single value of type <code>moving point</code>
+(<code>mpoint</code> for short), and the spread of a forest fire over time can be stored as a
+single value of type <code>moving region</code> (<code>mregion</code>). A moving point is
+essentially a function from time into point values, and a moving region a function from time
+into region values; they can be visualized as shown below.
+
+<div align="center" style="margin:16px 0;">
+<img src="/images/moving_objects_diagram.png" alt="A moving point visualized as a curve and a moving region visualized as a stack of cross-sections over the x, y, t axes" width="480">
+</div>
+
+Together with these data types, <span class="secondo">Secondo</span> provides operations to
+query and manipulate them, for example:
+
+<div style="overflow-x:auto;">
+<table style="border-collapse:collapse; margin-top:10px; max-width:22cm;">
+<tr>
+  <th style="text-align:left; padding:6px 14px 6px 0; border-bottom:2px solid var(--secondo-red);">Operation</th>
+  <th style="text-align:left; padding:6px 14px 6px 0; border-bottom:2px solid var(--secondo-red);">Signature</th>
+  <th style="text-align:left; padding:6px 0 6px 0; border-bottom:2px solid var(--secondo-red);">Meaning</th>
+</tr>
+<tr>
+  <td style="padding:6px 14px 6px 0; vertical-align:top;"><code>trajectory</code></td>
+  <td style="padding:6px 14px 6px 0; vertical-align:top;">mpoint &rarr; line</td>
+  <td style="padding:6px 0 6px 0; vertical-align:top;">the 2D projection of a moving point</td>
+</tr>
+<tr>
+  <td style="padding:6px 14px 6px 0; vertical-align:top;"><code>distance</code></td>
+  <td style="padding:6px 14px 6px 0; vertical-align:top;">mpoint &times; point &rarr; mreal</td>
+  <td style="padding:6px 0 6px 0; vertical-align:top;">time-dependent distance between a moving point and a static point</td>
+</tr>
+<tr>
+  <td style="padding:6px 14px 6px 0; vertical-align:top;"><code>passes</code></td>
+  <td style="padding:6px 14px 6px 0; vertical-align:top;">mpoint &times; region &rarr; bool</td>
+  <td style="padding:6px 0 6px 0; vertical-align:top;">whether a moving point ever passes through a given area</td>
+</tr>
+<tr>
+  <td style="padding:6px 14px 6px 0; vertical-align:top;"><code>inside</code></td>
+  <td style="padding:6px 14px 6px 0; vertical-align:top;">mpoint &times; mregion &rarr; mbool</td>
+  <td style="padding:6px 0 6px 0; vertical-align:top;">time-dependent boolean indicating when the point is inside the moving region</td>
+</tr>
+</table>
+</div>
+
+This approach to modeling and querying moving objects is described in a series of papers and
+in the textbook <i>Moving Objects Databases</i> (Morgan Kaufmann, 2005); see the
+<a href="content_papers.html">Publications</a> page for details.
+</div>
+
+<h2 id="install"> Step 1: Install SECONDO </h2>
+<div class="short">
+If you do not yet have a <span class="secondo">Secondo</span> installation, the fastest way to
+try it is the official container image. It bundles everything you need, so no local
+build is required:
+<pre>
+docker run -d --name secondo -p 8000:8000 -p 1234:1234 \
+    -v secondo-databases:/var/lib/secondo/databases \
+    ghcr.io/secondo-database/secondo:latest
+</pre>
+This gives you the <span class="secondo">Secondo</span> WebUI in your browser at
+<a href="http://localhost:8000">http://localhost:8000</a>; you can skip ahead to
+<a href="#queries">Step 4</a>. If you would rather install
+<span class="secondo">Secondo</span> natively (Ubuntu <code>.deb</code> packages, building from
+source, or macOS via Homebrew), see the full
+<a href="content_install.html">Installation Instructions</a> page and then come back here.
+</div>
+
+<h2 id="restore"> Step 2: Restore the Example Databases </h2>
+<div class="short">
+<ol>
+<li>
+Open a shell and change to the <code>secondo/bin</code> directory (skip this step for the
+Ubuntu <code>.deb</code> or container installation, where the
+<span class="secondo">Secondo</span> commands are available from any directory):
+<pre>cd secondo/bin</pre>
+</li>
+<li>
+Start a single-user session:
+<pre>SecondoTTYBDB</pre>
+</li>
+<li>
+Restore the two example databases used in this guide, <code>opt</code> and
+<code>berlintest</code>, then quit:
+<pre>restore database opt from opt;
+close database;
+
+restore database berlintest from berlintest;
+close database;
+q</pre>
+In the Ubuntu <code>.deb</code> installation, the database files live in
+<code>/opt/secondo/bin</code>, so use instead:
+<pre>restore database opt from '/opt/secondo/bin/opt';
+restore database berlintest from '/opt/secondo/bin/berlintest';</pre>
+A command at this interface is terminated by either a semicolon or an empty line.
+</li>
+</ol>
+</div>
+
+<h2 id="gui"> Step 3: Start the Kernel and the GUI </h2>
+<div class="short">
+<ol start="4">
+<li>
+Still in <code>secondo/bin</code>, start the kernel process that user interfaces connect to:
+<pre>SecondoMonitor -s</pre>
+</li>
+<li>
+Open a new shell, change to <code>secondo/Javagui</code> (not needed for the
+<code>.deb</code> or container installation), and start the graphical user interface:
+<pre>sgui</pre>
+A red message "Error: error in enabling optimizer" may appear &mdash;
+<span class="secondo">Secondo</span> works fine without the optimizer for now, so ignore it.
+A popup "Errors in loading favoured queries" can also appear the first time the GUI runs,
+because that file does not exist yet; ignore it too.
+</li>
+<li>
+In the command window at the upper left of the GUI, open the test database:
+<pre>open database berlintest</pre>
+</li>
+<li>
+From the "Viewers" drop-down menu, select <b>Hoese-Viewer</b>.
+</li>
+<li>
+From the "File" menu, select <b>Load Categories</b>, and open <code>BerlinU.cat</code>
+in the popup. The viewer confirms "categories loaded" &mdash; categories are display
+styles for geometric attributes.
+</li>
+</ol>
+</div>
+
+<h2 id="queries"> Step 4: Run Your First Queries </h2>
+<div class="short">
+<ol start="9">
+<li>
+Load the underground network of Berlin as a background. In the command window, type:
+<pre>query UBahn</pre>
+A popup asks for a display style for the attribute <code>geoData</code>; choose
+<b>UBahn</b> and click "ok". The Berlin underground network appears &mdash; we will use it
+as a background for the moving trains stored in the relation
+<code>Trains(Id: int, Line: int, Up: bool, Trip: mpoint)</code>, which holds 562 trains
+moving on 2003&#8209;11&#8209;20.
+</li>
+<li>
+Look at a single train, a value of type <code>mpoint</code>:
+<pre>query train7</pre>
+Choose display style <b>QueryMPoint</b>. Train7 appears as a red square at time
+2003-11-20-06:06:00.000. Use the animation "forward" button to see it move, and the
+double-arrow buttons to change the animation speed.
+</li>
+<li>
+Compute the path <code>train7</code> has taken:
+<pre>query trajectory(train7)</pre>
+Choose display style <b>QueryLine</b>. The path taken by train7 appears in red.
+</li>
+<li>
+Compute the time-dependent distance between <code>train7</code> and the underground
+station <code>mehringdamm</code>:
+<pre>query mehringdamm</pre>
+then
+<pre>query distance(train7, mehringdamm)</pre>
+Double-click the resulting <code>mreal</code> value on the left to see a plot of the
+distance over time &mdash; it drops to 0 when train7 passes through the station.
+</li>
+<li>
+Find all trains passing through the static region <code>tiergarten</code>:
+<pre>query Trains count
+query Trains feed filter[.Trip passes tiergarten] count
+query Trains feed filter[.Trip passes tiergarten] consume</pre>
+This confirms 562 trains in total, of which 80 pass through <code>tiergarten</code>, and
+then displays them.
+</li>
+</ol>
+</div>
+
+<h2 id="optimizer"> Step 5: Use the Query Optimizer </h2>
+<div class="short">
+<ol start="14">
+<li>
+SQL-style queries can be used as well. Find how many trains pass through
+<code>mehringdamm</code>:
+<pre>select count(*) from Trains where Trip passes mehringdamm</pre>
+The first optimizer query takes a little longer while it initializes; the result is 122.
+See the individual trains with:
+<pre>select * from Trains where Trip passes mehringdamm</pre>
+</li>
+</ol>
+</div>
+
+<h2 id="next"> Where to Go Next </h2>
+<div class="short">
+<ul>
+<li> To browse the available data types and operations from the GUI command line, type
+     <code>list algebras</code>, or for one algebra, e.g.
+     <code>list algebra TemporalAlgebra</code>. To search for a specific operator, e.g.
+     <code>atinstant</code>:
+     <pre>query SEC2OPERATORINFO feed filter[.Name contains "atinstant"] consume</pre>
+</li>
+<li> Read more about the general and specific documentation on the
+     <a href="content_docu.html">Documentation</a> pages. </li>
+<li> Try the larger <a href="/BerlinMOD/BerlinMOD.html">BerlinMOD Benchmark</a>, a full
+     benchmark suite for moving-objects databases built on the same data. </li>
+<li> See the research in the <a href="content_papers.html">Publications</a>
+     list, including the <i>Moving Objects Databases</i> textbook. </li>
+</ul>
+</div>
+
+
+<h2 id="papers"> Related Papers, Book </h2>
+<div class="short">
+The spatio-temporal data model implemented by <span class="secondo">Secondo</span> is
+described in the following papers and in the textbook <i>Moving Objects Databases</i>. See
+the <a href="content_papers.html">Publications</a> page for further
+<span class="secondo">Secondo</span>-related papers.
+
+<ol class="pub-list" style="max-width:22cm;">
+<li>
+  <div class="pub-meta">
+    <span class="authors">M. Erwig, R.H. G&uuml;ting, M. Schneider, and M. Vazirgiannis</span>
+    <span class="title">Spatio-Temporal Data Types: An Approach to Modeling and Querying Moving Objects in Databases</span>
+    <span class="venue">GeoInformatica 3:3 (1999), 269-296.</span>
+  </div>
+  <div class="pub-links">
+    <a href="https://doi.org/10.1023/A:1009805532638" target="_blank" rel="noopener noreferrer">Paper</a>
+  </div>
+</li>
+
+<li>
+  <div class="pub-meta">
+    <span class="authors">R.H. G&uuml;ting, M.H. B&ouml;hlen, M. Erwig, C.S. Jensen, N.A. Lorentzos, M. Schneider, and M. Vazirgiannis</span>
+    <span class="title">A Foundation for Representing and Querying Moving Objects</span>
+    <span class="venue">ACM Transactions on Database Systems 25:1 (2000), 1-42.</span>
+  </div>
+  <div class="pub-links">
+    <a href="https://doi.org/10.1145/352958.352963" target="_blank" rel="noopener noreferrer">Paper</a>
+  </div>
+</li>
+
+<li>
+  <div class="pub-meta">
+    <span class="authors">L. Forlizzi, R.H. G&uuml;ting, E. Nardelli, and M. Schneider</span>
+    <span class="title">A Data Model and Data Structures for Moving Objects Databases</span>
+    <span class="venue">Proc. ACM SIGMOD Conf. (Dallas, Texas), May 2000, 319-330.</span>
+  </div>
+  <div class="pub-links">
+    <a href="https://doi.org/10.1145/342009.335432" target="_blank" rel="noopener noreferrer">Paper</a>
+  </div>
+</li>
+
+<li>
+  <div class="pub-meta">
+    <span class="authors">J.A. Cotelo Lema, L. Forlizzi, R.H. G&uuml;ting, E. Nardelli, and M. Schneider</span>
+    <span class="title">Algorithms for Moving Objects Databases</span>
+    <span class="venue">The Computer Journal 46:6 (2003), 680-712.</span>
+  </div>
+  <div class="pub-links">
+    <a href="https://doi.org/10.1093/comjnl/46.6.680" target="_blank" rel="noopener noreferrer">Paper</a>
+  </div>
+</li>
+
+<li>
+  <div class="pub-meta">
+    <span class="authors">R.H. G&uuml;ting and M. Schneider</span>
+    <span class="title">Moving Objects Databases</span>
+    <span class="venue">Morgan Kaufmann Publishers, 2005. ISBN 978-1-55860-828-3.</span>
+  </div>
+</li>
+</ol>
+</div>
+
+<div class="footnote">
+ Last Changed: 2026-08-23
+</div>
