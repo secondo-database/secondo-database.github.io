@@ -99,7 +99,7 @@ Ubuntu <code>.deb</code> or container installation, where the
 </li>
 <li>
 Start a single-user session:
-<pre>SecondoTTYBDB</pre>
+<pre>./SecondoTTYBDB</pre>
 </li>
 <li>
 Restore the two example databases used in this guide, <code>opt</code> and
@@ -124,16 +124,14 @@ A command at this interface is terminated by either a semicolon or an empty line
 <ol start="4">
 <li>
 Still in <code>secondo/bin</code>, start the kernel process that user interfaces connect to:
-<pre>SecondoMonitor -s</pre>
+<pre>./SecondoMonitor -s</pre>
 </li>
 <li>
 Open a new shell, change to <code>secondo/Javagui</code> (not needed for the
 <code>.deb</code> or container installation), and start the graphical user interface:
-<pre>sgui</pre>
-A red message "Error: error in enabling optimizer" may appear &mdash;
-<span class="secondo">Secondo</span> works fine without the optimizer for now, so ignore it.
+<pre>./sgui</pre>
 A popup "Errors in loading favoured queries" can also appear the first time the GUI runs,
-because that file does not exist yet; ignore it too.
+because that file does not exist yet; you can ignore it.
 </li>
 <li>
 In the command window at the upper left of the GUI, open the test database:
