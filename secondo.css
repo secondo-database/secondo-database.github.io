@@ -22,7 +22,7 @@ body{
    font-family:serif;
    color:black;
    background-color:rgb(240,240,240);
-   text-align:justify;
+   text-align:left;
   /*background-image:url(/backgrounds/Back3.jpg);
     background-repeat:repeat;
     background-attachment:fixed;*/
@@ -198,6 +198,30 @@ ul{
 
 ul.algebra{
    list-style-type:none;
+   display:grid;
+   grid-template-columns:repeat(2, 1fr);
+   gap:16px;
+   margin:16px 0 0;
+   padding:0;
+   max-width:20cm;
+}
+
+ul.algebra li{
+   background:white;
+   border:1px solid rgb(224,224,224);
+   border-left:3px solid var(--secondo-red);
+   padding:14px 18px;
+}
+
+ul.algebra span.algebraname{
+   display:block;
+   margin-bottom:4px;
+   color:var(--secondo-red);
+   font-size:1.05rem;
+}
+
+@media (max-width:640px){
+   ul.algebra{ grid-template-columns:1fr; }
 }
 
 
@@ -286,7 +310,7 @@ span.algebraname{
 
 div.short{
      margin-left:1cm;
-     text-align:justify;
+     text-align:left;
      max-width:20cm;
 }
 
@@ -309,7 +333,7 @@ div.footnote{
 /* content classes used by BerlinMOD/BerlinMOD.html */
 div.normal{
      margin-left:1cm;
-     text-align:justify;
+     text-align:left;
      max-width:20cm;
 }
 
