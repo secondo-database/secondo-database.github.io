@@ -275,6 +275,8 @@ nav.navi > ul > li > ul a.navi.active{
 img{ border-style:none;
      padding:0pt;
      margin:0pt;
+     max-width:100%;
+     height:auto;
      }
 
 span.algebraname{
