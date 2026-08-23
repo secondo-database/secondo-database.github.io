@@ -471,6 +471,21 @@ a.btn:focus {
   text-decoration:none;
 }
 
+a.btn.btn-outline:link,
+a.btn.btn-outline:visited{
+  color:var(--secondo-red);
+  background:transparent;
+  border:2px solid var(--secondo-red);
+  padding:6px 18px;
+}
+
+a.btn.btn-outline:hover,
+a.btn.btn-outline:focus {
+  color:white;
+  background:var(--secondo-red);
+  border-color:var(--secondo-red);
+}
+
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{
     animation-duration:0.01ms !important;
