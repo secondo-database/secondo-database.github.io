@@ -7,15 +7,14 @@
 <nav class="navi" aria-label="Main navigation">
   <ul>
     <li><a class="navi{% if page.url == '/' %} active{% endif %}"{% if page.url == '/' %} aria-current="page"{% endif %} href="/">Home</a></li>
-    <li><a class="navi{% if page.url == '/content_news.html' %} active{% endif %}"{% if page.url == '/content_news.html' %} aria-current="page"{% endif %} href="/content_news.html">News</a></li>
     <li><a class="navi{% if page.url == '/content_getting_started.html' %} active{% endif %}"{% if page.url == '/content_getting_started.html' %} aria-current="page"{% endif %} href="/content_getting_started.html">Getting Started</a></li>
     <li>
       <span class="navi-label">Documentation</span>
       <ul>
+        <li><a class="navi{% if page.url == '/content_news.html' %} active{% endif %}"{% if page.url == '/content_news.html' %} aria-current="page"{% endif %} href="/content_news.html">News</a></li>
         <li><a class="navi{% if page.url == '/content_docu.html' %} active{% endif %}"{% if page.url == '/content_docu.html' %} aria-current="page"{% endif %} href="/content_docu.html">General</a></li>
         <li><a class="navi{% if page.url == '/content_docu_specific.html' %} active{% endif %}"{% if page.url == '/content_docu_specific.html' %} aria-current="page"{% endif %} href="/content_docu_specific.html">Specific Topics</a></li>
         <li><a class="navi{% if page.url == '/content_docu_extend.html' %} active{% endif %}"{% if page.url == '/content_docu_extend.html' %} aria-current="page"{% endif %} href="/content_docu_extend.html">Extending Secondo</a></li>
-        <li><a class="navi{% if page.url == '/content_papers.html' %} active{% endif %}"{% if page.url == '/content_papers.html' %} aria-current="page"{% endif %} href="/content_papers.html">Publications</a></li>
       </ul>
     </li>
     <li>
@@ -27,24 +26,30 @@
       </ul>
     </li>
     <li>
-      <span class="navi-label">Development</span>
+      <span class="navi-label">Research</span>
       <ul>
-        <li><a class="navi{% if page.url == '/content_contributing.html' %} active{% endif %}"{% if page.url == '/content_contributing.html' %} aria-current="page"{% endif %} href="/content_contributing.html">Contributing</a></li>
-        <li><a class="navi{% if page.url == '/content_faq.html' %} active{% endif %}"{% if page.url == '/content_faq.html' %} aria-current="page"{% endif %} href="/content_faq.html">FAQ</a></li>
-        <li><a class="navi{% if page.url == '/content_debugging.html' %} active{% endif %}"{% if page.url == '/content_debugging.html' %} aria-current="page"{% endif %} href="/content_debugging.html">Analyzing Crashes</a></li>
-      </ul>
-    </li>
-    <li>
-      <span class="navi-label">Special Topics</span>
-      <ul>
+        <li><a class="navi{% if page.url == '/content_papers.html' %} active{% endif %}"{% if page.url == '/content_papers.html' %} aria-current="page"{% endif %} href="/content_papers.html">Publications</a></li>
         <li><a class="navi{% if page.url == '/BerlinMOD/BerlinMOD.html' %} active{% endif %}"{% if page.url == '/BerlinMOD/BerlinMOD.html' %} aria-current="page"{% endif %} href="/BerlinMOD/BerlinMOD.html">BerlinMOD Benchmark</a></li>
         <li><a class="navi{% if page.url == '/ParallelSecondo/' %} active{% endif %}"{% if page.url == '/ParallelSecondo/' %} aria-current="page"{% endif %} href="/ParallelSecondo/index.html">Parallel Secondo</a></li>
         <li><a class="navi{% if page.url == '/DSecondo/DSECONDO-Website/' %} active{% endif %}"{% if page.url == '/DSecondo/DSECONDO-Website/' %} aria-current="page"{% endif %} href="/DSecondo/DSECONDO-Website/index.html">Distributed Secondo</a></li>
         <li><a class="navi{% if page.url == '/content_network.html' %} active{% endif %}"{% if page.url == '/content_network.html' %} aria-current="page"{% endif %} href="/content_network.html">Movements in Networks</a></li>
       </ul>
     </li>
-    <li><a class="navi{% if page.url == '/content_team.html' %} active{% endif %}"{% if page.url == '/content_team.html' %} aria-current="page"{% endif %} href="/content_team.html"><span class="secondo">Secondo</span> Team</a></li>
-    <li><a class="navi{% if page.url == '/content_contact.html' %} active{% endif %}"{% if page.url == '/content_contact.html' %} aria-current="page"{% endif %} href="/content_contact.html">Contact</a></li>
+    <li>
+      <span class="navi-label">Support</span>
+      <ul>
+        <li><a class="navi{% if page.url == '/content_faq.html' %} active{% endif %}"{% if page.url == '/content_faq.html' %} aria-current="page"{% endif %} href="/content_faq.html">FAQ</a></li>
+        <li><a class="navi{% if page.url == '/content_debugging.html' %} active{% endif %}"{% if page.url == '/content_debugging.html' %} aria-current="page"{% endif %} href="/content_debugging.html">Analyzing Crashes</a></li>
+      </ul>
+    </li>
+    <li>
+      <span class="navi-label">About</span>
+      <ul>
+        <li><a class="navi{% if page.url == '/content_contributing.html' %} active{% endif %}"{% if page.url == '/content_contributing.html' %} aria-current="page"{% endif %} href="/content_contributing.html">Contribute</a></li>
+        <li><a class="navi{% if page.url == '/content_team.html' %} active{% endif %}"{% if page.url == '/content_team.html' %} aria-current="page"{% endif %} href="/content_team.html"><span class="secondo">Secondo</span> Team</a></li>
+        <li><a class="navi{% if page.url == '/content_contact.html' %} active{% endif %}"{% if page.url == '/content_contact.html' %} aria-current="page"{% endif %} href="/content_contact.html">Contact</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 </aside>
