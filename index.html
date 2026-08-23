@@ -13,6 +13,7 @@ hide_logo: true
 
 <h1> An Extensible Database System </h1>
 
+<section class="section">
 <h2> What is <span class="secondo">Secondo</span> </h2>
 <div class="short">
 <span class="secondo">Secondo</span> is an extensible database system supporting
@@ -26,20 +27,21 @@ can handle moving objects, that is, continuously changing time-dependent geometr
 precisely, complete histories of movement can be represented in a database and queried.
 </p>
 
-<span class="secondo">Secondo</span> can be used by groups at universities to pursue 
-and prototype their research ideas for database systems. It can be used in teaching 
-to show students in detail the architecture and implementation of database systems. 
+<span class="secondo">Secondo</span> can be used by groups at universities to pursue
+and prototype their research ideas for database systems. It can be used in teaching
+to show students in detail the architecture and implementation of database systems.
 Additionally, <span class="secondo">Secondo</span> may be interesting for users in need
-of a database system able to handle non-standard data types usually not supported 
+of a database system able to handle non-standard data types usually not supported
 by standard systems.
 </div>
-<br>
-<div style="margin:10px 0 30px 1cm; max-width:20cm; display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:12px;">
+
+<div style="margin:24px 0 0 1cm; max-width:20cm; display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:12px;">
 <a class="btn" href="content_getting_started.html">Get Started &rarr;</a>
 <a class="btn btn-outline" href="https://github.com/secondo-database/secondo" target="_blank" rel="noopener noreferrer">View on GitHub</a>
 </div>
+</section>
 
-
+<section class="section">
 <h2> Functionality </h2>
 <div class="short">
 Objects of an arbitrary type defined in one of the
@@ -67,33 +69,41 @@ algebras:
 	</li>
 </ul>
 </div>
+</section>
 
-
+<section class="section">
 <h2> Architecture </h2>
 <div class="short">
-<div style="text-align:center;">
+<p>
+The <span class="secondo">Secondo</span> system is extensible by algebra modules, using
+a well defined interface. New data models and data structures together with their operations
+are integrated into the system in this way. The source code is available and enables the
+user to access and modify every part of the database system.
+</p>
+
+<div style="text-align:center; margin:20px 0;">
 	<a href="images/sec_architecture.svg" target="_blank">
-		<img src="images/sec_architecture.svg" alt="Architecture" width="90%"><br>
+		<img src="images/sec_architecture.svg" alt="Architecture" width="90%">
 	</a>
 </div>
-<br>
 
-The <span class="secondo">Secondo</span> system is extensible by algebra modules, using 
-a well defined interface. New data models and data structures together with their operations
-are integrated into the system in this way. The source code is available and enables the 
-user to access and modify every part of the database system.
-
+<p>
 The user interface allows users to interact with the system through queries and commands. A RESTful API is also provided for programmatic
 access to the system and used by the SECONDO web interface. The architecture is designed to be modular and
 extensible, allowing for easy integration of new features and data models.
+</p>
 </div>
+</section>
 
+<section class="section">
 <h2> Query Example </h2>
 <div class="short">
+<p>
 Using these algebras, one can determine the names
 and addresses of all Italian restaurants in Berlin
 within 2 km of the Brandenburg Gate. Then, the result
 is presented graphically.
+</p>
 
 <pre>
    select [r:name, r:strasse, r:geoData]
@@ -102,8 +112,8 @@ is presented graphically.
             r:art="Italienisch",
             distance(r:geoData, s:geodata) < 2000]
 </pre>
-<br><br>
-<div style="text-align:center;">
+
+<div style="text-align:center; margin:20px 0;">
 <img src="/images/screenshot1.gif" width="640" height="495" alt="Screenshot">
 </div>
 
@@ -112,6 +122,7 @@ Ready to run queries like this yourself? Follow the
 <a href="content_getting_started.html">Getting Started</a> guide.
 </p>
 </div>
+</section>
 
 <div class="footnote">
   Last Changed: 2026-08-23

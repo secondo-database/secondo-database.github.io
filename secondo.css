@@ -308,6 +308,15 @@ span.algebraname{
     font-weight:bolder;
 }
 
+section.section{
+     padding:28px 0;
+     max-width:21cm;
+}
+
+section.section + section.section{
+     border-top:1px solid rgb(222,222,222);
+}
+
 div.short{
      margin-left:1cm;
      text-align:left;
