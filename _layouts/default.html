@@ -20,8 +20,8 @@
 <meta name="twitter:image" content="{{ '/images/logo.gif' | absolute_url }}">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" type="text/css" href="/secondo.css">
-{% if page.extra_css %}<link rel="stylesheet" type="text/css" href="{{ page.extra_css }}">
+<link rel="stylesheet" type="text/css" href="/secondo.css?v={{ site.time | date: '%s' }}">
+{% if page.extra_css %}<link rel="stylesheet" type="text/css" href="{{ page.extra_css }}?v={{ site.time | date: '%s' }}">
 {% endif %}</head>
 <body>
 {% include nav.html %}
