@@ -102,18 +102,13 @@ Start a single-user session:
 <pre>./SecondoTTYBDB</pre>
 </li>
 <li>
-Restore the two example databases used in this guide, <code>opt</code> and
-<code>berlintest</code>, then quit:
-<pre>restore database opt from opt;
-close database;
-
-restore database berlintest from berlintest;
+Restore the two example database used in this guide, then quit:
+<pre>restore database berlintest from berlintest;
 close database;
 q</pre>
 In the Ubuntu <code>.deb</code> installation, the database files live in
 <code>/opt/secondo/bin</code>, so use instead:
-<pre>restore database opt from '/opt/secondo/bin/opt';
-restore database berlintest from '/opt/secondo/bin/berlintest';</pre>
+<pre>restore database berlintest from '/opt/secondo/bin/berlintest';</pre>
 A command at this interface is terminated by either a semicolon or an empty line.
 </li>
 </ol>
@@ -202,6 +197,19 @@ SQL-style queries can be used as well. Find how many trains pass through
 The first optimizer query takes a little longer while it initializes; the result is 122.
 See the individual trains with:
 <pre>select * from Trains where Trip passes mehringdamm</pre>
+</li>
+<li>
+Also more complex queries can be optimized. For example, find the names and addresses of all Italian restaurants within 2&nbsp;km of the
+Brandenburg Gate:
+<pre>select [r:name, r:strasse, r:geoData]
+from   [restaurants as r, sehenswuerdpoi as s]
+where  [ s:name="Brandenburger Tor",
+         r:art="Italienisch",
+         distance(r:geoData, s:geodata) < 2000]</pre>
+
+<div style="text-align:center; margin:16px 0;">
+<img src="/images/screenshot1.gif" width="640" height="495" alt="Secondo GUI showing Italian restaurants near the Brandenburg Gate plotted on a map of Berlin">
+</div>
 </li>
 </ol>
 </div>
