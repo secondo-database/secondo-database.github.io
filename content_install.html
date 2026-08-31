@@ -136,16 +136,15 @@ there are only these settings:
 <pre>
 export SECONDO_BUILD_DIR=$HOME/secondo
 export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini
-export PATH="$PATH:$SECONDO_BUILD_DIR/Tools/pd"
+export PATH="$PATH:$SECONDO_BUILD_DIR/bin:$SECONDO_BUILD_DIR/Tools/pd"
 </pre>
-The last line is optional; it puts the <code>PD</code> documentation tools
-(<code>pd2pdf</code>, <code>pdview</code>, ...) on your <code>PATH</code>.
+
 It is convenient to add these lines to your <code>~/.bashrc</code>, so the
 environment is set up automatically in every new terminal:
 <pre>
 echo 'export SECONDO_BUILD_DIR=$HOME/secondo' >> ~/.bashrc
 echo 'export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini' >> ~/.bashrc
-echo 'export PATH="$PATH:$SECONDO_BUILD_DIR/Tools/pd"' >> ~/.bashrc
+echo 'export PATH="$PATH:$SECONDO_BUILD_DIR/bin:$SECONDO_BUILD_DIR/Tools/pd"' >> ~/.bashrc
 </pre>
 Then download the sources and build the system as described on the
 <a href="content_sources.html">Sources</a> page (in short: run <code>make</code>
@@ -210,16 +209,15 @@ run <code>make</code>, so there are only these settings:
 <pre>
 export SECONDO_BUILD_DIR=$HOME/secondo
 export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini
-export PATH="$PATH:$SECONDO_BUILD_DIR/Tools/pd"
+export PATH="$PATH:$SECONDO_BUILD_DIR/bin:$SECONDO_BUILD_DIR/Tools/pd"
 </pre>
-The last line is optional; it puts the <code>PD</code> documentation tools
-(<code>pd2pdf</code>, <code>pdview</code>, ...) on your <code>PATH</code>.
+
 It is convenient to add these lines to your <code>~/.zshrc</code>, so the
 environment is set up automatically in every new terminal:
 <pre>
 echo 'export SECONDO_BUILD_DIR=$HOME/secondo' >> ~/.zshrc
 echo 'export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini' >> ~/.zshrc
-echo 'export PATH="$PATH:$SECONDO_BUILD_DIR/Tools/pd"' >> ~/.zshrc
+echo 'export PATH="$PATH:$SECONDO_BUILD_DIR/bin:$SECONDO_BUILD_DIR/Tools/pd"' >> ~/.zshrc
 </pre>
 Then download the sources and build the system as described on the
 <a href="content_sources.html">Sources</a> page (in short: run <code>make</code>

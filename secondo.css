@@ -481,6 +481,41 @@ pre code{
 }
 
 
+/* content data tables (content_sources.html and other download/overview pages) */
+div.table-wrap{
+  overflow-x:auto;
+  max-width:22cm;
+}
+
+table.datatable{
+  border-collapse:collapse;
+  margin-top:10px;
+  text-align:left;
+}
+
+table.datatable th{
+  text-align:left;
+  padding:7px 18px 7px 0;
+  border-bottom:2px solid var(--secondo-red);
+  vertical-align:top;
+}
+
+table.datatable td{
+  padding:7px 18px 7px 0;
+  border-bottom:1px solid rgb(228,228,228);
+  vertical-align:top;
+}
+
+table.datatable tr:last-child td{
+  border-bottom:none;
+}
+
+table.datatable th:last-child,
+table.datatable td:last-child{
+  padding-right:0;
+}
+
+
 a.btn:link,
 a.btn:visited{
   display:inline-block;
