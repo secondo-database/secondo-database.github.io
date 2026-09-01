@@ -1,0 +1,669 @@
+---
+layout: default
+title: Querying at the Executable Level - SECONDO
+description: A hands-on guide to SECONDO's executable query language - building and consuming tuple streams with operators such as feed, filter, sortby, the join methods, groupby, consume and the aggregation operators.
+---
+
+<h1>Writing Executable Queries in <span class="secondo">Secondo</span></h1>
+
+<section class="section">
+<h2 id="contents">Contents</h2>
+<ul>
+  <li><a href="#introduction">1&nbsp;&nbsp;Introduction</a></li>
+  <li><a href="#example-database">2&nbsp;&nbsp;Example Database</a></li>
+  <li><a href="#creating-a-stream">3&nbsp;&nbsp;Creating a Stream of Tuples</a>
+    <ul>
+      <li><a href="#from-a-relation">3.1&nbsp;&nbsp;From a Relation</a> &ndash; <code>feed</code>, <code>feedproject</code></li>
+      <li><a href="#from-a-stream-of-values">3.2&nbsp;&nbsp;From a Stream of Atomic Values</a> &ndash; <code>transformstream</code>, <code>namedtransformstream</code></li>
+    </ul>
+  </li>
+  <li><a href="#single-stream">4&nbsp;&nbsp;Operations on a Single Tuple Stream</a>
+    <ul>
+      <li><a href="#selecting-tuples">4.1&nbsp;&nbsp;Selecting Tuples</a> &ndash; <code>filter</code>, <code>head</code>, <code>tail</code>, <code>ksmallest</code>, <code>kbiggest</code></li>
+      <li><a href="#changing-the-order">4.2&nbsp;&nbsp;Changing the Order of Tuples</a> &ndash; <code>sortby</code>, <code>sort</code></li>
+      <li><a href="#removing-duplicates">4.3&nbsp;&nbsp;Removing Duplicates</a> &ndash; <code>rdup</code>, <code>krdup</code></li>
+      <li><a href="#tuple-to-tuple">4.4&nbsp;&nbsp;Tuple to Tuple Transformations</a> &ndash; <code>extend</code>, <code>project</code>, <code>remove</code>, <code>projectextend</code></li>
+      <li><a href="#tuple-to-tuple-stream">4.5&nbsp;&nbsp;Tuple to Tuple Stream Transformations</a> &ndash; <code>extendstream</code>, <code>projectextendstream</code>, <code>loopjoin</code>, <code>loopsel</code></li>
+      <li><a href="#tuple-stream-to-tuple">4.6&nbsp;&nbsp;Tuple Stream to Tuple Transformations</a> &ndash; <code>groupby</code></li>
+    </ul>
+  </li>
+  <li><a href="#joins">5&nbsp;&nbsp;Operations on Two Tuple Streams (Joins)</a>
+    <ul>
+      <li><a href="#generic-join">5.1&nbsp;&nbsp;Generic Join</a> &ndash; <code>symmjoin</code></li>
+      <li><a href="#equi-join">5.2&nbsp;&nbsp;Equi-Join</a> &ndash; <code>sortmergejoin</code>, <code>mergejoin</code>, <code>hashjoin</code></li>
+      <li><a href="#spatial-join">5.3&nbsp;&nbsp;Spatial Join</a> &ndash; <code>spatialjoin2</code></li>
+    </ul>
+  </li>
+  <li><a href="#consuming">6&nbsp;&nbsp;Consuming a Tuple Stream</a>
+    <ul>
+      <li><a href="#into-a-relation">6.1&nbsp;&nbsp;Into a Relation</a> &ndash; <code>consume</code>, <code>tconsume</code></li>
+      <li><a href="#into-an-aggregate">6.2&nbsp;&nbsp;Into an Aggregate Value</a> &ndash; <code>count</code>, <code>sum</code>, <code>min</code>, <code>max</code>, <code>avg</code>, <code>extract</code>, <code>aggregateB</code></li>
+      <li><a href="#into-a-stream-of-values">6.3&nbsp;&nbsp;Into a Stream of Values</a> &ndash; <code>transformstream</code></li>
+    </ul>
+  </li>
+</ul>
+</section>
+
+<section class="section">
+<h2 id="introduction">1&nbsp;&nbsp;Introduction</h2>
+
+<p>Queries can be formulated to <span class="secondo">Secondo</span> at two levels:</p>
+
+<ol>
+  <li>in an SQL-like language</li>
+  <li>by typing query plans directly, called the executable language.</li>
+</ol>
+
+<p>
+Queries at level 1 are given to the optimizer which produces a plan written in the executable
+language of level 2. A unique feature of <span class="secondo">Secondo</span> is that the user
+can also type queries at level 2. A query at level 2 is essentially a term composed of database
+objects and operators of the active algebras in the system.
+</p>
+
+<p>Writing queries at the executable level has disadvantages and advantages. Disadvantages are:</p>
+
+<ul>
+  <li>This language is more complex than SQL. One has to understand what methods are available,
+      e.g. for executing joins.</li>
+  <li>The user decides how to efficiently execute the query, hence there is no cost estimation
+      involved and the user's decision may be wrong.</li>
+</ul>
+
+<p>Advantages are:</p>
+
+<ul>
+  <li>The full range of the system's execution capabilities is available. The optimizer is only
+      able to create a subset of possible plans and is restricted to a relational data model
+      (including abstract data types at the attribute level such as moving objects). At the
+      executable level also other data types than relations such as networks, graphs, nested
+      relations, arrays of relations as well as parallel execution models are available.</li>
+  <li>In research, adding new concepts to a database system proceeds from the executable level to
+      the query optimization level. That is, the first step is to implement for example a new kind
+      of index structure as a data type and to implement a new query processing algorithm as an
+      operator. Once this is done, these methods are available in the executable language. It is a
+      further step to integrate such methods into query optimization by extending query plan
+      generation, cost estimation and possibly selectivity estimation techniques. Because of this,
+      capabilities available at the SQL level will always lag behind those at the executable
+      level.</li>
+</ul>
+
+<p>
+The purpose of this document is to provide a brief introduction to the query processing operations
+available at the executable level.
+</p>
+</section>
+
+<section class="section">
+<h2 id="example-database">2&nbsp;&nbsp;Example Database</h2>
+
+<p>
+We use the <code>berlintest</code> database available within the <span class="secondo">Secondo</span>
+distribution and within it the following objects:
+</p>
+
+<ul>
+  <li>relations
+    <pre>Trains(Id: int, Line: int, Up: bool, Trip: mpoint)
+strassen(Name: string, Typ: string, geoData: line)
+Kinos(Name: string, Strasse: string, geoData: point)</pre>
+    <p>
+    <code>Trains</code> is a relation describing trips of underground trains in Berlin, modeling
+    the movement in data type <code>mpoint</code> (short for <code>moving(point)</code>).
+    <code>strassen</code> means roads, a relation describing the road network of Berlin.
+    <code>Kinos</code> is a relation with cinema locations.
+    </p>
+  </li>
+  <li>an R-tree index on the <code>geoData</code> attribute of <code>strassen</code>:
+    <pre>strassen_geoData_rtree</pre>
+  </li>
+  <li>atomic objects
+    <pre>train7: mpoint
+mehringdamm: point
+tiergarten: region</pre>
+  </li>
+</ul>
+</section>
+
+<section class="section">
+<h2 id="creating-a-stream">3&nbsp;&nbsp;Creating a Stream of Tuples</h2>
+
+<h3 id="from-a-relation">3.1&nbsp;&nbsp;From a Relation</h3>
+
+<p>
+A relation can be read from disk and made available as a stream of tuples by the operations
+<code>feed</code> and <code>feedproject</code>.
+</p>
+
+<p>
+<code>feed</code> puts tuples into the stream as they are. <code>feedproject</code> creates only
+the attributes given in a projection list, hence is more efficient for large tuples.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed
+Trains feedproject[Id, Trip]</pre>
+
+<p><strong>Signatures:</strong></p>
+<pre>feed:         rel(Tuple) -> stream(Tuple)                          _ #
+feedproject:  rel(Tuple) x AttrList -> stream(tuple(AttrList))     _ # [ _ ]</pre>
+
+<p>
+Here words starting with a capital letter represent type variables, in contrast to type
+constructors starting with a lower case letter. At the end of the line is a syntax pattern where
+&ldquo;_&rdquo; represents an argument and &ldquo;#&rdquo; the operator. Parentheses, square
+brackets, commas, etc. have to be put as shown in the pattern. For stream operations usually
+postfix syntax is used, hence <code>feed</code> is applied to the argument in front of it. The
+notation <code>tuple(AttrList)</code> is assumed to construct the correct tuple type for the given
+<code>AttrList</code>.
+</p>
+
+<p>
+Note that to use the expressions in a query you have to put the keyword <code>query</code> in
+front. Furthermore, a stream cannot be a final result of a query, so the query has to be completed
+by an operation such as <code>count</code> or <code>consume</code> (see
+<a href="#consuming">Section 6</a>). Hence a complete query for one of the examples above would be
+</p>
+<pre>query Trains feedproject[Id, Trip] consume</pre>
+
+<h3 id="from-a-stream-of-values">3.2&nbsp;&nbsp;From a Stream of Atomic Values</h3>
+
+<p>
+One can also create a stream of tuples from a stream of values delivered by some operation. For
+example, the <code>units</code> operation can be used to convert a moving point into a stream of
+moving point units. Its signature is:
+</p>
+<pre>units: mpoint -> stream(upoint)      # ( _ )</pre>
+
+<p>Hence the expression</p>
+<pre>units(train7)</pre>
+<p>
+returns a stream of point units. Another example is the <code>intstream</code> operator creating a
+stream of integers (all integers between the two arguments) with signature:
+</p>
+<pre>intstream: int x int -> stream(int)      # ( _ , _ )</pre>
+
+<p>
+The operations <code>transformstream</code> and <code>namedtransformstream</code> can be used to
+transform such a stream of values into a stream of tuples.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>units(train7) transformstream
+units(train7) namedtransformstream[UTrip]
+intstream(1, 10000) namedtransformstream[No]</pre>
+
+<p><strong>Signatures:</strong></p>
+<pre>transformstream:       stream(Data) -> stream(tuple([elem: Data]))            _ #
+namedtransformstream:  stream(Data) x AttrName
+                         -> stream(tuple([AttrName: Data]))                   _ #</pre>
+
+<p>
+Hence these operations create for each value in the input stream one tuple with a single
+attribute. For <code>transformstream</code> this attribute name is fixed (<code>elem</code>)
+whereas for <code>namedtransformstream</code> it can be specified. The type represented by type
+variable <code>Data</code> must belong to the kind <code>DATA</code>, that is, data types suitable
+as attribute types.
+</p>
+</section>
+
+<section class="section">
+<h2 id="single-stream">4&nbsp;&nbsp;Operations on a Single Tuple Stream</h2>
+
+<h3 id="selecting-tuples">4.1&nbsp;&nbsp;Selecting Tuples</h3>
+
+<p>
+One can select a subset of the tuples from a given stream by operations <code>filter</code>,
+<code>head</code>, <code>tail</code>, <code>ksmallest</code> and <code>kbiggest</code>.
+</p>
+
+<p>
+<code>filter</code> implements selection by a predicate. <code>head</code> and <code>tail</code>
+reduce the stream to the first or last <em>k</em> elements, respectively. <code>ksmallest</code>
+and <code>kbiggest</code> return for a stream only the <em>k</em> smallest or largest tuples with
+respect to some sort order. This is done by maintaining a heap of <em>k</em> elements, hence is
+more efficient than sorting the entire tuple stream.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed filter[.Id = 7]
+Trains feed filter[.Trip passes mehringdamm]
+
+Trains feed head[10]
+Trains feed tail[10]
+
+Trains feed ksmallest[Id; 10]
+Trains feed ksmallest[Line, Id; 50]</pre>
+
+<p><strong>Signatures:</strong></p>
+<pre>filter:              stream(Tuple) x (Tuple -> bool) -> stream(Tuple)      _ # [ _ ]
+head, tail:          stream(Tuple) x int -> stream(Tuple)                  _ # [ _ ]
+ksmallest, kbiggest: stream(Tuple) x AttrList x int -> stream(Tuple)      _ # [ _ ]</pre>
+
+<p>
+Note that the second parameter of <code>filter</code> is a function (mapping a tuple into a
+boolean value) which is written in the example in an abbreviated form. Without abbreviation it
+could be written as follows:
+</p>
+<pre>Trains feed filter[fun(t: TUPLE) attr(t, Id) = 7]</pre>
+
+<p>
+Here <code>TUPLE</code> is actually a function determining the type of a tuple in the input stream
+of the <code>filter</code> operator. The abbreviation allows one to omit the function head
+<code>fun(t: TUPLE)</code> and to refer to the argument tuple by the symbol &ldquo;.&rdquo; and to
+any of its attributes &ldquo;attr&rdquo; by the notation &ldquo;.attr&rdquo;. Hence the following
+notation is also valid.
+</p>
+<pre>Trains feed filter[attr(., Id) = 7]</pre>
+
+<h3 id="changing-the-order">4.2&nbsp;&nbsp;Changing the Order of Tuples</h3>
+
+<p>
+A stream of tuples can be sorted by one or more attributes using operations <code>sortby</code>
+and <code>sort</code>. The latter operation sorts lexicographically ascending by all attributes.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed sortby[Line asc]
+Trains feed sortby[Up asc, Id desc]
+Trains feed sort</pre>
+
+<p><strong>Signatures:</strong></p>
+<pre>sortby: stream(Tuple) x ((attr1 x dir1) x ... x (attr_n x dir_n))
+          -> stream(Tuple)                                        _ # [ _ ]
+sort:   stream(Tuple) -> stream(Tuple)                            _ #</pre>
+
+<h3 id="removing-duplicates">4.3&nbsp;&nbsp;Removing Duplicates</h3>
+
+<p>Sorting is often combined with removing duplicates: <code>rdup</code> and <code>krdup</code>.</p>
+
+<p>
+The first operation <code>rdup</code> is applicable to a totally ordered stream of tuples obtained
+by <code>sort</code>. The second allows one to specify some attributes for comparison and return
+from a group of tuples equal in these attributes only the first one. This operation is applicable
+to a stream ordered by a subset of the attributes, obtained by <code>sortby</code>.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed sort rdup
+Trains feed sortby[Line asc] krdup[Line]</pre>
+
+<p><strong>Signatures:</strong></p>
+<pre>rdup:  stream(Tuple) -> stream(Tuple)      _ # [ _ ]
+krdup: stream(Tuple) -> stream(Tuple)      _ # [ _ ]</pre>
+
+<h3 id="tuple-to-tuple">4.4&nbsp;&nbsp;Tuple to Tuple Transformations</h3>
+
+<p>
+In this section we discuss operations that map each input tuple in a stream into a single output
+tuple.
+</p>
+
+<h4>Adding and Removing Attributes</h4>
+
+<p>
+This can be done by operations <code>extend</code>, <code>project</code>, <code>remove</code> and
+<code>projectextend</code>.
+</p>
+
+<p>
+<code>extend</code> adds new attributes to a tuple derived from the values in the existing
+attributes, by specifying for each new attribute an attribute name and an expression (a function
+mapping the tuple into an atomic value). <code>project</code> is the standard relational
+projection. <code>remove</code> is similar to <code>project</code> but allows one to mention the
+attributes that should be removed rather than those that should stay. Finally,
+<code>projectextend</code> allows one to combine <code>project</code> and <code>extend</code> into
+a single operation.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed extend[Dist: distance(.Trip, mehringdamm)]
+Trains feed project[Id, Trip]
+Trains feed remove[Trip]
+
+Trains feed projectextend[Id, Line, Up
+  ; Id1000: .Id * 1000,
+    Mindist: minimum(distance(train7, mehringdamm))]</pre>
+
+<p><strong>Signatures:</strong></p>
+<pre>extend: stream(Tuple) x
+  ((NewAttr1 x (Tuple -> Data1)) x ... x (NewAttr_n x (Tuple -> Data_n)))
+  -> stream(Tuple o tuple([NewAttr1: Data1, ..., NewAttr_n: Data_n]))
+                                                             _ # [ _ ]
+
+project: stream(Tuple) x AttrList
+  -> stream(tuple(AttrList))                                  _ # [ _ ]
+
+remove: stream(Tuple) x AttrList
+  -> stream(tuple(Tuple - AttrList))                          _ # [ _ ]
+
+projectextend: stream(Tuple) x AttrList x
+  ((NewAttr1 x (Tuple -> Data1)) x ... x (NewAttr_n x (Tuple -> Data_n)))
+  -> stream(tuple(AttrList)
+    o tuple([NewAttr1: Data1, ..., NewAttr_n: Data_n]))       _ # [ _ ; _ ]</pre>
+
+<p>
+Here <code>o</code> denotes concatenation of two tuple types and <code>NewAttrList</code> used in
+<code>projectextend</code> has the same form as the second argument in <code>extend</code>. The
+types <code>Data_1</code> through <code>Data_n</code> must be atomic data types in the kind
+<code>DATA</code>, i.e., suitable as attribute types. The notation
+<code>tuple(Tuple - AttrList)</code> is assumed to construct the correct tuple type obtained by
+removing the attributes in <code>AttrList</code> from type <code>Tuple</code>.
+</p>
+
+<p>
+Again, in the examples parameter functions of <code>extend</code> have been written in abbreviated
+form; a full version is
+</p>
+<pre>Trains feed
+  extend[Dist: fun(t: TUPLE) distance(attr(t, Trip), mehringdamm)]</pre>
+
+<h3 id="tuple-to-tuple-stream">4.5&nbsp;&nbsp;Tuple to Tuple Stream Transformations</h3>
+
+<h4>4.5.1&nbsp;&nbsp;Combining Each Tuple With a Stream of Values</h4>
+
+<p>
+The operations <code>extendstream</code> and <code>projectextendstream</code> take a tuple from
+the input stream and add an attribute whose value is obtained by an operation generating a stream
+of values. Examples of such operators are <code>units</code> and <code>intstream</code> introduced
+in <a href="#from-a-stream-of-values">Section 3.2</a>. Since every output tuple can take only one
+of the values of the stream, one copy of the input tuple is made for each value. The operator
+<code>extendstream</code> just adds the new attribute, creating the required number of copies of
+the input tuple. The operator <code>projectextendstream</code> additionally allows one to specify
+a projection so that only selected attributes of the input tuple are copied into the result
+tuples.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed extendstream[UTrip: units(.Trip)]
+Trains feed projectextendstream[Id, Line, Up; UTrip: units(.Trip)]</pre>
+
+<p><strong>Signatures:</strong></p>
+<pre>extendstream: stream(Tuple) x (NewAttr x (Tuple -> stream(Data)))
+  -> stream(Tuple o tuple([NewAttr: Data]))                   _ # [ _ ]
+projectextendstream: stream(Tuple) x AttrList x
+  (NewAttr x (Tuple -> stream(Data)))
+  -> stream(tuple(AttrList) o tuple([NewAttr: Data]))         _ # [ _ ; _ ]</pre>
+
+<p>
+Note that these operations add only a single stream-valued attribute, in contrast to
+<code>extend</code> and <code>projectextend</code> which can add several attributes.
+</p>
+
+<h4>4.5.2&nbsp;&nbsp;Combining Each Tuple With a Stream of Tuples</h4>
+
+<p>
+Analogously to <code>extendstream</code> and <code>projectextendstream</code> one can also combine
+each tuple of the input stream with a stream of tuples generated from the input tuple. This is in
+fact a join operation called <code>loopjoin</code>. The stream generated from the input tuple can,
+for example, be obtained by retrieving tuples from an index based on attributes of the input
+tuple. The relevant operators are <code>loopjoin</code> and <code>loopsel</code>.
+</p>
+
+<p>
+The <code>loopsel</code> operation generates for each input tuple a stream of tuples in the same
+way as <code>loopjoin</code>. However, it does not concatenate the input tuple with each output
+tuple but instead simply returns all the streams created for tuples concatenated into a single
+stream. Hence it can be used to implement a semijoin.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed loopjoin[fun(t: TUPLE)
+  Trains feed filter[sometimes(.Trip = attr(t, Trip))] {t2}]</pre>
+<p>
+This is a simple nested loop join. The inner relation is scanned once for every tuple of the outer
+stream. Here <code>{t2}</code> is a renaming needed to make attribute names distinct.
+</p>
+<pre>strassen feed loopjoin[
+  strassen_geoData_rtree strassen windowintersects[.geoData] {s2}]</pre>
+<p>
+This is an index nested loop join. For every tuple of the <code>strassen</code> relation, a range
+query on the R-tree index is executed to retrieve roads whose bounding box intersects the bounding
+box of the road in the input tuple.
+</p>
+<pre>Trains feed loopsel[
+  fun(t: TUPLE) strassen feed filter[attr(t, Trip) passes .geoData]]</pre>
+<p>
+This query finds all roads that are passed by underground trains. Hence a subset of the
+<code>strassen</code> relation is returned, containing duplicates.
+</p>
+
+<p><strong>Signatures:</strong></p>
+<pre>loopjoin: stream(Tuple1) x (Tuple1 -> stream(Tuple2))
+  -> stream(Tuple1 o Tuple2)                                  _ # [ _ ]
+loopsel:  stream(Tuple1) x (Tuple1 -> stream(Tuple2))
+  -> stream(Tuple2)                                           _ # [ _ ]</pre>
+
+<h3 id="tuple-stream-to-tuple">4.6&nbsp;&nbsp;Tuple Stream to Tuple Transformations</h3>
+
+<h4>Grouping</h4>
+
+<p>
+Grouping is the operation that returns for each group of tuples a single tuple. The
+<code>groupby</code> operator is applicable to a stream of tuples ordered by the grouping
+attributes; for each group, it allows one to derive some new attributes.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed sortby[Line asc, Up asc]
+  groupby[Line, Up
+  ; Cnt: group count,
+    MinId: group feed min[Id],
+    MaxId: group feed max[Id]]
+
+Trains feed sortby[Line asc]
+  groupby[Line
+  ; PassMehr: group feed filter[.Trip passes mehringdamm] count]</pre>
+<p>
+The first query groups trains by line and direction and computes for each such group the number
+of trains and the minimal and maximal <code>Id</code>. The second determines for each train line
+how many of its trains pass through <code>mehringdamm</code>.
+</p>
+
+<p><strong>Signature:</strong></p>
+<pre>groupby: stream(Tuple) x AttrList x
+  ((NewAttr1 x (stream(Tuple) -> Data1)) x ... x
+  (NewAttr_n x (stream(Tuple) -> Data_n)))
+    -> stream(tuple(AttrList) o
+        tuple([NewAttr1: Data1, ..., NewAttr_n: Data_n]))     _ # [ _ ; _ ]</pre>
+</section>
+
+<section class="section">
+<h2 id="joins">5&nbsp;&nbsp;Operations on Two Tuple Streams (Joins)</h2>
+
+<p>
+This section considers symmetric operations on two tuple streams, i.e., joins. Note that
+<code>loopjoin</code> is also available as an asymmetric join technique
+(<a href="#tuple-to-tuple-stream">Section 4.5.2</a>).
+</p>
+
+<h3 id="generic-join">5.1&nbsp;&nbsp;Generic Join</h3>
+
+<p>
+The <code>symmjoin</code> operator implements a symmetric, non-blocking, nested loop join
+technique, so the complexity is <em>m</em>&nbsp;&middot;&nbsp;<em>n</em> for tuple streams of
+sizes <em>m</em> and <em>n</em>, respectively. The main advantage of <code>symmjoin</code> is that
+it admits arbitrary join conditions, hence can always be used to implement a join.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed {t1} Trains feed {t2}
+  symmjoin[sometimes(distance(.Trip_t1, ..Trip_t2) < 1000.0)]</pre>
+<p>
+This finds all pairs of trains whose time dependent distance function at some time has a value
+less than 1000. The parameter function of <code>symmjoin</code> has two argument tuples, one from
+the first and one from the second argument stream. In the abbreviated form shown above, one can
+refer to the first argument as &ldquo;.&rdquo; and the second as &ldquo;..&rdquo;; similarly one
+can refer to an attribute <code>attr</code> of the first argument tuple as &ldquo;.attr&rdquo; and
+an attribute of the second argument tuple as &ldquo;..attr&rdquo;. The full form of the query
+above is
+</p>
+<pre>Trains feed {t1} Trains feed {t2}
+  symmjoin[fun(t1: TUPLE, t2: TUPLE2)
+    sometimes(distance(attr(t1, Trip_t1), attr(t2, Trip_t2)) < 1000.0)]</pre>
+
+<p><strong>Signature:</strong></p>
+<pre>symmjoin: stream(Tuple1) x stream(Tuple2) x (Tuple1 x Tuple2 -> bool)
+  -> stream(Tuple1 o Tuple2)                                  _ _ # [ _ ]</pre>
+
+<h3 id="equi-join">5.2&nbsp;&nbsp;Equi-Join</h3>
+
+<p>
+Three methods are available to perform an equijoin: <code>sortmergejoin</code>,
+<code>mergejoin</code> and <code>hashjoin</code>. These are the standard techniques from the
+literature. <code>mergejoin</code> is applicable if the two input streams are already ordered by
+the join attribute.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed {t1} Trains feed {t2} sortmergejoin[Line_t1, Line_t2]
+Trains feed {t1} Trains feed {t2} mergejoin[Id_t1, Id_t2]
+Trains feed {t1} Trains feed {t2} hashjoin[Id_t1, Id_t2]</pre>
+<p>
+Note that before <span class="secondo">Secondo</span> version 3.1, <code>hashjoin</code> had an
+additional parameter for the number of buckets, so would have to be written as
+</p>
+<pre>Trains feed {t1} Trains feed {t2} hashjoin[Id_t1, Id_t2, 99997]</pre>
+
+<p><strong>Signatures:</strong></p>
+<pre>sortmergejoin: stream(Tuple1) x stream(Tuple2) x AttrName1 x AttrName2
+  -> stream(Tuple1 o Tuple2)                                  _ _ # [ _ , _ ]
+mergejoin:     stream(Tuple1) x stream(Tuple2) x AttrName1 x AttrName2
+  -> stream(Tuple1 o Tuple2)                                  _ _ # [ _ , _ ]
+hashjoin:      stream(Tuple1) x stream(Tuple2) x AttrName1 x AttrName2
+  -> stream(Tuple1 o Tuple2)                                  _ _ # [ _ , _ ]</pre>
+
+<h3 id="spatial-join">5.3&nbsp;&nbsp;Spatial Join</h3>
+
+<p>
+The <code>spatialjoin</code> operator determines efficiently pairs of tuples from the input
+streams for which the (2D or 3D) bounding boxes of the mentioned spatial attributes overlap. It
+implements a grid based spatial join technique similar to (Patel &amp; DeWitt, Partition-Based
+Spatial Mergejoin, SIGMOD 1996).
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>strassen feed {s1} strassen feed {s2}
+  spatialjoin2[geoData_s1, geoData_s2]
+
+Trains feed extend[Box: bbox(.Trip)] {t1}
+Trains feed extend[Box: bbox(.Trip)] {t2}
+  spatialjoin2[Box_t1, Box_t2]</pre>
+<p>
+Attributes of simple 2D spatial data types (such as <code>point</code>, <code>line</code>,
+<code>region</code>) can be mentioned directly whereas for temporal types (<code>mpoint</code>,
+<code>upoint</code>) bounding boxes have to be added explicitly.
+</p>
+<p>
+Note that a robust operator <code>spatialjoin</code> comes only with
+<span class="secondo">Secondo</span> version 3.1; unfortunately the previous implementation
+<code>spatialjoin</code> (now renamed <code>spatialjoin0</code>) crashed occasionally.
+</p>
+
+<p><strong>Signature:</strong></p>
+<pre>spatialjoin: stream(Tuple1) x stream(Tuple2) x SpatialAttr1 x
+  SpatialAttr2 -> stream(Tuple1 o Tuple2)                     _ _ # [ _ , _ ]</pre>
+</section>
+
+<section class="section">
+<h2 id="consuming">6&nbsp;&nbsp;Consuming a Tuple Stream</h2>
+
+<h3 id="into-a-relation">6.1&nbsp;&nbsp;Into a Relation</h3>
+
+<p>
+The two operations <code>consume</code> and <code>tconsume</code> collect a tuple stream into a
+relation. <code>consume</code> creates a persistent relation suitable to be kept and indexed.
+<code>tconsume</code> is useful for temporary results and tries to keep tuples in memory as far
+as possible.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed filter[.Trip passes mehringdamm] consume
+Trains feed filter[.Trip passes mehringdamm] tconsume</pre>
+
+<p><strong>Signatures:</strong></p>
+<pre>consume:  stream(Tuple) -> rel(Tuple)
+tconsume: stream(tuple) -> trel(Tuple)</pre>
+
+<h3 id="into-an-aggregate">6.2&nbsp;&nbsp;Into an Aggregate Value</h3>
+
+<p>
+Aggregate functions can be applied to a tuple stream to derive a single atomic value:
+<code>count</code>, <code>sum</code>, <code>min</code>, <code>max</code>, <code>avg</code>,
+<code>extract</code> and <code>aggregateB</code>. For <code>sum</code>, <code>min</code>,
+<code>max</code>, and <code>avg</code> one has to specify an attribute for which the respective
+function is applied. <code>extract</code> allows one to get a typed atomic value of any attribute
+data type out of a tuple; it simply extracts this attribute from the first tuple in the stream.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>Trains feed filter[.Trip passes tiergarten] count
+strassen feed extend[Length: size(.geoData)] avg[Length]
+Trains feed filter[.Id = 322] extract[Trip]</pre>
+<p>Hence the result of the third expression is of type <code>mpoint</code>.</p>
+
+<p>
+The <code>aggregateB</code> operator provides an efficient implementation of a generic aggregate
+function. One has to specify an attribute of the tuple stream, a function combining two attribute
+values, and a value to be returned if the stream is empty. The operator uses a stack to merge
+partial results of equal sizes, rather than combining a single value with the aggregation of all
+previous values.
+</p>
+
+<p><strong>Examples:</strong></p>
+<pre>strassen feed aggregateB[geoData
+  ; fun(l1: line, l2: line) l1 union l2; [const line value ()]]</pre>
+<p>This computes the entire road network of Berlin as a single <code>line</code> value.</p>
+
+<p><strong>Signatures:</strong></p>
+<pre>count:      stream(Tuple) -> int                                    - #
+min, max:   stream(Tuple) x (AttrName: Data) -> Data                _ # [ _ ]
+avg:        stream(Tuple) x (AttrName: TNum) -> real                _ # [ _ ]
+aggregateB: stream(Tuple) x (AttrName: Data)
+  x (Data x Data -> Data) x Data -> Data                            _ # [ _ ; _ ; _ ]</pre>
+
+<p>
+Here <code>(AttrName: Data)</code> denotes an attribute name referring to an attribute of a type
+<code>Data</code> (and type <code>Data</code> must be in the kind <code>DATA</code>, that is,
+suitable as an attribute type of a relation). Type <code>TNum</code> must be a numeric type, i.e.,
+<code>int</code> or <code>real</code>.
+</p>
+
+<p>
+Aggregate functions are especially useful in connection with grouping. Examples are shown in
+<a href="#tuple-stream-to-tuple">Section 4.6</a>.
+</p>
+
+<h3 id="into-a-stream-of-values">6.3&nbsp;&nbsp;Into a Stream of Values</h3>
+
+<p>
+A stream of tuples that have only one attribute can be transformed into a stream of values with
+<code>transformstream</code>. This enables one to further apply operators taking a stream of
+values as an argument. One such operator is <code>collect_points</code> which takes a stream of
+<code>point</code> values and collects them into a <code>points</code> value (the data type
+<code>points</code> can represent a set of points). We can then use operations applicable to
+<code>points</code> values. <code>convexhull</code> is one of those. The two mentioned operations
+have signatures:
+</p>
+<pre>collect_points: stream(point) x bool -> points      _ # [ _ ]
+convexhull:     points -> region                   # ( _ )</pre>
+<p>
+The boolean parameter in <code>collect_points</code> tells whether undefined point values in the
+input stream should be ignored or should make the whole value undefined.
+</p>
+
+<p><strong>Example:</strong></p>
+<pre>convexhull(Kinos feed project[geoData] transformstream
+  collect_points[TRUE])</pre>
+<p>
+This computes the convex hull of the Kino positions and so roughly defines a &ldquo;cinema
+area&rdquo;.
+</p>
+
+<p><strong>Signature:</strong></p>
+<pre>transformstream: stream(tuple([Attr: T])) -> stream(T)      _ #</pre>
+</section>
+
+<div class="footnote">
+ Last Changed: 2026-09-01 (JNI)
+</div>
