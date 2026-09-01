@@ -2,7 +2,19 @@
 layout: default
 title: Querying at the Executable Level - SECONDO
 description: A hands-on guide to SECONDO's executable query language - building and consuming tuple streams with operators such as feed, filter, sortby, the join methods, groupby, consume and the aggregation operators.
+last_changed: 2026-09-01
 ---
+
+<style type="text/css">
+  /* Indent the body content under each heading so the section / subsection
+     hierarchy is visible, matching the div.short treatment on other guides. */
+  .section > h3 { margin-left: 1rem; margin-top: 1.6em; }
+  .section > h4 { margin-left: 2rem; margin-top: 1.4em; }
+  .section > p,
+  .section > ul,
+  .section > ol,
+  .section > pre { margin-left: 2rem; }
+</style>
 
 <h1>Writing Executable Queries in <span class="secondo">Secondo</span></h1>
 
@@ -663,7 +675,3 @@ area&rdquo;.
 <p><strong>Signature:</strong></p>
 <pre>transformstream: stream(tuple([Attr: T])) -> stream(T)      _ #</pre>
 </section>
-
-<div class="footnote">
- Last Changed: 2026-09-01 (JNI)
-</div>

@@ -2,6 +2,7 @@
 layout: default
 title: Analyzing SECONDO Crashes
 description: Guide to analyzing SECONDO crashes with the faultcrash test operator, stacktrace decoding, Valgrind, GDB, and lldb.
+last_changed: 2026-08-19
 ---
 
 <h1> Analyzing SECONDO Crashes </h1>
@@ -371,8 +372,3 @@ provides almost the same commands as gdb. More information about the differences
     frame #15: 0x00000001000851cd SecondoBDB`main(argc=1, argv=0x00007ffeefbff050) at MainTTY.cpp:164:10
     frame #16: 0x00007fff2035d631 libdyld.dylib`start + 1
 (lldb) quit</pre>
-
-
-<div class="footnote">
- Last Changed: 2026-08-19 (JNI)
-</div>

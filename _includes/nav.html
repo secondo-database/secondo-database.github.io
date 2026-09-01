@@ -59,9 +59,61 @@
   var btn = document.getElementById('nav-toggle');
   var nav = document.getElementById('site-nav');
   if(!btn || !nav){ return; }
+
+  var lastFocus = null;
+  var mq = window.matchMedia('(max-width:800px)');
+
+  function isOpen(){ return nav.classList.contains('nav-open'); }
+
+  function open(){
+    nav.classList.add('nav-open');
+    btn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+    lastFocus = document.activeElement;
+    var first = nav.querySelector('a, button');
+    if(first){ first.focus(); }
+    document.addEventListener('keydown', onKeydown);
+    document.addEventListener('click', onDocClick, true);
+  }
+
+  function close(returnFocus){
+    nav.classList.remove('nav-open');
+    btn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', onKeydown);
+    document.removeEventListener('click', onDocClick, true);
+    if(returnFocus !== false){
+      (lastFocus && lastFocus.focus ? lastFocus : btn).focus();
+    }
+  }
+
+  function onKeydown(e){
+    if(e.key === 'Escape' || e.key === 'Esc'){ close(); return; }
+    if(e.key === 'Tab' && isOpen()){
+      var items = nav.querySelectorAll('a, button');
+      if(!items.length){ return; }
+      var first = items[0], last = items[items.length - 1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  }
+
+  function onDocClick(e){
+    if(isOpen() && !nav.contains(e.target) && e.target !== btn){ close(); }
+  }
+
   btn.addEventListener('click', function(){
-    var open = nav.classList.toggle('nav-open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(isOpen()){ close(); } else { open(); }
+  });
+
+  nav.addEventListener('click', function(e){
+    var link = e.target.closest('a');
+    if(link && isOpen()){ close(false); }
+  });
+
+  // If the viewport grows past the mobile breakpoint, drop the open state.
+  mq.addEventListener('change', function(ev){
+    if(!ev.matches && isOpen()){ close(false); }
   });
 })();
 </script>
