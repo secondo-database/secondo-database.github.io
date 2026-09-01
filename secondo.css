@@ -246,6 +246,62 @@ ul.algebra span.algebraname{
 }
 
 
+/* navigation card grid (index.html "Where to go next") */
+ul.cards{
+   list-style:none;
+   display:grid;
+   grid-template-columns:repeat(3, 1fr);
+   gap:16px;
+   margin:18px 0 0;
+   padding:0;
+   max-width:48rem;
+}
+
+ul.cards li{
+   display:flex;
+}
+
+a.card,
+a.card:link,
+a.card:visited{
+   display:flex;
+   flex-direction:column;
+   width:100%;
+   padding:15px 18px;
+   background:white;
+   border:1px solid rgb(224,224,224);
+   border-left:3px solid var(--secondo-red);
+   text-decoration:none;
+   color:black;
+   transition:box-shadow .15s ease, border-left-color .15s ease;
+}
+
+a.card:hover,
+a.card:focus{
+   text-decoration:none;
+   color:black;
+   box-shadow:0 2px 12px rgba(0,0,0,0.09);
+   border-left-color:var(--secondo-red-dark);
+}
+
+a.card .card-title{
+   font-weight:bold;
+   font-size:1.02rem;
+   color:var(--secondo-red);
+   margin-bottom:6px;
+}
+
+a.card .card-desc{
+   font-size:0.88rem;
+   color:rgb(70,70,70);
+   line-height:1.5;
+}
+
+@media (max-width:760px){
+   ul.cards{ grid-template-columns:1fr; }
+}
+
+
 /* Links  don't change the order of this definitions */
 /* not visited */
 a:link{ color:var(--secondo-red);
@@ -342,6 +398,23 @@ div.short{
      margin-left:2rem;
      text-align:left;
      max-width:46rem;
+}
+
+/* screenshot + caption for query examples (index.html) */
+figure.query-figure{
+     margin:18px 0 34px;
+     max-width:640px;
+}
+
+figure.query-figure img{
+     border:1px solid rgb(210,210,210);
+}
+
+figure.query-figure figcaption{
+     margin:8px 0 0;
+     font-size:0.8rem;
+     color:gray;
+     line-height:1.5;
 }
 
 div.paper{
