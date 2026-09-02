@@ -820,6 +820,29 @@ a.heading-anchor:hover{
   text-decoration:none;
 }
 
+ol:not(.pub-list) > li{
+  margin-bottom:0.8em;
+}
+
+.guide-indent > h3{
+  margin-left:1rem;
+  margin-top:1.6em;
+}
+
+.guide-indent > h4{
+  margin-left:2rem;
+  margin-top:1.4em;
+}
+
+.guide-indent > p,
+.guide-indent > ul,
+.guide-indent > ol,
+.guide-indent > pre,
+.guide-indent > figure.highlight,
+.guide-indent > div.code-block{
+  margin-left:2rem;
+}
+
 
 /* ------------------------------------------------------------------
    Small utilities
@@ -957,7 +980,15 @@ address.contact .line{
     /* drop the reading-column indent on small screens */
     div.short,
     div.normal,
-    div.indented{
+    div.indented,
+    .guide-indent > h3,
+    .guide-indent > h4,
+    .guide-indent > p,
+    .guide-indent > ul,
+    .guide-indent > ol,
+    .guide-indent > pre,
+    .guide-indent > figure.highlight,
+    .guide-indent > div.code-block{
         margin-left:0;
     }
 

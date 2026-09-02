@@ -4,29 +4,28 @@ description: Installation instructions for SECONDO covering Docker images, Ubunt
 last_changed: 2026-08-15
 ---
 
-<style type="text/css">
-    ol li { margin-bottom: 1em; }
-  </style>
 
 <h1> Installation Instructions </h1>
 
+<p>
 This page explains how to install <span class="secondo">Secondo</span> and the tools it
 requires on your computer. The currently supported and CI-verified paths are a build from
-sources on <b>Ubuntu / Debian</b>, precompiled <tt>.deb</tt> binary packages for Ubuntu,
+sources on <b>Ubuntu / Debian</b>, precompiled <code>.deb</code> binary packages for Ubuntu,
 a Container image for <b>Docker</b> and other container platforms, and a build on <b>macOS</b>
 using <a href="https://brew.sh/">Homebrew</a>. Older
 distributions are covered by the
 <a href="content_install_legacy.html">historical installation guides</a>. The build of
 <span class="secondo">Secondo</span> from sources itself is explained on the
 <a href="content_sources.html">Sources</a> page.
+</p>
 
 <section class="section">
 <h2> Which installation is right for you? </h2>
 <ul>
   <li> Just want to try <span class="secondo">Secondo</span> in a few seconds &rarr;
-       <a href="#container">using containers</a> </li>
+       <a href="#container">use a container image</a> </li>
   <li> Just want to install <span class="secondo">Secondo</span> on Ubuntu &rarr;
-       <a href="#deb">binary <tt>.deb</tt> packages (apt-get)</a> </li>
+       <a href="#deb">binary <code>.deb</code> packages (apt-get)</a> </li>
   <li> Build or extend <span class="secondo">Secondo</span> on Ubuntu / Debian &rarr;
        <a href="#ubuntu">installation from sources</a> </li>
   <li> Build or extend <span class="secondo">Secondo</span> on macOS &rarr;
@@ -48,14 +47,14 @@ OCI-compatible container runtime).
 </p>
 
 <p>
-Start the container. A named volume (<tt>secondo-databases</tt>) keeps your
+Start the container. A named volume (<code>secondo-databases</code>) keeps your
 databases on the host, so they survive container restarts and upgrades:
+</p>
 {% highlight bash %}
 docker run -d --name secondo -p 8000:8000 -p 1234:1234 \
     -v secondo-databases:/var/lib/secondo/databases \
     ghcr.io/secondo-database/secondo:latest
 {% endhighlight %}
-</p>
 
 <p>
 Afterward, you can access the <span class="secondo">Secondo</span> GUI in your
@@ -63,32 +62,32 @@ browser at <a href="http://localhost:8000">http://localhost:8000</a>.
 </p>
 
 <p>
-To instead work with the client-server console <tt>SecondoTTYCS</tt> inside the
+To instead work with the client-server console <code>SecondoTTYCS</code> inside the
 running container:
+</p>
 {% highlight bash %}
 docker exec -it secondo SecondoTTYCS
 {% endhighlight %}
-</p>
 
 <p>
 Stop the container when you are done, and start it again later with
-<tt>docker start secondo</tt>:
+<code>docker start secondo</code>:
+</p>
 {% highlight bash %}
 docker stop secondo
 {% endhighlight %}
-</p>
 </section>
 
 <section class="section">
-<h2 id="deb"> Binary Installation via <tt>.deb</tt> Packages (Ubuntu, apt-get) </h2>
+<h2 id="deb"> Binary Installation via <code>.deb</code> Packages (Ubuntu, apt-get) </h2>
 
 <p>
 For users who just want to try <span class="secondo">Secondo</span> without compiling it,
-we provide precompiled <tt>.deb</tt> packages for Ubuntu&nbsp;22.04, 24.04 and 26.04. They
+we provide precompiled <code>.deb</code> packages for Ubuntu&nbsp;22.04, 24.04 and 26.04. They
 install <span class="secondo">Secondo</span> and all of its dependencies within a few
-minutes via <tt>apt-get</tt>, and are the recommended starting point for new users.
+minutes via <code>apt-get</code>, and are the recommended starting point for new users.
 Developers who want to build their own extensions should instead build
-<a href="#ubuntu">from sources</a> as described above.
+<a href="#ubuntu">from sources</a> as described below.
 </p>
 
 <p>
@@ -129,10 +128,9 @@ sudo apt-get install flex bison gcc g++ build-essential \
 </li>
 
 <li>
-<b>Get the sources and build <span class="secondo">Secondo</span>.</b> The build
+<b>Set up the build environment.</b> The build
 environment (compiler, Berkeley&nbsp;DB, SWI-Prolog paths, ...) is derived
-automatically from the installed tools every time you run <code>make</code>, so
-there are only these settings:
+automatically. So, there are only these settings:
 {% highlight bash %}
 export SECONDO_BUILD_DIR=$HOME/secondo
 export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini
@@ -146,10 +144,18 @@ echo 'export SECONDO_BUILD_DIR=$HOME/secondo' >> ~/.bashrc
 echo 'export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini' >> ~/.bashrc
 echo 'export PATH="$PATH:$SECONDO_BUILD_DIR/bin:$SECONDO_BUILD_DIR/Tools/pd"' >> ~/.bashrc
 {% endhighlight %}
-Then download the sources as described on the <a href="content_sources.html">Sources</a> page
-and build the system by running <code>make</code> in <code>$SECONDO_BUILD_DIR</code>.
 </li>
 
+<li>
+<b>Download</b> the sources as described on the <a href="content_sources.html">Sources</a> page.
+</li>
+<li>
+<b>Build</b> the system by running <code>make</code> in <code>$SECONDO_BUILD_DIR</code>.
+{% highlight bash %}
+cd $SECONDO_BUILD_DIR
+make -j $(nproc)
+{% endhighlight %}
+</li>
 </ol>
 </section>
 
@@ -169,17 +175,17 @@ in a terminal.
 
 <li>
 <b>Install the Xcode command line tools</b> (C/C++ compiler, <code>make</code>, system headers):
-<pre>
+{% highlight bash %}
 xcode-select --install
-</pre>
+{% endhighlight %}
 </li>
 
 <li>
 <b>Install Homebrew</b> (skip if it is already present); see
 <a href="https://brew.sh/">brew.sh</a>:
-<pre>
+{% highlight bash %}
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-</pre>
+{% endhighlight %}
 </li>
 
 <li>
@@ -201,10 +207,9 @@ to the system (or install an equivalent JDK&nbsp;21, e.g. Temurin).
 </li>
 
 <li>
-<b>Get the sources and build <span class="secondo">Secondo</span>.</b> The build
-environment (compiler, Berkeley&nbsp;DB, SWI-Prolog paths, the keg-only Homebrew
-prefixes, ...) is derived automatically from the installed tools every time you
-run <code>make</code>, so there are only these settings:
+<b>Set up the build environment.</b> The build
+environment (compiler, Berkeley&nbsp;DB, SWI-Prolog paths, ...) is derived
+automatically. So, there are only these settings:
 {% highlight bash %}
 export SECONDO_BUILD_DIR=$HOME/secondo
 export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini
@@ -218,29 +223,42 @@ echo 'export SECONDO_BUILD_DIR=$HOME/secondo' >> ~/.zshrc
 echo 'export SECONDO_CONFIG=$SECONDO_BUILD_DIR/bin/SecondoConfig.ini' >> ~/.zshrc
 echo 'export PATH="$PATH:$SECONDO_BUILD_DIR/bin:$SECONDO_BUILD_DIR/Tools/pd"' >> ~/.zshrc
 {% endhighlight %}
-Then download the sources as described on the <a href="content_sources.html">Sources</a> page
-and build the system by running <code>make</code> in <code>$SECONDO_BUILD_DIR</code>.
 </li>
-
+<li>
+<b>Download</b> the sources as described on the <a href="content_sources.html">Sources</a> page.
+</li>
+<li>
+<b>Build</b> the system by running <code>make</code> in <code>$SECONDO_BUILD_DIR</code>.
+{% highlight bash %}
+cd $SECONDO_BUILD_DIR
+make -j $(sysctl -n hw.ncpu)
+{% endhighlight %}
+</li>
 </ol>
 
 
 <h3>Upgrading the macOS version</h3>
 
+<p>
 After an upgrade of the macOS operating system, the Xcode developer tools
-have to be reinstalled. If you have upgraded your system and the call of <code> make </code>
+have to be reinstalled. If you have upgraded your system and the call of <code>make</code>
 produces the following error message:
+</p>
 <pre>
 xcrun: error: invalid active developer path
 </pre>
+<p>
 then you have to reinstall the Xcode developer tools. To do so, start a
 terminal and enter:
-<pre>
+</p>
+{% highlight bash %}
 xcode-select --install
-</pre>
-In the upcoming dialog, click on the button <code>Installation</code> and wait until the
+{% endhighlight %}
+<p>
+In the upcoming dialog, click on the button <b>Install</b> and wait until the
 installation is finished. After that, the <code>make</code> process should run
 as before.
+</p>
 </section>
 
 <section class="section">

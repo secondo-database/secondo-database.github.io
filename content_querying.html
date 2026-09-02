@@ -4,20 +4,10 @@ description: A hands-on guide to SECONDO's executable query language - building 
 last_changed: 2026-09-01
 ---
 
-<style type="text/css">
-  /* Indent the body content under each heading so the section / subsection
-     hierarchy is visible, matching the div.short treatment on other guides. */
-  .section > h3 { margin-left: 1rem; margin-top: 1.6em; }
-  .section > h4 { margin-left: 2rem; margin-top: 1.4em; }
-  .section > p,
-  .section > ul,
-  .section > ol,
-  .section > pre { margin-left: 2rem; }
-</style>
 
 <h1>Writing Executable Queries in <span class="secondo">Secondo</span></h1>
 
-<section class="section">
+<section class="section guide-indent">
 <h2 id="contents">Contents</h2>
 <ul>
   <li><a href="#introduction">1&nbsp;&nbsp;Introduction</a></li>
@@ -55,7 +45,7 @@ last_changed: 2026-09-01
 </ul>
 </section>
 
-<section class="section">
+<section class="section guide-indent">
 <h2 id="introduction">1&nbsp;&nbsp;Introduction</h2>
 
 <p>Queries can be formulated to <span class="secondo">Secondo</span> at two levels:</p>
@@ -105,7 +95,7 @@ available at the executable level.
 </p>
 </section>
 
-<section class="section">
+<section class="section guide-indent">
 <h2 id="example-database">2&nbsp;&nbsp;Example Database</h2>
 
 <p>
@@ -136,7 +126,7 @@ tiergarten: region</pre>
 </ul>
 </section>
 
-<section class="section">
+<section class="section guide-indent">
 <h2 id="creating-a-stream">3&nbsp;&nbsp;Creating a Stream of Tuples</h2>
 
 <h3 id="from-a-relation">3.1&nbsp;&nbsp;From a Relation</h3>
@@ -218,7 +208,7 @@ as attribute types.
 </p>
 </section>
 
-<section class="section">
+<section class="section guide-indent">
 <h2 id="single-stream">4&nbsp;&nbsp;Operations on a Single Tuple Stream</h2>
 
 <h3 id="selecting-tuples">4.1&nbsp;&nbsp;Selecting Tuples</h3>
@@ -479,7 +469,7 @@ how many of its trains pass through <code>mehringdamm</code>.
         tuple([NewAttr1: Data1, ..., NewAttr_n: Data_n]))     _ # [ _ ; _ ]</pre>
 </section>
 
-<section class="section">
+<section class="section guide-indent">
 <h2 id="joins">5&nbsp;&nbsp;Operations on Two Tuple Streams (Joins)</h2>
 
 <p>
@@ -576,7 +566,7 @@ Note that a robust operator <code>spatialjoin</code> comes only with
   SpatialAttr2 -> stream(Tuple1 o Tuple2)                     _ _ # [ _ , _ ]</pre>
 </section>
 
-<section class="section">
+<section class="section guide-indent">
 <h2 id="consuming">6&nbsp;&nbsp;Consuming a Tuple Stream</h2>
 
 <h3 id="into-a-relation">6.1&nbsp;&nbsp;Into a Relation</h3>
