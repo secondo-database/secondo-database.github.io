@@ -1,15 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-  <title>SECONDO</title>
-  <meta name="description" content="extensible database system">
-  <link rel="stylesheet" type="text/css" href="/Secondo.html/secondo.css">
-    <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-</head>
-<body>
-
+---
+title: macOS Catalina - SECONDO
+description: Installing SECONDO on macOS Catalina.
+last_changed: 2020-11-02
+---
 <h1>Secondo on Mac-OS Catalina: Installation Instructions</h1>
 
 To be able to compile the Secondo database system, 
@@ -19,7 +12,7 @@ document describes how to install all required tools.
 <h2>Prerequisite</h2>
 OS X 10.15 uses 'zsh' as the default shell. Secondo uses some functions that are only available in the 'BASH' shell.  Using zsh with Secondo can lead to some problems. Therefore, we recommend using the BASH as the default shell for the user that should work with SECONDO. 
 
-The default shell can be set via command line by calling '<tt>chsh -s /bin/bash</tt>' and re-login. As an alternative, the shell can be set in the system preferences under 'Users and Groups' &rarr; press the Ctrl key and click your user name &rarr; select 'Advanced Options' &rarr; 'Login Shell' &rarr; '/bin/bash' and re-login.
+The default shell can be set via command line by calling '<code>chsh -s /bin/bash</code>' and re-login. As an alternative, the shell can be set in the system preferences under 'Users and Groups' &rarr; press the Ctrl key and click your user name &rarr; select 'Advanced Options' &rarr; 'Login Shell' &rarr; '/bin/bash' and re-login.
 
 
 <h2>Fresh Installation</h2>
@@ -107,36 +100,36 @@ be distributed together with Secondo.
         <kbd> cd $HOME/secondo </kbd> </li>
    <li> compile Secondo <br>
         <kbd> make </kbd> </li>
-   <li> Start Secondo according to the <a href="/secondo/files/Documentation/General/SecondoManual.pdf" target="_blank">Secondo's User Manual </a></li>
+   <li> Start Secondo according to the <a href="/files/Documentation/General/SecondoManual.pdf" target="_blank">Secondo's User Manual </a></li>
  </ul>
 
-<b>Note:</b> Some algebras of SECONDO are using further dependencies. We recommend installing the <a href="https://brew.sh/">Homebrew</a> package manager for OS X. Using the package manager, these dependencies can be easily installed (e.g., <tt>brew install gmp</tt> or <tt>brew install libjpeg</tt>). 
+<b>Note:</b> Some algebras of SECONDO are using further dependencies. We recommend installing the <a href="https://brew.sh/">Homebrew</a> package manager for OS X. Using the package manager, these dependencies can be easily installed (e.g., <code>brew install gmp</code> or <code>brew install libjpeg</code>). 
 
 <h2>Upgrade</h2>
 <div>
 To upgrade from a previous OS X / SDK version, please execute the following commands:<br>
 <br>
-<tt>mkdir secondo-download</tt><br>
-<tt>cd secondo-download</tt><br>
+<code>mkdir secondo-download</code><br>
+<code>cd secondo-download</code><br>
 <br>
-<tt>curl -L https://ftp.gnu.org/gnu/bison/bison-3.0.5.tar.gz --output bison-3.0.5.tar.gz</tt><br>
-<tt>tar zxvf bison-3.0.5.tar.gz</tt><br>
-<tt>cd bison-3.0.5</tt><br>
-<tt>./configure --prefix=$SECONDO_SDK</tt><br>
-<tt>make</tt><br>
-<tt>make install</tt><br>
-<tt>cd ..</tt><br>
+<code>curl -L https://ftp.gnu.org/gnu/bison/bison-3.0.5.tar.gz --output bison-3.0.5.tar.gz</code><br>
+<code>tar zxvf bison-3.0.5.tar.gz</code><br>
+<code>cd bison-3.0.5</code><br>
+<code>./configure --prefix=$SECONDO_SDK</code><br>
+<code>make</code><br>
+<code>make install</code><br>
+<code>cd ..</code><br>
 <br>
-<tt>curl -L https://github.com/westes/flex/files/981163/flex-2.6.4.tar.gz --output flex-2.6.4.tar.gz</tt><br>
-<tt>tar zxvf flex-2.6.4.tar.gz</tt><br>
-<tt>cd flex-2.6.4</tt><br>
-<tt>./configure --prefix=$SECONDO_SDK</tt><br>
-<tt>make</tt><br>
-<tt>make install</tt><br>
-<tt>cd ..</tt><br>
+<code>curl -L https://github.com/westes/flex/files/981163/flex-2.6.4.tar.gz --output flex-2.6.4.tar.gz</code><br>
+<code>tar zxvf flex-2.6.4.tar.gz</code><br>
+<code>cd flex-2.6.4</code><br>
+<code>./configure --prefix=$SECONDO_SDK</code><br>
+<code>make</code><br>
+<code>make install</code><br>
+<code>cd ..</code><br>
 <br>
-<tt>cd ..</tt><br>
-<tt>rm -r secondo-download</tt><br>
+<code>cd ..</code><br>
+<code>rm -r secondo-download</code><br>
 </div>
 <br>
 <div>
@@ -144,30 +137,20 @@ To upgrade from a previous OS X / SDK version, please execute the following comm
 <div>
 If you have upgraded your Prolog Installation, please execute the following commands:<br>
 <br>
-<tt>JPL=$(find /Applications -name "libjpl.dylib")</tt><br>
-<tt>PL=$(find /Applications -name "libswipl.dylib")</tt><br>
-<tt>SWIPLDIR=$(dirname $PL)</tt><br>
-<tt>install_name_tool -add_rpath $SWIPLDIR $JPL</tt><br>
+<code>JPL=$(find /Applications -name "libjpl.dylib")</code><br>
+<code>PL=$(find /Applications -name "libswipl.dylib")</code><br>
+<code>SWIPLDIR=$(dirname $PL)</code><br>
+<code>install_name_tool -add_rpath $SWIPLDIR $JPL</code><br>
 </div>
 
 <br>
 
 In your Secondo source directory please execute:<br>
 <br>
-<tt>make clean</tt><br>
-<tt>make</tt>
+<code>make clean</code><br>
+<code>make</code>
 </div>
 
 <br>
 That is all, your Secondo SDK is successfully upgraded.
 <br>
-
-<div class="footnote">
- Last Changed: 2020-11-02 (JNI)
-</div>
-
-
-</body>
-</html>
-
-

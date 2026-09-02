@@ -1,15 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-  <title>SECONDO</title>
-  <meta name="description" content="extensible database system">
-  <link rel="stylesheet" type="text/css" href="/secondo.css">
-    <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-</head>
-<body>
-
+---
+title: macOS Monterey on M1 - SECONDO
+description: Installing SECONDO on macOS Monterey (12) for ARM (M1) processors.
+last_changed: 2021-11-01
+---
 <h1>Secondo on macOS Monterey (12): Installation Instructions for ARM-CPUs (M1)</h1>
 
 <h2>Please Note</h2> 
@@ -83,7 +76,7 @@ printed out. Otherwise a window pops up. Just click on <kbd>install</kbd>.
         <kbd> cd $HOME/secondo </kbd> </li>
    <li> compile Secondo <br>
         <kbd> make </kbd> </li>
-   <li> Start Secondo according to the <a href="/secondo/files/Documentation/General/SecondoManual.pdf" target="_blank">Secondo's User Manual </a></li>
+   <li> Start Secondo according to the <a href="/files/Documentation/General/SecondoManual.pdf" target="_blank">Secondo's User Manual </a></li>
  </ul>
 
 <h2>Upgrade</h2>
@@ -92,26 +85,16 @@ printed out. Otherwise a window pops up. Just click on <kbd>install</kbd>.
 To upgrade from a previous OS X / SDK version, please execute:<br>
 
 <ul>
- <li><tt>mv ${SECONDO_SDK} ${SECONDO_SDK}.old</tt></li>
+ <li><code>mv ${SECONDO_SDK} ${SECONDO_SDK}.old</code></li>
  <li>Repeat the installation processs</li>
  <li>
    In your Secondo source directory please execute:<br>
     <br>
-     <tt>make clean</tt><br>
-     <tt>make</tt>
+     <code>make clean</code><br>
+     <code>make</code>
   </li>
 </ul>
 
 <br>
 That is all, your Secondo SDK is successfully upgraded.
 <br>
-
-<div class="footnote">
- Last Changed: 2021-11-01 (JNI)
-</div>
-
-
-</body>
-</html>
-
-

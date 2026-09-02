@@ -1,22 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-  <title>Secondo Installation on Ubuntu </title>
-  <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
-  <meta name="description" content="extensible database system">
-  <link rel="stylesheet" type="text/css" href="../../../secondo.css">
-    <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-</head>
-<body>
-<div style="text-align:center;">
-<img alt="SECONDO" src="/images/logo.gif" height="107" width="598"> </div>
+---
+title: Ubuntu apt-get Packages - SECONDO
+description: Installing SECONDO on Ubuntu from the official .deb package repository.
+last_changed: 2026-07-14
+---
+<h1>Installation on Ubuntu using <code>apt-get</code></h1>
 
-
-<h1>Installation on Ubuntu using <tt>apt-get</tt></h1>
-
-We provide <tt>.deb</tt> packages for Ubuntu 26.04 (LTS), 24.04 (LTS), and 22.04 (LTS) on the
-Intel/AMD architecture (<tt>x86_64/amd64</tt>).
+We provide <code>.deb</code> packages for Ubuntu 26.04 (LTS), 24.04 (LTS), and 22.04 (LTS) on the
+Intel/AMD architecture (<code>x86_64/amd64</code>).
 
 These packages can be used to setup <span class="secondo">Secondo</span> within
 a few minutes on your computer. We recommend this installation type for new users,
@@ -26,7 +16,7 @@ For advanced users, who want to develop their own extensions, we recommend to bu
 
 <h2>Installation of <span class="secondo">Secondo</span></h2>
 
-To install <span class="secondo">Secondo</span> via <tt>apt-get</tt>,
+To install <span class="secondo">Secondo</span> via <code>apt-get</code>,
 add the <span class="secondo">Secondo</span> repository for your Ubuntu release to
 your package sources. Pick the line that matches your release:<br>
 <br>
@@ -46,8 +36,8 @@ Ubuntu 22.04<br>
 echo 'deb [trusted=yes] https://secondo-database.github.io/secondo/apt/ubuntu/22.04/ ./' | sudo tee /etc/apt/sources.list.d/secondo.list
 </pre>
 
-The repository is not signed, which is what the <tt>[trusted=yes]</tt> option tells
-<tt>apt</tt>.<br>
+The repository is not signed, which is what the <code>[trusted=yes]</code> option tells
+<code>apt</code>.<br>
 <br>
 
 Update the list of the available packages:<br>
@@ -68,7 +58,7 @@ has to execute the <span class="secondo">Secondo</span> installer. This script c
 /opt/secondo/bin/secondo_installer.sh
 </pre>
 
-The installer writes the file <tt>~/.secondorc</tt> and makes your shell read it on login.
+The installer writes the file <code>~/.secondorc</code> and makes your shell read it on login.
 To use <span class="secondo">Secondo</span> in the current shell without logging in again, enter:
 <pre>
 source ~/.secondorc
@@ -106,11 +96,3 @@ started are:
 Do not start more than one instance of Server or
 Single User programs accessing the same database directory.
 For details see the User Manual.
-
-<div class="footnote">
-Last Changed: 2026-07-14 (JNI)
-</div>
-
-
-</body>
-</html>
