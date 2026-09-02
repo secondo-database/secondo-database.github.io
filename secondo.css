@@ -1,7 +1,6 @@
-
-/* the color rgb(184,0,0) the the rgb value from the secondo-logo */
-
 :root{
+   /* brand */
+   /* the color rgb(184,0,0) the the rgb value from the secondo-logo */
    --secondo-red-rgb: 184,0,0;
    --secondo-red: rgb(var(--secondo-red-rgb));
    --secondo-red-dark-rgb: 138,0,0;
@@ -10,22 +9,56 @@
    --secondo-red-btn-hover: rgb(140,0,0);
    --secondo-visited-rgb: 138,64,54;
    --secondo-visited: rgb(var(--secondo-visited-rgb));
+
+   /* surfaces */
+   --surface-page: rgb(240,240,240);
+   --surface-raised: white;
+   --surface-code: rgb(228,228,228);
+   --surface-pre: rgb(245,245,245);
+
+   /* borders, light to dark */
+   --border-divider: rgb(222,222,222);
+   --border-subtle: rgb(224,224,224);
+   --border-strong: rgb(210,210,210);
+   --border-table: rgb(228,228,228);
+
+   /* text, strongest to faintest */
+   --text-body: black;
+   --text-muted: rgb(70,70,70);
+   --text-venue: rgb(110,110,110);
+   --text-footer: rgb(90,90,90);
+   --text-faint: rgb(140,140,140);
+   --text-caption: gray;
+
+   /* type */
+   --font-ui: -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+   --font-heading: serif;
+   --font-mono: monospace;
+   --line-height-body: 1.5;
+
+   /* radii */
+   --radius-sm: 3px;
+   --radius-md: 6px;
+   --radius-lg: 8px;
+   --radius-xl: 10px;
+
+   /* the reading column shared by content blocks and the footer */
+   --content-max: 48rem;
 }
 
 
 /* page format */
 body{
    margin:0;
-   /* font-size:14pt; */
+   font-size:16px;
    font-style:normal;
    font-weight:normal;
-   font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
-   color:black;
-   background-color:rgb(240,240,240);
+   font-family:var(--font-ui);
+   /* long-form documentation needs more leading than the browser default */
+   line-height:var(--line-height-body);
+   color:var(--text-body);
+   background-color:var(--surface-page);
    text-align:left;
-  /*background-image:url(/backgrounds/Back3.jpg);
-    background-repeat:repeat;
-    background-attachment:fixed;*/
 }
 
 .secondo{
@@ -36,28 +69,32 @@ body{
 /* headlines */
 h1{ color:var(--secondo-red);
     text-align:center;
+    line-height:1.25;
     font-size:xx-large;
     font-style:normal; 
     font-weight:bold;
-    font-family:serif; }
+    font-family:var(--font-heading); }
 
 h2{ color:var(--secondo-red);
+    line-height:1.25;
     font-size:x-large;
     font-style:normal; 
     font-weight:bold;
-    font-family:serif; }
+    font-family:var(--font-heading); }
 
 h3{ color:var(--secondo-red);
+    line-height:1.25;
     font-size:large;
     font-style:italic; 
     font-weight:bold;
-    font-family:serif; }
+    font-family:var(--font-heading); }
 
 h4,h5,h6{ 
+    line-height:1.25;
     font-size:medium;
     font-style:normal; 
     font-weight:bold;
-    font-family:serif; }
+    font-family:var(--font-heading); }
 
 /* navigation sidebar (_includes/nav.html) */
 aside.sidebar{
@@ -67,17 +104,11 @@ aside.sidebar{
     width:270px;
     height:100vh;
     overflow-y:auto;
-    font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    font-family:var(--font-ui);
     font-size:16px;
     line-height:normal;
     text-align:left;
     background:linear-gradient(180deg, var(--secondo-red) 0%, var(--secondo-red-dark) 100%);
-}
-
-aside.sidebar *{
-    line-height:normal !important;
-    text-align:left !important;
-    color:white !important;
 }
 
 /* main content area, offset by the fixed sidebar width */
@@ -92,73 +123,6 @@ main{
     display:none;
 }
 
-/* narrow desktop / landscape tablet: shrink the sidebar so the content
-   column keeps a usable width before the mobile overlay takes over at 800px */
-@media (max-width:1100px){
-    aside.sidebar{
-        width:220px;
-    }
-
-    main{
-        margin-left:220px;
-        padding-left:16px;
-        padding-right:16px;
-    }
-}
-
-@media (max-width:800px){
-    .nav-toggle-btn{
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        position:fixed;
-        top:12px;
-        left:12px;
-        z-index:1000;
-        width:44px;
-        height:44px;
-        background:var(--secondo-red);
-        color:white;
-        font-size:22px;
-        line-height:1;
-        font-family:inherit;
-        border:none;
-        border-radius:6px;
-        cursor:pointer;
-        box-shadow:0 2px 6px rgba(0,0,0,0.3);
-    }
-
-    aside.sidebar{
-        position:fixed;
-        top:0;
-        left:0;
-        width:100%;
-        max-width:320px;
-        height:100vh;
-        max-height:100vh;
-        overflow-y:hidden;
-        transform:translateX(-100%);
-        transition:transform .25s ease;
-        z-index:999;
-    }
-
-    aside.sidebar.nav-open{
-        transform:translateX(0);
-        overflow-y:auto;
-    }
-
-    main{
-        margin-left:0;
-        padding-top:68px;
-    }
-
-    /* drop the reading-column indent on small screens */
-    div.short,
-    div.normal,
-    div.indented{
-        margin-left:0;
-    }
-}
 
 a.nav-logo,
 a.nav-logo:link,
@@ -168,8 +132,8 @@ a.nav-logo:focus{
     display:block;
     margin:16px 14px 8px;
     padding:12px 10px 10px;
-    background:white;
-    border-radius:8px;
+    background:var(--surface-raised);
+    border-radius:var(--radius-lg);
     text-align:center;
     box-shadow:0 2px 6px rgba(0,0,0,0.3);
 }
@@ -228,8 +192,8 @@ ul.algebra{
 }
 
 ul.algebra li{
-   background:white;
-   border:1px solid rgb(224,224,224);
+   background:var(--surface-raised);
+   border:1px solid var(--border-subtle);
    border-left:3px solid var(--secondo-red);
    padding:14px 18px;
 }
@@ -240,11 +204,6 @@ ul.algebra span.algebraname{
    color:var(--secondo-red);
    font-size:1.05rem;
 }
-
-@media (max-width:640px){
-   ul.algebra{ grid-template-columns:1fr; }
-}
-
 
 /* navigation card grid (index.html "Where to go next") */
 ul.cards{
@@ -268,18 +227,18 @@ a.card:visited{
    flex-direction:column;
    width:100%;
    padding:15px 18px;
-   background:white;
-   border:1px solid rgb(224,224,224);
+   background:var(--surface-raised);
+   border:1px solid var(--border-subtle);
    border-left:3px solid var(--secondo-red);
    text-decoration:none;
-   color:black;
+   color:var(--text-body);
    transition:box-shadow .15s ease, border-left-color .15s ease;
 }
 
 a.card:hover,
 a.card:focus{
    text-decoration:none;
-   color:black;
+   color:var(--text-body);
    box-shadow:0 2px 12px rgba(0,0,0,0.09);
    border-left-color:var(--secondo-red-dark);
 }
@@ -293,14 +252,9 @@ a.card .card-title{
 
 a.card .card-desc{
    font-size:0.88rem;
-   color:rgb(70,70,70);
+   color:var(--text-muted);
    line-height:1.5;
 }
-
-@media (max-width:760px){
-   ul.cards{ grid-template-columns:1fr; }
-}
-
 
 /* Links  don't change the order of this definitions */
 /* not visited */
@@ -315,7 +269,7 @@ a:link{ color:var(--secondo-red);
 nav.navi a.navi{
    display:block;
    padding:9px 12px;
-   font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+   font-family:var(--font-ui);
    font-weight:600;
    font-style:normal;
    color:white;
@@ -381,7 +335,7 @@ img{ border-style:none;
      }
 
 span.algebraname{
-    color:rgb(0, 0, 0);
+    color:var(--text-body);
     font-weight:bolder;
 }
 
@@ -391,7 +345,7 @@ section.section{
 }
 
 section.section + section.section{
-     border-top:1px solid rgb(222,222,222);
+     border-top:1px solid var(--border-divider);
 }
 
 div.short{
@@ -407,13 +361,13 @@ figure.query-figure{
 }
 
 figure.query-figure img{
-     border:1px solid rgb(210,210,210);
+     border:1px solid var(--border-strong);
 }
 
 figure.query-figure figcaption{
      margin:8px 0 0;
      font-size:0.8rem;
-     color:gray;
+     color:var(--text-caption);
      line-height:1.5;
 }
 
@@ -422,7 +376,7 @@ div.paper{
 }
 
 div.comment{
-  color:gray;
+  color:var(--text-caption);
 }
 
 div.footnote{
@@ -437,22 +391,17 @@ div.footnote{
 footer.site-footer{
   margin-top:48px;
   padding-top:16px;
-  border-top:1px solid rgb(210,210,210);
+  border-top:1px solid var(--border-strong);
   max-width:48rem;
   font-size:0.8rem;
-  color:rgb(90,90,90);
+  color:var(--text-footer);
   line-height:1.7;
-}
-
-footer.site-footer .site-footer-sep{
-  margin:0 6px;
-  color:rgb(170,170,170);
 }
 
 footer.site-footer .site-footer-date{
   display:block;
   margin-top:6px;
-  color:rgb(140,140,140);
+  color:var(--text-faint);
 }
 
 /* content classes used by BerlinMOD/BerlinMOD.html */
@@ -463,12 +412,12 @@ div.normal{
 }
 
 div.deprecated{
-    color:gray;
+    color:var(--text-caption);
     font-style:italic;
 }
 
 a.deprecated{
-    color:gray;
+    color:var(--text-caption);
 }
 
 div.indented{
@@ -476,7 +425,7 @@ div.indented{
 }
 
 span.object{
-    font-family:monospace;
+    font-family:var(--font-mono);
 }
 
 /* publication list (content_papers.html) */
@@ -492,7 +441,7 @@ ol.pub-list li{
   align-items:flex-start;
   gap:16px;
   padding:14px 4px;
-  border-top:1px solid rgb(224,224,224);
+  border-top:1px solid var(--border-subtle);
   border-left:3px solid transparent;
   transition:background-color .15s ease, border-left-color .15s ease;
 }
@@ -513,21 +462,21 @@ ol.pub-list li:hover{
 
 .pub-meta .authors{
   display:block;
-  color:rgb(70,70,70);
+  color:var(--text-muted);
 }
 
 .pub-meta .title{
   display:block;
   margin-top:2px;
   font-weight:bold;
-  color:black;
+  color:var(--text-body);
 }
 
 .pub-meta .venue{
   display:block;
   margin-top:2px;
   font-style:italic;
-  color:rgb(110,110,110);
+  color:var(--text-venue);
 }
 
 .pub-badge{
@@ -539,7 +488,7 @@ ol.pub-list li:hover{
   font-weight:bold;
   color:white;
   background:var(--secondo-red);
-  border-radius:10px;
+  border-radius:var(--radius-xl);
 }
 
 .pub-links{
@@ -557,33 +506,28 @@ ol.pub-list li:hover{
   white-space:nowrap;
 }
 
-@media (max-width:640px){
-  ol.pub-list li{ flex-direction:column; }
-  .pub-links{ flex-direction:row; flex-wrap:wrap; align-items:flex-start; text-align:left; }
-}
-
-
 span.file{
-  font-family:monospace;
+  font-family:var(--font-mono);
 }
 
 span.command{
-  font-family:monospace;
+  font-family:var(--font-mono);
   font-size:large;
 }
 
 /* inline code and code blocks (used by documentation pages) */
 code{
-  font-family:monospace;
-  background-color:rgb(228,228,228);
+  font-family:var(--font-mono);
+  background-color:var(--surface-code);
   padding:1px 3px;
-  border-radius:3px;
+  border-radius:var(--radius-sm);
 }
 
 pre{
-  font-family:monospace;
-  background-color:rgb(245,245,245);
-  border:1px solid rgb(210,210,210);
+  font-family:var(--font-mono);
+  line-height:1.45;
+  background-color:var(--surface-pre);
+  border:1px solid var(--border-strong);
   border-left:3px solid var(--secondo-red);
   padding:10px 12px;
   overflow-x:auto;
@@ -619,7 +563,7 @@ table.datatable th{
 
 table.datatable td{
   padding:7px 18px 7px 0;
-  border-bottom:1px solid rgb(228,228,228);
+  border-bottom:1px solid var(--border-table);
   vertical-align:top;
 }
 
@@ -636,14 +580,14 @@ table.datatable td:last-child{
 a.btn:link,
 a.btn:visited{
   display:inline-block;
-  font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  font-family:var(--font-ui);
   font-weight:600;
   font-style:normal;
   font-size:0.95rem;
   color:white;
   background:var(--secondo-red);
   padding:8px 20px;
-  border-radius:6px;
+  border-radius:var(--radius-md);
   border:none;
   text-decoration:none;
   transition:background-color .15s ease;
@@ -670,6 +614,103 @@ a.btn.btn-outline:focus {
   background:var(--secondo-red);
   border-color:var(--secondo-red);
 }
+
+/* ------------------------------------------------------------------
+   Responsive breakpoints
+
+     1100px  narrow desktop / landscape tablet -- shrink the sidebar
+      800px  mobile -- sidebar becomes a hamburger overlay
+      640px  small phone -- multi-column grids collapse to one column
+   ------------------------------------------------------------------ */
+
+@media (max-width:1100px){
+    aside.sidebar{
+        width:220px;
+    }
+
+    main{
+        margin-left:220px;
+        padding-left:16px;
+        padding-right:16px;
+    }
+}
+
+@media (max-width:800px){
+    .nav-toggle-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position:fixed;
+        top:12px;
+        left:12px;
+        z-index:1000;
+        width:44px;
+        height:44px;
+        background:var(--secondo-red);
+        color:white;
+        font-size:22px;
+        line-height:1;
+        font-family:inherit;
+        border:none;
+        border-radius:var(--radius-md);
+        cursor:pointer;
+        box-shadow:0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    /* the outline is drawn on the light page background, so it needs a dark
+       colour rather than the button's own red */
+    .nav-toggle-btn:focus-visible{
+        outline:3px solid var(--text-muted);
+        outline-offset:2px;
+    }
+
+    aside.sidebar{
+        position:fixed;
+        top:0;
+        left:0;
+        width:100%;
+        max-width:320px;
+        height:100vh;
+        max-height:100vh;
+        overflow-y:hidden;
+        transform:translateX(-100%);
+        /* visibility keeps the closed menu out of the tab order; transform alone
+           moves it off-screen but leaves its links focusable */
+        visibility:hidden;
+        transition:transform .25s ease, visibility .25s ease;
+        z-index:999;
+    }
+
+    aside.sidebar.nav-open{
+        transform:translateX(0);
+        visibility:visible;
+        overflow-y:auto;
+    }
+
+    main{
+        margin-left:0;
+        padding-top:68px;
+    }
+
+    /* drop the reading-column indent on small screens */
+    div.short,
+    div.normal,
+    div.indented{
+        margin-left:0;
+    }
+
+    /* the card grid collapses with the sidebar rather than at its own
+       breakpoint, so cards and navigation change together */
+    ul.cards{ grid-template-columns:1fr; }
+}
+
+@media (max-width:640px){
+    ul.algebra{ grid-template-columns:1fr; }
+
+    ol.pub-list li{ flex-direction:column; }
+    .pub-links{ flex-direction:row; flex-wrap:wrap; align-items:flex-start; text-align:left; }
+}
+
 
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{

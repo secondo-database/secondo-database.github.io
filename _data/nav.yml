@@ -1,0 +1,69 @@
+# Sidebar navigation (rendered by _includes/nav.html).
+#
+# Each entry is a group. A group without a `label` renders its items as
+# top-level links; a group with a `label` renders a heading and an indented
+# sub-list.
+#
+# Item keys:
+#   title  link text (may contain HTML)
+#   url    href, and the page.url that marks the item active
+#   match  optional path prefix; any page whose url starts with it also marks
+#          the item active. Used for sub-project sections that have their own
+#          pages below an index.
+
+- items:
+    - title: Home
+      url: /
+    - title: Getting Started
+      url: /content_getting_started.html
+
+- label: Documentation
+  items:
+    - title: General
+      url: /content_docu.html
+    - title: Executable Language
+      url: /content_querying.html
+    - title: Specific Topics
+      url: /content_docu_specific.html
+    - title: Recent Changes
+      url: /content_news.html
+
+- label: Installation
+  items:
+    - title: Instructions
+      url: /content_install.html
+    - title: Sources &amp; Downloads
+      url: /content_sources.html
+    - title: Release Notes
+      url: /content_releasenotes.html
+
+- label: Research
+  items:
+    - title: Publications
+      url: /content_papers.html
+    - title: BerlinMOD Benchmark
+      url: /BerlinMOD/BerlinMOD.html
+    - title: Parallel Secondo
+      url: /ParallelSecondo/index.html
+      match: /ParallelSecondo/
+    - title: Distributed Secondo
+      url: /DSecondo/DSECONDO-Website/index.html
+      match: /DSecondo/
+    - title: Movements in Networks
+      url: /content_network.html
+
+- label: Development
+  items:
+    - title: FAQ
+      url: /content_faq.html
+    - title: Analyzing Crashes
+      url: /content_debugging.html
+    - title: Contribute
+      url: /content_contributing.html
+
+- label: About
+  items:
+    - title: <span class="secondo">Secondo</span> Team
+      url: /content_team.html
+    - title: Contact
+      url: /content_contact.html

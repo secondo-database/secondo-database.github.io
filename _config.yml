@@ -3,3 +3,9 @@ description: extensible database system
 url: "https://secondo-database.github.io"
 plugins:
   - jekyll-sitemap
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
