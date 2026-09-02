@@ -28,7 +28,9 @@ In one shell, execute:
 <p>
 In another shell, execute:
 </p>
-<pre>./SecondoTTYBDB --profile</pre>
+{% highlight bash %}
+./SecondoTTYBDB --profile
+{% endhighlight %}
 
 <p>
 You will now see in the first shell the current stack trace of
@@ -78,11 +80,13 @@ To solve this problem, two known solutions exist:
        <code>SecondoConfig.ini</code>. </li>
   <li> Increase the memory area for locks. This is controlled by the following settings in
        the <code>SecondoConfig.ini</code>:
-<pre>[BerkeleyDB]
+{% highlight ini %}
+[BerkeleyDB]
 
 MaxLockers=100
 MaxLocks=5000
-MaxLockObjects=5000</pre>
+MaxLockObjects=5000
+{% endhighlight %}
        In most cases the values for <code>MaxLocks</code> and <code>MaxLockObjects</code>
        need to be increased. </li>
 </ul>
@@ -115,8 +119,10 @@ A part of the project was built with an older C++ standard, another part with th
 standard (<code>-std=c++17</code>). The linker is unable to link these files. Please update
 your <span class="secondo">Secondo</span> to the most recent version and run:
 </p>
-<pre>make clean
-make</pre>
+{% highlight bash %}
+make clean
+make
+{% endhighlight %}
 
 
 <h2> Compile error 'fatal error: libxml/xmlreader.h: No such file or directory' </h2>
@@ -147,8 +153,10 @@ You can use <code>ccache</code> to cache compilation units (even
 <code>make clean / make -j $(nproc)</code> is quite fast afterwards). Simply add the
 following lines to your <code>.secondorc</code> file:
 </p>
-<pre>export SECONDO_CC="ccache gcc"
-export SECONDO_CPP="ccache g++"</pre>
+{% highlight bash %}
+export SECONDO_CC="ccache gcc"
+export SECONDO_CPP="ccache g++"
+{% endhighlight %}
 
 <p>
 The cache can be checked by running <code>ccache -s</code>.

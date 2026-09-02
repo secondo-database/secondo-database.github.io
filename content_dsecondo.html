@@ -165,15 +165,19 @@ At least one system running Ubuntu 14.04 or Debian 7/8 Linux is required. The pa
 <ol>
 <li>
 <p>Install the required software components:</p>
-<pre><code>apt-get install cmake libtool automake git openssh-client \
-    screen build-essential libssl-dev</code></pre>
+{% highlight bash %}
+apt-get install cmake libtool automake git openssh-client \
+    screen build-essential libssl-dev
+{% endhighlight %}
 </li>
 
 <li>
 <p>Define and create the Distributed <span class="secondo">Secondo</span> home:</p>
-<pre><code>export DSECONDO_DIR=~/dsecondo/
+{% highlight bash %}
+export DSECONDO_DIR=~/dsecondo/
 mkdir -p $DSECONDO_DIR
-mkdir -p $DSECONDO_DIR/secondo</code></pre>
+mkdir -p $DSECONDO_DIR/secondo
+{% endhighlight %}
 </li>
 
 <li>
@@ -224,13 +228,17 @@ export DSECONDO_SN="node1 node2 node3 node4 node5 node6"</code></pre>
 
 <li>
 <p>Re-read your <span class="file">.secondorc</span>:</p>
-<pre><code>source ~/.secondorc</code></pre>
+{% highlight bash %}
+source ~/.secondorc
+{% endhighlight %}
 </li>
 
 <li>
 <p>Download, patch, build and install the cpp-driver and its dependencies:</p>
-<pre><code>cd $DSECONDO_DIR/Algebras/Cassandra/tools
-./manage_dsecondo.sh install_driver</code></pre>
+{% highlight bash %}
+cd $DSECONDO_DIR/Algebras/Cassandra/tools
+./manage_dsecondo.sh install_driver
+{% endhighlight %}
 </li>
 
 <li>
@@ -251,8 +259,10 @@ ALGEBRA_DEP_DIRS += $(DSECONDO_DIR)/driver/cpp-driver</code></pre>
 
 <li>
 <p>Build <span class="secondo">Secondo</span>:</p>
-<pre><code>cd $DSECONDO_DIR/secondo
-make</code></pre>
+{% highlight bash %}
+cd $DSECONDO_DIR/secondo
+make
+{% endhighlight %}
 </li>
 
 <li>
@@ -261,11 +271,13 @@ Add the following lines to the configuration file of <span class="secondo">Secon
 (<span class="file">SecondoConfig.ini</span>). The placeholder <code>%%SN_IP%%</code> has to be
 replaced with the IP of one of the storage nodes.
 </p>
-<pre><code>[CassandraAlgebra]
+{% highlight ini %}
+[CassandraAlgebra]
 CassandraHost=%%SN_IP%%
 CassandraKeyspace=keyspace_r3
 CassandraConsistency=QUORUM
-CassandraDefaultNodename=node1</code></pre>
+CassandraDefaultNodename=node1
+{% endhighlight %}
 </li>
 </ol>
 
@@ -278,14 +290,18 @@ steps to install these nodes:
 <ol>
 <li>
 <p>On the management node, change into the tools directory:</p>
-<pre><code>cd $DSECONDO_DIR/secondo/Algebras/Cassandra/tools</code></pre>
+{% highlight bash %}
+cd $DSECONDO_DIR/secondo/Algebras/Cassandra/tools
+{% endhighlight %}
 </li>
 <li>
 <p>
 Run the query processing node installer. The installer copies your
 <span class="secondo">Secondo</span> installation and the cpp-driver onto the nodes.
 </p>
-<pre><code>./manage_dsecondo.sh install</code></pre>
+{% highlight bash %}
+./manage_dsecondo.sh install
+{% endhighlight %}
 </li>
 </ol>
 
@@ -293,18 +309,24 @@ Run the query processing node installer. The installer copies your
 <ol>
 <li>
 <p>On the management node, change into the tools directory:</p>
-<pre><code>cd $DSECONDO_DIR/secondo/Algebras/Cassandra/tools</code></pre>
+{% highlight bash %}
+cd $DSECONDO_DIR/secondo/Algebras/Cassandra/tools
+{% endhighlight %}
 </li>
 <li>
 <p>
 Run the storage node installer. The installer downloads and unpacks Cassandra and applies a basic
 configuration.
 </p>
-<pre><code>./manage_cassandra.sh install</code></pre>
+{% highlight bash %}
+./manage_cassandra.sh install
+{% endhighlight %}
 </li>
 <li>
 <p>Start the storage nodes:</p>
-<pre><code>./manage_cassandra.sh start</code></pre>
+{% highlight bash %}
+./manage_cassandra.sh start
+{% endhighlight %}
 </li>
 <li>
 <p>
@@ -312,7 +334,9 @@ Create the default keyspaces (<code>keyspace_r1</code> &ndash; <code>keyspace_r6
 tables. The keyspace <code>keyspace_r1</code> has a replication factor of 1,
 <code>keyspace_r6</code> has a replication factor of 6.
 </p>
-<pre><code>./manage_cassandra.sh init</code></pre>
+{% highlight bash %}
+./manage_cassandra.sh init
+{% endhighlight %}
 </li>
 </ol>
 </div>

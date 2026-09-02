@@ -79,11 +79,11 @@ in the textbook <i>Moving Objects Databases</i> (Morgan Kaufmann, 2005); see the
 If you do not yet have a <span class="secondo">Secondo</span> installation, the fastest way to
 try it is the official container image. It bundles everything you need, so no local
 build is required:
-<pre>
+{% highlight bash %}
 docker run -d --name secondo -p 8000:8000 -p 1234:1234 \
     -v secondo-databases:/var/lib/secondo/databases \
     ghcr.io/secondo-database/secondo:latest
-</pre>
+{% endhighlight %}
 This gives you the <span class="secondo">Secondo</span> WebUI in your browser at
 <a href="http://localhost:8000">http://localhost:8000</a>; you can skip ahead to
 <a href="#queries">Step 4</a>. If you would rather install
@@ -99,11 +99,15 @@ source, or macOS via Homebrew), see the full
 Open a shell and change to the <code>secondo/bin</code> directory (skip this step for the
 Ubuntu <code>.deb</code> or container installation, where the
 <span class="secondo">Secondo</span> commands are available from any directory):
-<pre>cd secondo/bin</pre>
+{% highlight bash %}
+cd secondo/bin
+{% endhighlight %}
 </li>
 <li>
 Start a single-user session:
-<pre>./SecondoTTYBDB</pre>
+{% highlight bash %}
+./SecondoTTYBDB
+{% endhighlight %}
 </li>
 <li>
 Restore the example database used in this guide, then quit:
@@ -123,12 +127,16 @@ A command at this interface is terminated by either a semicolon or an empty line
 <ol>
 <li>
 Still in <code>secondo/bin</code>, start the kernel process that user interfaces connect to:
-<pre>./SecondoMonitor -s</pre>
+{% highlight bash %}
+./SecondoMonitor -s
+{% endhighlight %}
 </li>
 <li>
 Open a new shell, change to <code>secondo/WebUI</code> (not needed for the
 <code>.deb</code> or container installation), and start the WebUI:
-<pre>make prod</pre>
+{% highlight bash %}
+make prod
+{% endhighlight %}
 
 After the command <code>make prod</code> has finished, the WebUI is available in your browser at
 <a href="http://localhost:8000">http://localhost:8000</a>.
@@ -230,21 +238,27 @@ then displays them.
 <li>
 SQL-style queries can be used as well. Find how many trains pass through
 <code>mehringdamm</code>:
-<pre>select count(*) from Trains where Trip passes mehringdamm</pre>
+{% highlight sql %}
+select count(*) from Trains where Trip passes mehringdamm
+{% endhighlight %}
 The first optimizer query takes a little longer while it initializes; the result is 122.
 See the individual trains with:
-<pre>select * from Trains where Trip passes mehringdamm</pre>
+{% highlight sql %}
+select * from Trains where Trip passes mehringdamm
+{% endhighlight %}
 </li>
 <li>
 Also more complex queries can be optimized, not just on moving objects. The
 <code>berlintest</code> database also contains restaurants and sights of interest in Berlin.
 Find the names and addresses of all Italian restaurants within 2&nbsp;km of the
 Brandenburg Gate:
-<pre>select [r:name, r:strasse, r:geoData]
+{% highlight sql %}
+select [r:name, r:strasse, r:geoData]
 from   [restaurants as r, sehenswuerdpoi as s]
 where  [ s:name="Brandenburger Tor",
          r:art="Italienisch",
-         distance(r:geoData, s:geodata) < 2000]</pre>
+         distance(r:geoData, s:geodata) < 2000]
+{% endhighlight %}
 
 <figure class="center">
 <img src="/images/screen_restaurant.jpg" width="640" height="495" alt="Secondo GUI showing Italian restaurants near the Brandenburg Gate plotted on a map of Berlin">

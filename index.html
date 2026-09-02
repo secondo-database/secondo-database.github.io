@@ -95,11 +95,13 @@ including over ordinary spatial data &mdash; for example, every Italian restaura
 2&nbsp;km of the Brandenburg Gate:
 </p>
 
-<pre>select [r:name, r:strasse, r:geoData]
+{% highlight sql %}
+select [r:name, r:strasse, r:geoData]
 from   [restaurants as r, sehenswuerdpoi as s]
 where  [ s:name="Brandenburger Tor",
          r:art="Italienisch",
-         distance(r:geoData, s:geodata) < 2000]</pre>
+         distance(r:geoData, s:geodata) < 2000]
+{% endhighlight %}
 
 <figure class="query-figure">
   <a href="/images/screen_restaurant.jpg" target="_blank" rel="noopener noreferrer">
