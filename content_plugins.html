@@ -6,17 +6,17 @@ sitemap: false
 last_changed: 2009-10-05
 ---
 
-<h1><span style="font-variant:small-caps">Secondo</span> Plugins</h1>
+<h1><span class="secondo">Secondo</span> Plugins</h1>
 <h2>Basic Idea</h2>
-<span style="font-variant:small-caps">Secondo</span> is extensible in many ways. One can provide a new algebra, new viewers,
+<span class="secondo">Secondo</span> is extensible in many ways. One can provide a new algebra, new viewers,
 new display classes, and extensions of the optimizer. 
-A <span style="font-variant:small-caps">Secondo</span> plugin is a package of such extensions provided as a single zip-file. 
+A <span class="secondo">Secondo</span> plugin is a package of such extensions provided as a single zip-file. 
 Besides the parts containing the source code (i.e. source files and code sections),
 a plugin contains an XML file containing information about where the new code is to
 place, the name of the extension etc. This allows for an automatical installation
-of an extension  using a tool which is part of a <span style="font-variant:small-caps">Secondo</span> distribution. 
+of an extension  using a tool which is part of a <span class="secondo">Secondo</span> distribution. 
 So, if the inventor of a new data structure or of a new
-algorithm provides it as a <span style="font-variant:small-caps">Secondo</span> plugin, other researchers can compare their solutions
+algorithm provides it as a <span class="secondo">Secondo</span> plugin, other researchers can compare their solutions
 with this approach without the effort of reimplementing the algorithms/data structures. 
 <p>
 A main motivation for this is to better support <a href="content_plugin_motivation.html">experimental research in databases</a>. 
@@ -33,10 +33,10 @@ same signature. From the view of the gui, it's not allowed to overwrite existing
 
 <h2>Installing Plugins</h2>
 
-Before installing a new plugin ensure to have a running <span style="font-variant:small-caps">Secondo</span> system. Additionally to
+Before installing a new plugin ensure to have a running <span class="secondo">Secondo</span> system. Additionally to
 the plugin to install, you need the following two files (these files are also created 
 by typing <code>make</code> in the <code>$SECONDO_BUILD_DIR/Tools/extensionInstaller</code>
-directory in <span style="font-variant:small-caps">Secondo</span> version 2.9.0 or later):
+directory in <span class="secondo">Secondo</span> version 2.9.0 or later):
 <ul>
   <li> <a href="files/Binaries/Installer.jar">Installer.jar</a></li>
   <li> <a href="files/Binaries/secinstall">secinstall</a></li>
@@ -46,7 +46,7 @@ of your choice, let us call it X. Then proceed as follows:
 
 <ol>
   <li>Ensure that the system variable <code>SECONDO_BUILD_DIR</code> points
-to the root directory of your <span style="font-variant:small-caps">Secondo</span> installation. 
+to the root directory of your <span class="secondo">Secondo</span> installation. 
 To make sure this is the case,  
 open a bash (or an msys-shell on Windows), navigate to that <code>secondo</code> directory, and type
 <pre>

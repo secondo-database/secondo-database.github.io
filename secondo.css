@@ -1,4 +1,7 @@
 :root{
+   /* both themes are defined here; the dark set is the media block below */
+   color-scheme: light dark;
+
    /* brand */
    /* the color rgb(184,0,0) the the rgb value from the secondo-logo */
    --secondo-red-rgb: 184,0,0;
@@ -9,6 +12,12 @@
    --secondo-red-btn-hover: rgb(140,0,0);
    --secondo-visited-rgb: 138,64,54;
    --secondo-visited: rgb(var(--secondo-visited-rgb));
+
+   /* the sidebar, the hamburger and the filled buttons share this deep red.
+      it is kept separate from --secondo-red because in dark mode the brand red
+      is lightened for text contrast, which would make these surfaces glaring */
+   --sidebar-top: var(--secondo-red);
+   --sidebar-bottom: var(--secondo-red-dark);
 
    /* surfaces */
    --surface-page: rgb(240,240,240);
@@ -31,10 +40,16 @@
    --text-caption: gray;
 
    /* type */
-   --font-ui: -apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
-   --font-heading: serif;
-   --font-mono: monospace;
+   --font-ui: system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+   --font-heading: ui-serif,Georgia,"Times New Roman",serif;
+   --font-mono: ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
    --line-height-body: 1.5;
+
+   /* heading scale; h1 and h2 grow with the viewport, the rest are fixed */
+   --step-h1: clamp(1.9rem, 1.5rem + 1.6vw, 2.5rem);
+   --step-h2: clamp(1.45rem, 1.25rem + 0.8vw, 1.75rem);
+   --step-h3: 1.2rem;
+   --step-h4: 1.02rem;
 
    /* radii */
    --radius-sm: 3px;
@@ -47,10 +62,57 @@
 }
 
 
+/* ------------------------------------------------------------------
+   Dark theme
+
+   Only tokens are redefined here -- every rule below reads them, so no
+   layout or component rule needs a dark variant.
+
+   The brand red is the one value that cannot carry over: rgb(184,0,0)
+   on a dark surface is far below the 4.5:1 contrast minimum, so text
+   and accents use a lightened red instead. The sidebar and buttons keep
+   a deep red via --sidebar-top/-bottom, since they carry white text.
+   ------------------------------------------------------------------ */
+
+@media (prefers-color-scheme: dark){
+   :root{
+      /* brand, lightened for text on dark surfaces */
+      --secondo-red-rgb: 255,122,110;
+      --secondo-red-dark-rgb: 214,84,74;
+      --secondo-red-hover: rgb(255,160,150);
+      --secondo-red-btn-hover: rgb(150,0,0);
+      --secondo-visited-rgb: 214,150,142;
+
+      --sidebar-top: rgb(120,0,0);
+      --sidebar-bottom: rgb(78,0,0);
+
+      /* surfaces */
+      --surface-page: rgb(24,24,26);
+      --surface-raised: rgb(34,34,37);
+      --surface-code: rgb(48,48,52);
+      --surface-pre: rgb(30,30,33);
+
+      /* borders, light to dark */
+      --border-divider: rgb(56,56,60);
+      --border-subtle: rgb(56,56,60);
+      --border-strong: rgb(70,70,75);
+      --border-table: rgb(60,60,64);
+
+      /* text, strongest to faintest */
+      --text-body: rgb(232,232,234);
+      --text-muted: rgb(178,178,182);
+      --text-venue: rgb(158,158,162);
+      --text-footer: rgb(158,158,162);
+      --text-faint: rgb(130,130,134);
+      --text-caption: rgb(150,150,154);
+   }
+}
+
+
 /* page format */
 body{
    margin:0;
-   font-size:16px;
+   font-size:100%;
    font-style:normal;
    font-weight:normal;
    font-family:var(--font-ui);
@@ -70,31 +132,44 @@ body{
 h1{ color:var(--secondo-red);
     text-align:center;
     line-height:1.25;
-    font-size:xx-large;
-    font-style:normal; 
+    font-size:var(--step-h1);
+    font-style:normal;
     font-weight:bold;
     font-family:var(--font-heading); }
 
 h2{ color:var(--secondo-red);
     line-height:1.25;
-    font-size:x-large;
-    font-style:normal; 
+    font-size:var(--step-h2);
+    font-style:normal;
     font-weight:bold;
     font-family:var(--font-heading); }
 
 h3{ color:var(--secondo-red);
     line-height:1.25;
-    font-size:large;
-    font-style:italic; 
+    font-size:var(--step-h3);
+    font-style:italic;
     font-weight:bold;
     font-family:var(--font-heading); }
 
-h4,h5,h6{ 
+h4,h5,h6{
     line-height:1.25;
-    font-size:medium;
-    font-style:normal; 
+    font-size:var(--step-h4);
+    font-style:normal;
     font-weight:bold;
     font-family:var(--font-heading); }
+
+/* keep headings off ragged one-word last lines, and keep in-page anchor
+   targets clear of the fixed mobile hamburger */
+h1,h2,h3{
+    text-wrap:balance;
+    scroll-margin-top:24px;
+}
+
+/* keyboard focus must stay visible in both themes; currentColor adapts */
+:focus-visible{
+    outline:2px solid currentColor;
+    outline-offset:2px;
+}
 
 /* navigation sidebar (_includes/nav.html) */
 aside.sidebar{
@@ -103,12 +178,14 @@ aside.sidebar{
     left:0;
     width:270px;
     height:100vh;
+    /* dvh accounts for collapsing mobile browser chrome; vh above is the fallback */
+    height:100dvh;
     overflow-y:auto;
     font-family:var(--font-ui);
-    font-size:16px;
+    font-size:1rem;
     line-height:normal;
     text-align:left;
-    background:linear-gradient(180deg, var(--secondo-red) 0%, var(--secondo-red-dark) 100%);
+    background:linear-gradient(180deg, var(--sidebar-top) 0%, var(--sidebar-bottom) 100%);
 }
 
 /* main content area, offset by the fixed sidebar width */
@@ -328,8 +405,8 @@ nav.navi > ul > li > ul a.navi.active{
 }
 
 img{ border-style:none;
-     padding:0pt;
-     margin:0pt;
+     padding:0;
+     margin:0;
      max-width:100%;
      height:auto;
      }
@@ -364,7 +441,9 @@ figure.query-figure img{
      border:1px solid var(--border-strong);
 }
 
-figure.query-figure figcaption{
+/* caption styling is shared by the query figures on index.html and the
+   screenshot walkthrough on content_getting_started.html */
+figcaption{
      margin:8px 0 0;
      font-size:0.8rem;
      color:var(--text-caption);
@@ -426,6 +505,7 @@ div.indented{
 
 span.object{
     font-family:var(--font-mono);
+    font-size:0.9em;
 }
 
 /* publication list (content_papers.html) */
@@ -508,6 +588,7 @@ ol.pub-list li:hover{
 
 span.file{
   font-family:var(--font-mono);
+  font-size:0.9em;
 }
 
 span.command{
@@ -515,9 +596,15 @@ span.command{
   font-size:large;
 }
 
-/* inline code and code blocks (used by documentation pages) */
+/* inline code and code blocks (used by documentation pages)
+
+   The size is set explicitly here. Browsers shrink monospace text only when
+   the family is the bare `monospace` keyword; naming a real face first opts
+   out of that, which would otherwise render code noticeably larger than the
+   surrounding prose. */
 code{
   font-family:var(--font-mono);
+  font-size:0.9em;
   background-color:var(--surface-code);
   padding:1px 3px;
   border-radius:var(--radius-sm);
@@ -525,6 +612,7 @@ code{
 
 pre{
   font-family:var(--font-mono);
+  font-size:0.875rem;
   line-height:1.45;
   background-color:var(--surface-pre);
   border:1px solid var(--border-strong);
@@ -537,6 +625,7 @@ pre{
 
 pre code{
   background-color:transparent;
+  font-size:inherit;
   padding:0;
 }
 
@@ -585,7 +674,7 @@ a.btn:visited{
   font-style:normal;
   font-size:0.95rem;
   color:white;
-  background:var(--secondo-red);
+  background:var(--sidebar-top);
   padding:8px 20px;
   border-radius:var(--radius-md);
   border:none;
@@ -611,9 +700,90 @@ a.btn.btn-outline:visited{
 a.btn.btn-outline:hover,
 a.btn.btn-outline:focus {
   color:white;
-  background:var(--secondo-red);
-  border-color:var(--secondo-red);
+  background:var(--sidebar-top);
+  border-color:var(--sidebar-top);
 }
+
+/* in-page table of contents for long single-page documents
+   (DSecondo/DSECONDO-Website/index.html) */
+nav.page-toc{
+  max-width:48rem;
+  margin:20px 0 8px;
+  padding:14px 18px;
+  background:var(--surface-raised);
+  border:1px solid var(--border-subtle);
+  border-left:3px solid var(--secondo-red);
+}
+
+nav.page-toc ul{
+  list-style:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 22px;
+  margin:0;
+  padding:0;
+}
+
+nav.page-toc a{
+  font-size:0.9rem;
+  font-weight:600;
+}
+
+
+/* ------------------------------------------------------------------
+   Small utilities
+
+   Each of these replaces an inline style attribute that was repeated
+   across the content pages.
+   ------------------------------------------------------------------ */
+
+/* centred block, mostly diagrams and figure wrappers */
+.center{
+  text-align:center;
+  margin:16px 0;
+}
+
+/* a small trailing aside under a section */
+p.note{
+  margin-top:16px;
+  font-size:0.9rem;
+}
+
+/* the hero button pair on index.html */
+.btn-row{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:20px 0 8px;
+}
+
+/* multi-column name lists (content_team.html) */
+ul.two-col,
+ul.four-col{
+  column-gap:2rem;
+}
+
+ul.two-col{ column-count:2; }
+ul.four-col{ column-count:4; column-gap:1.5rem; }
+
+/* postal address block (content_contact.html) */
+address.contact{
+  font-style:normal;
+  margin:12px 0;
+}
+
+address.contact .label{
+  display:block;
+  margin-top:1em;
+  font-weight:bold;
+}
+
+address.contact .line{
+  display:block;
+  padding-left:1em;
+}
+
 
 /* ------------------------------------------------------------------
    Responsive breakpoints
@@ -646,7 +816,7 @@ a.btn.btn-outline:focus {
         z-index:1000;
         width:44px;
         height:44px;
-        background:var(--secondo-red);
+        background:var(--sidebar-top);
         color:white;
         font-size:22px;
         line-height:1;
@@ -671,7 +841,8 @@ a.btn.btn-outline:focus {
         width:100%;
         max-width:320px;
         height:100vh;
-        max-height:100vh;
+        height:100dvh;
+        max-height:100dvh;
         overflow-y:hidden;
         transform:translateX(-100%);
         /* visibility keeps the closed menu out of the tab order; transform alone
@@ -704,8 +875,15 @@ a.btn.btn-outline:focus {
     ul.cards{ grid-template-columns:1fr; }
 }
 
+@media (max-width:800px){
+    ul.four-col{ column-count:2; }
+}
+
 @media (max-width:640px){
     ul.algebra{ grid-template-columns:1fr; }
+
+    ul.two-col,
+    ul.four-col{ column-count:1; }
 
     ol.pub-list li{ flex-direction:column; }
     .pub-links{ flex-direction:row; flex-wrap:wrap; align-items:flex-start; text-align:left; }

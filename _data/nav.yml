@@ -47,8 +47,8 @@
       url: /ParallelSecondo/index.html
       match: /ParallelSecondo/
     - title: Distributed Secondo
-      url: /DSecondo/DSECONDO-Website/index.html
-      match: /DSecondo/
+      url: /content_dsecondo.html
+      match: /content_dsecondo
     - title: Movements in Networks
       url: /content_network.html
 

@@ -6,7 +6,7 @@ sitemap: false
 last_changed: 2009-08-18
 ---
 
-<h1><span style="font-variant:small-caps">Secondo</span> Plugin Creation</h1>
+<h1><span class="secondo">Secondo</span> Plugin Creation</h1>
 
 <p>On  this page, we describe, how you can build your own plugin. If you share  
 your work with other researchers, feel free to send us your implementation as
@@ -31,7 +31,7 @@ copyright information about this plugin.</p>
 Furthermore, we create a new file named <code>SecondoExtension.xml</code>.
 For the <code>PointSequenceAlgebra</code> which is part of a <span class="secondo">Secondo</span> distribution, the file has the
 following content:
-<div style="text-align:center">
+<div class="center">
 <textarea cols="80" rows="22" readonly>
 &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
 &lt;SecondoExtension&gt;
@@ -68,7 +68,7 @@ created during compiling <span class="secondo">Secondo</span>. If there are depe
 external libraries, these must also be written within the <code>Dependencies</code> section.
 For example, if the <code>gsl</code> library is required by the algebra, the following code
 must be part of the Dependencies section:
-<div style="text-align:center">
+<div class="center">
 <textarea cols="80" rows="4" readonly>
      &lt;Libraries&gt; 
         &lt;Lib name="GSL" flag="gsl" /&gt; 
@@ -110,7 +110,7 @@ similar to the one creating an algebra plugin:
 
 The interesting thing is the format of the XML file. 
 Here, an example for the <code>SVGViewer</code> is given:
-<div style="text-align:center">
+<div class="center">
 <textarea cols="80" rows="28" readonly>
 &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
 &lt;SecondoExtension&gt;
@@ -174,7 +174,7 @@ several displayclasses may be contained.  Again, all required files are copied i
 directory and zipped together with an XML file. 
 In the following, the code of the XML-file for a plugin providing display classes for periodic
 moving object is shown.
-<div style="text-align:center">
+<div class="center">
 <textarea cols="80" rows="30" readonly>
 &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
 &lt;SecondoExtension&gt;
@@ -227,7 +227,7 @@ All extension code must be inserted between existing tags. If some code is outsi
 it cannot be converted into a plugin.
 If the extension needs additional files, copy them into an empty directory. Create the copyright 
 file and an XML-file. The XML-file for an optimizer extension has the following structure:
-<div style="text-align:center;">
+<div class="center">
 <textarea cols="80" rows="23">
 &lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
 &lt;SecondoExtension&gt;

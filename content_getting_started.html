@@ -28,40 +28,44 @@ single value of type <code>moving region</code> (<code>mregion</code>). A moving
 essentially a function from time into point values, and a moving region a function from time
 into region values; they can be visualized as shown below.
 
-<div style="margin:16px 0; text-align:center;">
+<div class="center">
 <img src="/images/moving_objects_diagram.png" alt="A moving point visualized as a curve and a moving region visualized as a stack of cross-sections over the x, y, t axes" width="480">
 </div>
 
 Together with these data types, <span class="secondo">Secondo</span> provides operations to
 query and manipulate them, for example:
 
-<div style="overflow-x:auto;">
-<table style="border-collapse:collapse; margin-top:10px; max-width:52rem;">
+<div class="table-wrap">
+<table class="datatable">
+<thead>
 <tr>
-  <th style="text-align:left; padding:6px 14px 6px 0; border-bottom:2px solid var(--secondo-red);">Operation</th>
-  <th style="text-align:left; padding:6px 14px 6px 0; border-bottom:2px solid var(--secondo-red);">Signature</th>
-  <th style="text-align:left; padding:6px 0 6px 0; border-bottom:2px solid var(--secondo-red);">Meaning</th>
+  <th>Operation</th>
+  <th>Signature</th>
+  <th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>trajectory</code></td>
+  <td>mpoint &rarr; line</td>
+  <td>the 2D projection of a moving point</td>
 </tr>
 <tr>
-  <td style="padding:6px 14px 6px 0; vertical-align:top;"><code>trajectory</code></td>
-  <td style="padding:6px 14px 6px 0; vertical-align:top;">mpoint &rarr; line</td>
-  <td style="padding:6px 0 6px 0; vertical-align:top;">the 2D projection of a moving point</td>
+  <td><code>distance</code></td>
+  <td>mpoint &times; point &rarr; mreal</td>
+  <td>time-dependent distance between a moving point and a static point</td>
 </tr>
 <tr>
-  <td style="padding:6px 14px 6px 0; vertical-align:top;"><code>distance</code></td>
-  <td style="padding:6px 14px 6px 0; vertical-align:top;">mpoint &times; point &rarr; mreal</td>
-  <td style="padding:6px 0 6px 0; vertical-align:top;">time-dependent distance between a moving point and a static point</td>
+  <td><code>passes</code></td>
+  <td>mpoint &times; region &rarr; bool</td>
+  <td>whether a moving point ever passes through a given area</td>
 </tr>
 <tr>
-  <td style="padding:6px 14px 6px 0; vertical-align:top;"><code>passes</code></td>
-  <td style="padding:6px 14px 6px 0; vertical-align:top;">mpoint &times; region &rarr; bool</td>
-  <td style="padding:6px 0 6px 0; vertical-align:top;">whether a moving point ever passes through a given area</td>
+  <td><code>inside</code></td>
+  <td>mpoint &times; mregion &rarr; mbool</td>
+  <td>time-dependent boolean indicating when the point is inside the moving region</td>
 </tr>
-<tr>
-  <td style="padding:6px 14px 6px 0; vertical-align:top;"><code>inside</code></td>
-  <td style="padding:6px 14px 6px 0; vertical-align:top;">mpoint &times; mregion &rarr; mbool</td>
-  <td style="padding:6px 0 6px 0; vertical-align:top;">time-dependent boolean indicating when the point is inside the moving region</td>
-</tr>
+</tbody>
 </table>
 </div>
 
@@ -146,7 +150,7 @@ To load the underground network of Berlin as a background, type:
 <pre>query UBahn</pre>
 Or click on the UBahn entry in the catalog view at the left. The network appears in the main view.
 
-<div style="text-align:center; margin:16px 0;">
+<div class="center">
 <img src="/images/screen_ubahn.jpg" width="640" height="495" alt="Secondo WebUI showing the Berlin underground network">
 </div>
 
@@ -163,10 +167,10 @@ on the top right and adjusting it.
 To map them and be able to get a map background, click on the projection dropdown on the top left and
 select BerlinMOD -> OSM.
 
-<div style="text-align:center; margin:16px 0;">
+<figure class="center">
 <img src="/images/screen_ubahn_mapped.jpg" width="640" height="495" alt="The Berlin underground network overlaid on an OpenStreetMap background">
-<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
-</div>
+<figcaption>Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</figcaption>
+</figure>
 </li>
 
 <li>
@@ -174,10 +178,10 @@ Look at a single train, a value of type <code>mpoint</code>:
 <pre>query train7</pre>
 Use the animation "forward" button to see it move along its trajectory. You can also adjust the speed or pause the animation. Furthermore, you can change the symbol of the train by clicking on the <code>train7</code> layer on the top right and adjusting it.
 
-<div style="text-align:center; margin:16px 0;">
+<figure class="center">
 <img src="/images/screen_ubahn_moving.jpg" width="640" height="495" alt="Train7 shown as a moving point on the map, mid-animation along its route">
-<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
-</div>
+<figcaption>Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</figcaption>
+</figure>
 
 </li>
 
@@ -185,10 +189,10 @@ Use the animation "forward" button to see it move along its trajectory. You can 
 Compute the path <code>train7</code> has taken:
 <pre>query trajectory(train7)</pre>
 The width and the color of the line can be adjusted by clicking on the <code>trajectory(train7)</code> layer.
-<div style="text-align:center; margin:16px 0;">
+<figure class="center">
 <img src="/images/screen_ubahn_trajectory.jpg" width="640" height="495" alt="The full trajectory of train7 drawn as a line on the map">
-<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
-</div>
+<figcaption>Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</figcaption>
+</figure>
 
 </li>
 <li>
@@ -200,10 +204,10 @@ then
 
 On the left, you will see a value of type <code>mreal</code>, which is a time-dependent real number. It represents the distance between the train and the station over time; it drops to 0 when train7 passes through the station.
 
-<div style="text-align:center; margin:16px 0;">
+<figure class="center">
 <img src="/images/screen_ubahn_mehringdam_mreal.jpg" width="640" height="495" alt="Plot of the time-dependent distance between train7 and the mehringdamm station, dropping to zero as the train passes through">
-<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
-</div>
+<figcaption>Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</figcaption>
+</figure>
 
 </li>
 <li>
@@ -242,10 +246,10 @@ where  [ s:name="Brandenburger Tor",
          r:art="Italienisch",
          distance(r:geoData, s:geodata) < 2000]</pre>
 
-<div style="text-align:center; margin:16px 0;">
+<figure class="center">
 <img src="/images/screen_restaurant.jpg" width="640" height="495" alt="Secondo GUI showing Italian restaurants near the Brandenburg Gate plotted on a map of Berlin">
-<div style="font-size:0.8rem; color:gray; margin-top:4px;">Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</div>
-</div>
+<figcaption>Map data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors</figcaption>
+</figure>
 </li>
 </ol>
 </div>
@@ -278,7 +282,7 @@ described in the following papers and in the textbook <i>Moving Objects Database
 the <a href="content_papers.html">Publications</a> page for further
 <span class="secondo">Secondo</span>-related papers.
 
-<ol class="pub-list" style="max-width:52rem;">
+<ol class="pub-list">
 <li>
   <div class="pub-meta">
     <span class="authors">M. Erwig, R.H. G&uuml;ting, M. Schneider, and M. Vazirgiannis</span>

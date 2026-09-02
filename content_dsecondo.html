@@ -1,0 +1,394 @@
+---
+title: Distributed SECONDO - SECONDO
+description: Distributed SECONDO is a highly available and scalable database management system built on Apache Cassandra and SECONDO.
+last_changed: 2017-01-01
+hide_logo: true
+---
+
+<div class="center">
+<img src="/DSecondo/logo.png" alt="Distributed SECONDO" width="480">
+</div>
+
+<h1>Distributed <span class="secondo">Secondo</span></h1>
+
+<nav class="page-toc" aria-label="On this page">
+<ul>
+  <li><a href="#overview">Overview</a></li>
+  <li><a href="#example">An Example</a></li>
+  <li><a href="#install">Installation</a></li>
+  <li><a href="#related">Related Work</a></li>
+  <li><a href="#papers">Documentation</a></li>
+  <li><a href="#about">About Us</a></li>
+</ul>
+</nav>
+
+<section class="section">
+<h2 id="overview">Overview</h2>
+<div class="short">
+<p>
+Distributed <span class="secondo">Secondo</span> is an extensible, highly available and scalable
+database management system. It uses <a href="https://cassandra.apache.org/" target="_blank" rel="noopener noreferrer">Apache Cassandra</a>
+for data storage and <span class="secondo">Secondo</span> as a query processing engine.
+</p>
+
+<p>
+As the name implies, Distributed <span class="secondo">Secondo</span> is a distributed system.
+It consists of three different node types: storage nodes, query processing nodes and management
+nodes. The storage nodes run Apache Cassandra to provide highly available data storage. The query
+processing nodes run <span class="secondo">Secondo</span> for query processing, together with a tool
+called <em>Query Executor</em> that distributes the queries. Each Query Executor instance determines
+which queries need to be executed and which part of the input data must be processed by the local
+<span class="secondo">Secondo</span> installation. This decision depends on the state of the storage
+nodes and on heartbeat messages. The Query Executor can deal with failing processing nodes and it is
+capable of addressing multiple <span class="secondo">Secondo</span> instances at the same time, which
+is useful when a processing node has more than one core available for query processing. The
+management nodes also run <span class="secondo">Secondo</span> and are used to import and export data
+and to specify the queries that should be executed.
+</p>
+
+<p>
+Distributed <span class="secondo">Secondo</span> ships with a graphical user interface. The GUI shows
+the state of the query processing nodes and the progress of a query in real time.
+</p>
+
+<figure class="center">
+  <a href="/DSecondo/dsecondo.jpg" target="_blank" rel="noopener noreferrer">
+    <img src="/DSecondo/dsecondo_small.jpg" alt="The Distributed SECONDO GUI, showing query processing node state and live query progress" width="520" loading="lazy">
+  </a>
+  <figcaption>The Distributed <span class="secondo">Secondo</span> GUI.</figcaption>
+</figure>
+</div>
+</section>
+
+<section class="section">
+<h2 id="example">An Example</h2>
+<div class="short">
+<p>
+<span class="secondo">Secondo</span> should perform an equi-join on the two relations
+<code>Customer</code> and <code>Revenue</code> over the attribute <code>Customerid</code>. Both
+relations are assumed to be stored as relations in <span class="secondo">Secondo</span> already.
+</p>
+
+<h3>The Sequential Version</h3>
+<p>
+The sequential version is very simple: <span class="secondo">Secondo</span> reads both relations,
+computes the result and stores it as a new relation. <span class="secondo">Secondo</span> offers a
+comprehensive set of join operators, so the computation can be done with a single query:
+</p>
+
+<pre><code>let join_result = customer feed {r1} revenue feed {r2}
+    itHashJoin[customerid_r1, customerid_r2] consume;</code></pre>
+
+<p>
+To learn more about the <span class="secondo">Secondo</span> query language, see the
+<a href="/content_querying.html">executable language guide</a>.
+</p>
+
+<h3>The Parallel Version</h3>
+<p>
+In the first step, both relations are exported to Cassandra with the <code>cspread</code> operator.
+This operator reads all tuples from a relation and stores them in Cassandra. In addition, a partition
+key must be specified. The partition key determines which attribute governs the placement of a tuple
+within the logical ring. <span class="secondo">Secondo</span> has to join both relations on the
+attribute <code>customerid</code>, so tuples with the same <code>customerid</code> have to be placed
+at the same position in the logical ring.
+</p>
+
+<p>The export of the relations into Cassandra is done with the following two queries:</p>
+
+<pre><code>query customer feed cspread['customer', customerid];
+query revenue feed cspread['revenue', customerid];</code></pre>
+
+<figure class="center">
+  <img src="/DSecondo/schema.png" alt="Diagram of the customer and revenue relations distributed across the storage nodes of the logical ring" width="600" loading="lazy">
+  <figcaption>The relations stored across the storage nodes.</figcaption>
+</figure>
+
+<p>
+The following step is the most complicated one: an execution plan must be created for all query
+processing nodes. The execution plan consists of two queries. The first query opens a database, after
+which <span class="secondo">Secondo</span> is ready to process queries. The second query imports parts
+of the relations from Cassandra, executes the join and writes the data back into Cassandra.
+</p>
+
+<pre><code>query cqueryexecute(1, 'open database opt;');
+
+query cqueryexecute(2, 'query [readparallel customer] {r1}
+    [readparallel revenue] {r2}
+    itHashJoin[customerid_r1, customerid_r2]
+    [write join_result customerid_r1];');</code></pre>
+
+<p>
+After executing these queries the execution plan is created, and each query processing node starts to
+fetch data, compute a part of the join and write the result back into Cassandra.
+</p>
+
+<figure class="center">
+  <img src="/DSecondo/structure.png" alt="Diagram of the query processing nodes fetching data, computing partial joins and writing results back" width="420" loading="lazy">
+  <figcaption>The query processing nodes at work.</figcaption>
+</figure>
+
+<p>
+In the penultimate step, <span class="secondo">Secondo</span> waits for the join (query id 2) to
+complete:
+</p>
+
+<pre><code>query cquerywait(2);</code></pre>
+
+<p>
+Once the query finishes, the join is fully computed and the result is stored in Cassandra. In the
+last step, <span class="secondo">Secondo</span> imports the join result back into the local
+<span class="secondo">Secondo</span> instance:
+</p>
+
+<pre><code>let join_result = ccollectquery('join_result', 2) consume;</code></pre>
+</div>
+</section>
+
+<section class="section">
+<h2 id="install">Installation</h2>
+<div class="short">
+<p>
+Like <span class="secondo">Secondo</span> and Cassandra, Distributed
+<span class="secondo">Secondo</span> is freely available for download. The following steps show how
+the system is installed and configured.
+</p>
+
+<h3>Prerequisites</h3>
+<p>
+At least one system running Ubuntu 14.04 or Debian 7/8 Linux is required. The packages
+<code>ssh</code>, <code>screen</code>, <code>java</code>, <code>git</code>, <code>gcc</code> and
+<code>make</code> should be installed on this system.
+</p>
+
+<h3>Installing a Management Node</h3>
+<ol>
+<li>
+<p>Install the required software components:</p>
+<pre><code>apt-get install cmake libtool automake git openssh-client \
+    screen build-essential libssl-dev</code></pre>
+</li>
+
+<li>
+<p>Define and create the Distributed <span class="secondo">Secondo</span> home:</p>
+<pre><code>export DSECONDO_DIR=~/dsecondo/
+mkdir -p $DSECONDO_DIR
+mkdir -p $DSECONDO_DIR/secondo</code></pre>
+</li>
+
+<li>
+<p>
+<a href="/content_sources.html">Download</a> the latest <span class="secondo">Secondo</span> version
+(at least version 4.0.0 is required).
+</p>
+</li>
+
+<li>
+<p>
+Configure and install <span class="secondo">Secondo</span> as described on the
+<a href="/content_install.html">installation page</a>.
+</p>
+</li>
+
+<li>
+<p>
+Add these lines to your <span class="file">.secondorc</span> and adjust the names of the query
+processing nodes and storage nodes. The placeholder <code>%%YOUR_DSECONDO_DIR%%</code> needs to be
+replaced with the full path of <code>$DSECONDO_DIR</code>. The placeholder
+<code>%%YOUR_QPN_INSTALL_DIR%%</code> needs to be replaced with the directory where
+<span class="secondo">Secondo</span> should be installed on the query processing nodes
+(e.g. <span class="file">/opt/dsecondo</span>).
+</p>
+<pre><code>###
+# DSECONDO
+###
+
+export DSECONDO_DIR=%%YOUR_DSECONDO_DIR%%
+export DSECONDO_QPN_DIR=%%YOUR_QPN_INSTALL_DIR%%
+
+# Locate the libuv and cpp-driver installation dir
+if [ -d $DSECONDO_DIR/driver/libuv ]; then
+   export LD_LIBRARY_PATH=$DSECONDO_DIR/driver/libuv/.libs:$LD_LIBRARY_PATH
+   export LD_LIBRARY_PATH=$DSECONDO_DIR/driver/cpp-driver:$LD_LIBRARY_PATH
+else
+   export LD_LIBRARY_PATH=$DSECONDO_QPN_DIR/driver/libuv/.libs:$LD_LIBRARY_PATH
+   export LD_LIBRARY_PATH=$DSECONDO_QPN_DIR/driver/cpp-driver:$LD_LIBRARY_PATH
+fi
+
+# DSECONDO - Hostnames of the QPNs
+export DSECONDO_QPN="node1 node2 node3 node4 node5 node6"
+
+# DSECONDO - Hostnames of the SNs
+export DSECONDO_SN="node1 node2 node3 node4 node5 node6"</code></pre>
+</li>
+
+<li>
+<p>Re-read your <span class="file">.secondorc</span>:</p>
+<pre><code>source ~/.secondorc</code></pre>
+</li>
+
+<li>
+<p>Download, patch, build and install the cpp-driver and its dependencies:</p>
+<pre><code>cd $DSECONDO_DIR/Algebras/Cassandra/tools
+./manage_dsecondo.sh install_driver</code></pre>
+</li>
+
+<li>
+<p>
+Add the following lines to the file <span class="file">makefile.algebras</span> to enable the
+Cassandra algebra:
+</p>
+<pre><code>ALGEBRA_DIRS += Cassandra
+ALGEBRAS     += CassandraAlgebra
+ALGEBRA_DEPS += uv cassandra
+
+ALGEBRA_INCLUDE_DIRS += $(DSECONDO_DIR)/driver/cpp-driver/include
+ALGEBRA_INCLUDE_DIRS += $(DSECONDO_DIR)/driver/libuv/include
+
+ALGEBRA_DEP_DIRS += $(DSECONDO_DIR)/driver/libuv/.libs
+ALGEBRA_DEP_DIRS += $(DSECONDO_DIR)/driver/cpp-driver</code></pre>
+</li>
+
+<li>
+<p>Build <span class="secondo">Secondo</span>:</p>
+<pre><code>cd $DSECONDO_DIR/secondo
+make</code></pre>
+</li>
+
+<li>
+<p>
+Add the following lines to the configuration file of <span class="secondo">Secondo</span>
+(<span class="file">SecondoConfig.ini</span>). The placeholder <code>%%SN_IP%%</code> has to be
+replaced with the IP of one of the storage nodes.
+</p>
+<pre><code>[CassandraAlgebra]
+CassandraHost=%%SN_IP%%
+CassandraKeyspace=keyspace_r3
+CassandraConsistency=QUORUM
+CassandraDefaultNodename=node1</code></pre>
+</li>
+</ol>
+
+<h3>Installing the Query Processing Nodes</h3>
+<p>
+The management node is responsible for installing the query processing nodes. Execute the following
+steps to install these nodes:
+</p>
+
+<ol>
+<li>
+<p>On the management node, change into the tools directory:</p>
+<pre><code>cd $DSECONDO_DIR/secondo/Algebras/Cassandra/tools</code></pre>
+</li>
+<li>
+<p>
+Run the query processing node installer. The installer copies your
+<span class="secondo">Secondo</span> installation and the cpp-driver onto the nodes.
+</p>
+<pre><code>./manage_dsecondo.sh install</code></pre>
+</li>
+</ol>
+
+<h3>Installing the Storage Nodes</h3>
+<ol>
+<li>
+<p>On the management node, change into the tools directory:</p>
+<pre><code>cd $DSECONDO_DIR/secondo/Algebras/Cassandra/tools</code></pre>
+</li>
+<li>
+<p>
+Run the storage node installer. The installer downloads and unpacks Cassandra and applies a basic
+configuration.
+</p>
+<pre><code>./manage_cassandra.sh install</code></pre>
+</li>
+<li>
+<p>Start the storage nodes:</p>
+<pre><code>./manage_cassandra.sh start</code></pre>
+</li>
+<li>
+<p>
+Create the default keyspaces (<code>keyspace_r1</code> &ndash; <code>keyspace_r6</code>) and system
+tables. The keyspace <code>keyspace_r1</code> has a replication factor of 1,
+<code>keyspace_r6</code> has a replication factor of 6.
+</p>
+<pre><code>./manage_cassandra.sh init</code></pre>
+</li>
+</ol>
+</div>
+</section>
+
+<section class="section">
+<h2 id="related">Related Work</h2>
+<div class="short">
+<p>
+With <a href="/ParallelSecondo/index.html">Parallel <span class="secondo">Secondo</span></a>, another
+<span class="secondo">Secondo</span>-based prototype for distributed processing of large amounts of
+data exists. Parallel <span class="secondo">Secondo</span> couples Hadoop with
+<span class="secondo">Secondo</span> to achieve scalability and data distribution. In contrast to
+Distributed <span class="secondo">Secondo</span>, Parallel <span class="secondo">Secondo</span> does
+not focus on data updates, and its architecture contains a master node, which is a single point of
+failure.
+</p>
+</div>
+</section>
+
+<section class="section">
+<h2 id="papers">Documentation and Papers</h2>
+
+<ol class="pub-list">
+  <li>
+    <div class="pub-meta">
+      <span class="authors">J.K. Nidzwetzki and R.H. G&uuml;ting</span>
+      <span class="title">Distributed SECONDO: A highly available and scalable system for spatial data processing</span>
+      <span class="venue">14th International Symposium on Spatial and Temporal Databases, 2015. DOI 10.1007/978-3-319-22363-6_28.</span>
+    </div>
+    <div class="pub-links">
+      <a href="https://link.springer.com/chapter/10.1007/978-3-319-22363-6_28" target="_blank" rel="noopener noreferrer">Paper</a>
+      <a href="/DSecondo/sstd_poster.pdf" target="_blank" rel="noopener noreferrer">Poster</a>
+    </div>
+  </li>
+  <li>
+    <div class="pub-meta">
+      <span class="authors">J.K. Nidzwetzki</span>
+      <span class="title">Entwicklung eines skalierbaren und verteilten Datenbanksystems &mdash; Auf Basis von Apache Cassandra und SECONDO</span>
+      <span class="venue">Springer BestMasters, 2016. ISBN 978-3-658-12443-4, DOI 10.1007/978-3-658-12444-1. Available in German only.</span>
+    </div>
+    <div class="pub-links">
+      <a href="http://www.springer.com/de/book/9783658124434" target="_blank" rel="noopener noreferrer">Book</a>
+    </div>
+  </li>
+  <li>
+    <div class="pub-meta">
+      <span class="authors">J.K. Nidzwetzki and R.H. G&uuml;ting</span>
+      <span class="title">Distributed SECONDO: An extensible and scalable database management system</span>
+      <span class="venue">Distributed and Parallel Databases, 2017. DOI 10.1007/s10619-017-7198-9.</span>
+    </div>
+    <div class="pub-links">
+      <a href="https://link.springer.com/article/10.1007%2Fs10619-017-7198-9" target="_blank" rel="noopener noreferrer">Paper</a>
+      <a href="http://dna.fernuni-hagen.de/papers/Report371.pdf" target="_blank" rel="noopener noreferrer">Tech report</a>
+    </div>
+  </li>
+</ol>
+</section>
+
+<section class="section">
+<h2 id="about">About Us</h2>
+<div class="short">
+<p>
+<a href="http://dna.fernuni-hagen.de/" target="_blank" rel="noopener noreferrer">Our group</a> is a
+database research group at FernUniversit&auml;t in Hagen, Germany, led by Prof. Dr. Ralf Hartmut
+G&uuml;ting. The group focuses on database technologies for non-standard data types, especially
+moving objects data, and on extensible database systems. The group has developed the
+<a href="/index.html"><span class="secondo">Secondo</span> system</a>, an open-source extensible DBMS
+prototype.
+</p>
+
+<h3>Contact</h3>
+<address class="contact">
+<span class="line">Main developer: <a href="mailto:jan.nidzwetzki@fernuni-hagen.de">Jan Kristof Nidzwetzki</a></span>
+<span class="line">The <span class="secondo">Secondo</span> group: <a href="mailto:secondo@fernuni-hagen.de">secondo@fernuni-hagen.de</a></span>
+</address>
+
+</div>
+</section>
