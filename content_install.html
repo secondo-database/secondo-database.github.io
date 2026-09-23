@@ -25,7 +25,7 @@ distributions are covered by the
   <li> Just want to try <span class="secondo">Secondo</span> in a few seconds &rarr;
        <a href="#container">use a container image</a> </li>
   <li> Just want to install <span class="secondo">Secondo</span> on Ubuntu &rarr;
-       <a href="#deb">binary <code>.deb</code> packages (apt-get)</a> </li>
+       <a href="#deb">binary <code>.deb</code> packages (apt)</a> </li>
   <li> Build or extend <span class="secondo">Secondo</span> on Ubuntu / Debian &rarr;
        <a href="#ubuntu">installation from sources</a> </li>
   <li> Build or extend <span class="secondo">Secondo</span> on macOS &rarr;
@@ -85,7 +85,7 @@ docker stop secondo
 For users who just want to try <span class="secondo">Secondo</span> without compiling it,
 we provide precompiled <code>.deb</code> packages for Ubuntu&nbsp;22.04, 24.04 and 26.04. They
 install <span class="secondo">Secondo</span> and all of its dependencies within a few
-minutes via <code>apt-get</code>, and are the recommended starting point for new users.
+minutes via <code>apt</code>, and are the recommended starting point for new users.
 Developers who want to build their own extensions should instead build
 <a href="#ubuntu">from sources</a> as described below.
 </p>
@@ -93,7 +93,7 @@ Developers who want to build their own extensions should instead build
 <p>
 See the
 <a href="files/Installation/Ubuntu/content_Installation_repos.html">Ubuntu installation
-guide using apt-get</a> for the full instructions. Note that these packages are built for
+guide using apt</a> for the full instructions. Note that these packages are built for
 the <code>x86_64</code>/<code>amd64</code> architecture only; on other architectures
 (e.g. arm64) please <a href="#ubuntu">build from sources</a>.
 </p>
@@ -117,13 +117,14 @@ the same way; the package names below are identical on Debian.
 the Boost libraries, a Java Development Kit (<code>default-jdk</code>) for the Java GUI, and
 SWI-Prolog for the optimizer:
 {% highlight bash %}
-sudo apt-get update
-sudo apt-get install flex bison gcc g++ build-essential \
+sudo apt update
+sudo apt install flex bison gcc g++ build-essential \
     libdb5.3 libdb5.3-dev libdb5.3++ libdb5.3++-dev db5.3-util \
     libjpeg-dev libgsl0-dev libreadline-dev librecode-dev \
     libgmp-dev libgmp10 libncurses-dev libxml2-dev libboost-all-dev \
     libbison-dev libfl-dev libquadmath0 nlohmann-json3-dev \
-    default-jdk swi-prolog swi-prolog-nox
+    default-jdk swi-prolog swi-prolog-nox python3 python3-dev \
+    python3-pip
 {% endhighlight %}
 </li>
 
